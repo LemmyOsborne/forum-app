@@ -1,4 +1,6 @@
 {
+  "name": "forum-app",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next",
@@ -6,9 +8,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "aws-amplify": "^4.3.15",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.27.1",
     "react-is": "^17.0.2",
     "styled-components": "^5.2.3"
   },
