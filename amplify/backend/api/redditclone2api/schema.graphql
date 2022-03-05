@@ -17,9 +17,16 @@ type Post
   comments: [Comment!]! @hasMany
 }
 
-type Comment @model @auth(rules: [{ allow: public }]) {
+type Comment
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, update, delete, read] }
+      { allow: private, operations: [read] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
   id: ID!
-  postId: ID!
   post: Post @belongsTo
   content: String!
 }

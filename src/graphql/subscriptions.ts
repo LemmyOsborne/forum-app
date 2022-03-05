@@ -2,72 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateComment = /* GraphQL */ `
-  subscription OnCreateComment {
-    onCreateComment {
-      id
-      postId
-      post {
-        id
-        title
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      content
-      createdAt
-      updatedAt
-      postCommentsId
-    }
-  }
-`
-export const onUpdateComment = /* GraphQL */ `
-  subscription OnUpdateComment {
-    onUpdateComment {
-      id
-      postId
-      post {
-        id
-        title
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      content
-      createdAt
-      updatedAt
-      postCommentsId
-    }
-  }
-`
-export const onDeleteComment = /* GraphQL */ `
-  subscription OnDeleteComment {
-    onDeleteComment {
-      id
-      postId
-      post {
-        id
-        title
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      content
-      createdAt
-      updatedAt
-      postCommentsId
-    }
-  }
-`
 export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost($owner: String) {
     onCreatePost(owner: $owner) {
@@ -76,11 +10,11 @@ export const onCreatePost = /* GraphQL */ `
       comments {
         items {
           id
-          postId
           content
           createdAt
           updatedAt
           postCommentsId
+          owner
         }
         nextToken
       }
@@ -89,7 +23,7 @@ export const onCreatePost = /* GraphQL */ `
       owner
     }
   }
-`
+`;
 export const onUpdatePost = /* GraphQL */ `
   subscription OnUpdatePost($owner: String) {
     onUpdatePost(owner: $owner) {
@@ -98,11 +32,11 @@ export const onUpdatePost = /* GraphQL */ `
       comments {
         items {
           id
-          postId
           content
           createdAt
           updatedAt
           postCommentsId
+          owner
         }
         nextToken
       }
@@ -111,7 +45,7 @@ export const onUpdatePost = /* GraphQL */ `
       owner
     }
   }
-`
+`;
 export const onDeletePost = /* GraphQL */ `
   subscription OnDeletePost($owner: String) {
     onDeletePost(owner: $owner) {
@@ -120,11 +54,11 @@ export const onDeletePost = /* GraphQL */ `
       comments {
         items {
           id
-          postId
           content
           createdAt
           updatedAt
           postCommentsId
+          owner
         }
         nextToken
       }
@@ -133,4 +67,70 @@ export const onDeletePost = /* GraphQL */ `
       owner
     }
   }
-`
+`;
+export const onCreateComment = /* GraphQL */ `
+  subscription OnCreateComment($owner: String) {
+    onCreateComment(owner: $owner) {
+      id
+      post {
+        id
+        title
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      owner
+    }
+  }
+`;
+export const onUpdateComment = /* GraphQL */ `
+  subscription OnUpdateComment($owner: String) {
+    onUpdateComment(owner: $owner) {
+      id
+      post {
+        id
+        title
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      owner
+    }
+  }
+`;
+export const onDeleteComment = /* GraphQL */ `
+  subscription OnDeleteComment($owner: String) {
+    onDeleteComment(owner: $owner) {
+      id
+      post {
+        id
+        title
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      content
+      createdAt
+      updatedAt
+      postCommentsId
+      owner
+    }
+  }
+`;

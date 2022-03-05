@@ -7,7 +7,6 @@ import * as ROUTES from "constants/routes"
 import { Button, Container, ErrorMessage, Form, Input, ServerError } from "styles/form.styles"
 
 interface IFormData {
-  email: string
   username: string
   password: string
   code: string
