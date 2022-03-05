@@ -1,8 +1,10 @@
 import { Post } from "API"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import Downvote from "assets/icons/downvote.svg"
 import Upvote from "assets/icons/upvote.svg"
+import UpvoteFill from "assets/icons/upvote-fill.svg"
+import DownvoteFill from "assets/icons/downvote-fill.svg"
 import { formatDate } from "helpers/formatDate"
 
 interface Props {
@@ -10,15 +12,39 @@ interface Props {
 }
 
 export const PostPreview: React.FC<Props> = ({ post }) => {
+  const [upvotes, setUpvotes] = useState<number | undefined>(
+    post.votes?.items ? post.votes.items.filter((vote) => vote?.vote === "upvote").length : 0
+  )
+  const [downvotes, setDownvotes] = useState<number | undefined>(
+    post.votes?.items ? post.votes.items.filter((vote) => vote?.vote === "downvote").length : 0
+  )
+
+  const [upvoted, setUpvoted] = useState(false)
+  const [downvoted, setDownvoted] = useState(false)
+
+  const handleUpvoted = () => {
+    if (downvoted) {
+      setDownvoted(false)
+    }
+    setUpvoted((upvoted) => !upvoted)
+  }
+
+  const handleDownvoted = () => {
+    if (upvoted) {
+      setUpvoted(false)
+    }
+    setDownvoted((downvoted) => !downvoted)
+  }
+
   return (
     <Container>
       <VoteSection>
-        <UpvoteWrapper>
-          <Upvote />
+        <UpvoteWrapper onClick={handleUpvoted}>
+          {upvoted ? <UpvoteFill /> : <Upvote />}
         </UpvoteWrapper>
-        <p>{post.votes?.items ? post.votes?.items?.length : "vote"}</p>
-        <DownvoteWrapper>
-          <Downvote />
+        <p>{upvotes - downvotes}</p>
+        <DownvoteWrapper onClick={handleDownvoted}>
+          {downvoted ? <DownvoteFill /> : <Downvote />}
         </DownvoteWrapper>
       </VoteSection>
       <InfoSection>
@@ -49,6 +75,7 @@ const Container = styled.article`
 const VoteSection = styled.section`
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-right: 15px;
 
   p {
