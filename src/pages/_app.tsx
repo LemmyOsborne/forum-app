@@ -10,15 +10,12 @@ import { AuthProvider } from "helpers/AuthProvider"
 
 Amplify.configure({ ...awsconfig, ssr: true })
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
         <title>Forum App</title>
-        <meta
-          name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width"
-        />
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       <AuthProvider>
         <ThemeProvider theme={theme}>
@@ -30,4 +27,4 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   )
 }
 
-export default MyApp
+export default App

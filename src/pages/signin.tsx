@@ -13,44 +13,41 @@ interface IFormData {
   code: string
 }
 
-const SignUp = () => {
+const SignIn = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormData>()
 
-  const [signUpError, setSignUpError] = useState("")
+  const [signInError, setSignInError] = useState("")
   const [showCode, setShowCode] = useState(false)
   const router = useRouter()
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
     try {
       if (showCode) {
-        confirmSignUp(data)
+        confirmSignIn(data)
       } else {
-        await signUpWithEmailAndPassword(data)
+        await signInWithEmailAndPassword(data)
         setShowCode(true)
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error)
-      setSignUpError(error.message)
+      setSignInError(error.message)
     }
   }
 
-  const signUpWithEmailAndPassword = async (data: IFormData): Promise<CognitoUser> => {
-    const { username, email, password } = data
+  const signInWithEmailAndPassword = async (data: IFormData): Promise<CognitoUser> => {
+    const { username, password } = data
 
     try {
-      const { user } = await Auth.signUp({
+      const user = await Auth.signIn({
         username,
         password,
-        attributes: {
-          email,
-        },
       })
-      console.log("Signed up a user: ", user)
+      console.log("Signed in a user: ", user)
       return user
     } catch (error) {
       console.error(error)
@@ -58,25 +55,25 @@ const SignUp = () => {
     }
   }
 
-  const confirmSignUp = async (data: IFormData) => {
-    const { username, password, code } = data
+  const confirmSignIn = async (data: IFormData) => {
+    const { username } = data
 
     try {
-      await Auth.confirmSignUp(username, code)
-      const amplifyUser = await Auth.signIn(username, password)
+      await Auth.resendSignUp(username)
+      const amplifyUser = await Auth.signIn(username)
       if (amplifyUser) {
         router.push(ROUTES.HOME)
       } else {
         throw new Error("Something went wrong")
       }
     } catch (error) {
-      console.log("error confirming sign up", error)
+      console.log("error confirming sign in", error)
     }
   }
 
   return (
     <Container>
-      {signUpError && <ServerError>{signUpError}</ServerError>}
+      {signInError && <ServerError>{signInError}</ServerError>}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           placeholder="Username"
@@ -93,14 +90,6 @@ const SignUp = () => {
           })}
         />
         {errors.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}
-        <Input
-          placeholder="Email"
-          type="email"
-          {...register("email", {
-            required: { value: true, message: "Please enter a valid email." },
-          })}
-        />
-        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         <Input
           type="password"
           placeholder="Password"
@@ -136,4 +125,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default SignIn
