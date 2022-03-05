@@ -7,6 +7,8 @@ export const getPost = /* GraphQL */ `
     getPost(id: $id) {
       id
       title
+      content
+      image
       comments {
         items {
           id
@@ -18,24 +20,48 @@ export const getPost = /* GraphQL */ `
         }
         nextToken
       }
+      votes {
+        items {
+          id
+          vote
+          createdAt
+          updatedAt
+          postVotesId
+          owner
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       owner
     }
   }
-`;
+`
 export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListPosts($filter: ModelPostFilterInput, $limit: Int, $nextToken: String) {
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         title
+        content
+        image
         comments {
           nextToken
+          items {
+            id
+            content
+            createdAt
+            owner
+            postCommentsId
+          }
+        }
+        votes {
+          nextToken
+          items {
+            id
+            vote
+            postVotesId
+          }
         }
         createdAt
         updatedAt
@@ -44,7 +70,7 @@ export const listPosts = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
@@ -52,7 +78,12 @@ export const getComment = /* GraphQL */ `
       post {
         id
         title
+        content
+        image
         comments {
+          nextToken
+        }
+        votes {
           nextToken
         }
         createdAt
@@ -66,19 +97,17 @@ export const getComment = /* GraphQL */ `
       owner
     }
   }
-`;
+`
 export const listComments = /* GraphQL */ `
-  query ListComments(
-    $filter: ModelCommentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListComments($filter: ModelCommentFilterInput, $limit: Int, $nextToken: String) {
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         post {
           id
           title
+          content
+          image
           createdAt
           updatedAt
           owner
@@ -92,4 +121,55 @@ export const listComments = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
+export const getVote = /* GraphQL */ `
+  query GetVote($id: ID!) {
+    getVote(id: $id) {
+      id
+      vote
+      post {
+        id
+        title
+        content
+        image
+        comments {
+          nextToken
+        }
+        votes {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      postVotesId
+      owner
+    }
+  }
+`
+export const listVotes = /* GraphQL */ `
+  query ListVotes($filter: ModelVoteFilterInput, $limit: Int, $nextToken: String) {
+    listVotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        vote
+        post {
+          id
+          title
+          content
+          image
+          createdAt
+          updatedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        postVotesId
+        owner
+      }
+      nextToken
+    }
+  }
+`

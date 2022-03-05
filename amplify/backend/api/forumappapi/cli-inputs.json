@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "forumappapi",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "C:\\Users\\User\\Desktop\\Rodion\\React-projects\\forum-app\\amplify\\backend\\api\\forumappapi\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authforumapp60cfccf2"
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 364,
+        "apiKeyExpirationDate": "2023-03-04T12:03:54.100Z",
+        "keyDescription": "Forum App API Key"
+      }
+    ]
+  }
+}

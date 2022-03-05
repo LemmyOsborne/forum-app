@@ -1,6 +1,6 @@
 {
   "auth": {
-    "redditclone20f278727": {
+    "forumapp60cfccf2": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -26,24 +26,24 @@
     }
   },
   "api": {
-    "redditclone2api": {
+    "forumappapi": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
         "authConfig": {
           "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 364,
-              "apiKeyExpirationDate": "2023-03-03T18:48:47.961Z",
-              "description": "Reddit Clone API Key"
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authforumapp60cfccf2"
             }
           },
           "additionalAuthenticationProviders": [
             {
-              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-              "userPoolConfig": {
-                "userPoolId": "authredditclone20f278727"
+              "authenticationType": "API_KEY",
+              "apiKeyConfig": {
+                "apiKeyExpirationDays": 364,
+                "apiKeyExpirationDate": "2023-03-04T12:03:54.100Z",
+                "description": "Forum App API Key"
               }
             }
           ]

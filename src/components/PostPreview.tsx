@@ -16,16 +16,17 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
         <UpvoteWrapper>
           <Upvote />
         </UpvoteWrapper>
-        <p>272</p>
+        <p>{post.votes?.items ? post.votes?.items?.length : "vote"}</p>
         <DownvoteWrapper>
           <Downvote />
         </DownvoteWrapper>
       </VoteSection>
       <InfoSection>
-        <Text>
-          Posted by {post.owner} {formatDate(post.createdAt)} hours ago.
-        </Text>
+        <SmallText>
+          Posted by <b>{post.owner}</b> {formatDate(post.createdAt)} hours ago.
+        </SmallText>
         <Title>{post.title}</Title>
+        <Text>{post.content}</Text>
       </InfoSection>
     </Container>
   )
@@ -33,7 +34,7 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
 
 const Container = styled.article`
   display: flex;
-  max-width: 600px;
+  min-width: 600px;
   background-color: ${({ theme }) => theme.palette.grey[100]};
   margin-bottom: 10px;
   cursor: pointer;
@@ -63,9 +64,14 @@ const InfoSection = styled.section`
 const Title = styled.h1`
   font-size: 20px;
   font-weight: 600;
+  margin-bottom: 20px;
 `
 
 const Text = styled.p`
+  font-size: 14px;
+`
+
+const SmallText = styled.p`
   color: ${({ theme }) => theme.palette.text.secondary};
   font-size: 12px;
   margin-bottom: 10px;
