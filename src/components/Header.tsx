@@ -6,21 +6,42 @@ import * as ROUTES from "constants/routes"
 import Logo from "assets/logo.png"
 import MenuIcon from "assets/icons/menu.svg"
 import LogoutIcon from "assets/icons/logout.svg"
+import { Auth } from "aws-amplify"
+import { useRouter } from "next/router"
+import { useUser } from "context/AuthContext"
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
+  const router = useRouter()
+  const { user } = useUser()
+  const username = user?.getUsername()
+
+  const signOut = async () => {
+    try {
+      await Auth.signOut()
+      router.push(ROUTES.SIGN_IN)
+    } catch (error) {
+      console.log("error signing out: ", error)
+    }
+  }
   return (
     <Container>
       <Link href={ROUTES.HOME}>
         <Image src={Logo} height={150} width={200} />
       </Link>
       <div style={{ display: "flex" }}>
-        <Link href={ROUTES.SIGN_IN}>
-          <SignInButton>Sign In</SignInButton>
-        </Link>
-        <Link href={ROUTES.SIGN_UP}>
-          <SignUpButton>Sign Up</SignUpButton>
-        </Link>
+        {user ? (
+          <Username>{username}</Username>
+        ) : (
+          <div>
+            <Link href={ROUTES.SIGN_IN}>
+              <SignInButton>Sign In</SignInButton>
+            </Link>
+            <Link href={ROUTES.SIGN_UP}>
+              <SignUpButton>Sign Up</SignUpButton>
+            </Link>
+          </div>
+        )}
         <Dropdown>
           <MenuButton onClick={() => setShowMenu(!showMenu)}>
             <MenuIcon />
@@ -28,7 +49,7 @@ export const Header = () => {
           {showMenu && (
             <DropdownMenu>
               <MenuItem>Switch Theme</MenuItem>
-              <MenuItem>
+              <MenuItem onClick={signOut}>
                 <LogoutIcon />
                 Logout
               </MenuItem>
@@ -57,7 +78,7 @@ const Container = styled.header`
 const SignInButton = styled.button`
   border: 1px solid ${({ theme }) => theme.palette.primary.main};
   padding: 0 25px;
-  max-height: 30px;
+  height: 30px;
   font-size: 16px;
   font-weight: 600;
   color: ${({ theme }) => theme.palette.primary.main};
@@ -76,8 +97,8 @@ const Dropdown = styled.div`
 `
 
 const MenuButton = styled.button`
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 `
 const DropdownMenu = styled.div`
   display: flex;
@@ -118,4 +139,9 @@ const MenuItem = styled.div`
     color: ${({ theme }) => theme.palette.primary.contrastText};
     background-color: ${({ theme }) => theme.palette.primary.main};
   }
+`
+
+const Username = styled.p`
+  margin: 5px 15px 0;
+  font-weight: 600;
 `
