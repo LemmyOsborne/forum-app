@@ -7,6 +7,7 @@ import { GlobalStyle } from "styles/global-style"
 import { Amplify } from "aws-amplify"
 import awsconfig from "../aws-exports"
 import { AuthProvider } from "helpers/AuthProvider"
+import { Header } from "components"
 
 Amplify.configure({ ...awsconfig, ssr: true })
 
@@ -20,6 +21,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <AuthProvider>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
+          <Header />
           <Component {...pageProps} />
         </ThemeProvider>
       </AuthProvider>
