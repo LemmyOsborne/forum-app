@@ -1,0 +1,15 @@
+{
+  "resourceName": "forumappimages",
+  "policyUUID": "97709b1c",
+  "bucketName": "forumapp20aec2d17f9d46feb9711bce42625345",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "groupAccess": {}
+}
