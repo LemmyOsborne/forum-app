@@ -37,7 +37,6 @@ export default function Home() {
 
 const Container = styled.div`
   display: flex;
-  width: 100vw;
   align-items: center;
   flex-direction: column;
   padding: 5rem;

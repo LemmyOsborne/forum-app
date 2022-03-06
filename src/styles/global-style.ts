@@ -20,4 +20,9 @@ export const GlobalStyle = createGlobalStyle`
         border: none;
         box-sizing: border-box;
     }
+
+    button {
+        cursor: pointer;
+        background: none;
+    }
 `

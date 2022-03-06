@@ -605,7 +605,7 @@ export type ListPostsQueryVariables = {
 }
 
 export type ListPostsQuery = {
-  listPosts?: {
+  listPosts: {
     __typename: "ModelPostConnection"
     items: Array<{
       __typename: "Post"
@@ -628,7 +628,7 @@ export type ListPostsQuery = {
       owner?: string | null
     } | null>
     nextToken?: string | null
-  } | null
+  }
 }
 
 export type GetCommentQueryVariables = {

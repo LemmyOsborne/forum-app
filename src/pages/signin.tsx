@@ -20,17 +20,12 @@ const SignIn = () => {
   } = useForm<IFormData>()
 
   const [signInError, setSignInError] = useState("")
-  const [showCode, setShowCode] = useState(false)
   const router = useRouter()
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
     try {
-      if (showCode) {
-        confirmSignIn(data)
-      } else {
-        await signInWithEmailAndPassword(data)
-        setShowCode(true)
-      }
+      await signInWithEmailAndPassword(data)
+      router.push(ROUTES.HOME)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error)
@@ -51,22 +46,6 @@ const SignIn = () => {
     } catch (error) {
       console.error(error)
       throw error
-    }
-  }
-
-  const confirmSignIn = async (data: IFormData) => {
-    const { username } = data
-
-    try {
-      await Auth.resendSignUp(username)
-      const amplifyUser = await Auth.signIn(username)
-      if (amplifyUser) {
-        router.push(ROUTES.HOME)
-      } else {
-        throw new Error("Something went wrong")
-      }
-    } catch (error) {
-      console.log("error confirming sign in", error)
     }
   }
 
@@ -101,24 +80,7 @@ const SignIn = () => {
           })}
         />
         {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
-        {showCode && (
-          <Input
-            placeholder="Verification code"
-            {...register("code", {
-              required: { value: true, message: "Please enter a code." },
-              minLength: {
-                value: 6,
-                message: "Code should have 6 characters.",
-              },
-              maxLength: {
-                value: 6,
-                message: "Code should have 6 characters.",
-              },
-            })}
-          />
-        )}
-        {errors.code && <ErrorMessage>{errors.code.message}</ErrorMessage>}
-        <Button type="submit">{showCode ? "Confirm Code" : "Sign Up"}</Button>
+        <Button type="submit">Sign In</Button>
       </Form>
     </Container>
   )

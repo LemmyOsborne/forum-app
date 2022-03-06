@@ -10,12 +10,15 @@ import { API } from "aws-amplify"
 import { updateVote, createVote } from "graphql/mutations"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { useUser } from "context/AuthContext"
+import Image from "next/image"
+import { useRouter } from "next/router"
 
 interface Props {
   post: Post
 }
 
 export const PostPreview: React.FC<Props> = ({ post }) => {
+  const router = useRouter()
   const { user } = useUser()
   const [existingVote, setExistingVote] = useState<string | undefined>(undefined)
   const [existingVoteId, setExistingVoteId] = useState<string | undefined>(undefined)
@@ -91,30 +94,37 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
   }
 
   return (
-    <Container>
+    <Container onClick={() => router.push(`/post/${post.id}`)}>
       <VoteSection>
         <UpvoteWrapper onClick={() => addVote("upvote")}>
-          <Upvote />
+          {existingVote === "upvote" ? <UpvoteFill /> : <Upvote />}
         </UpvoteWrapper>
         <p>{upvotes - downvotes}</p>
         <DownvoteWrapper onClick={() => addVote("downvote")}>
-          <Downvote />
+          {existingVote === "downvote" ? <DownvoteFill /> : <Downvote />}
         </DownvoteWrapper>
       </VoteSection>
-      <InfoSection>
+      <ContentSection>
         <SmallText>
           Posted by <b>{post.owner}</b> {formatDate(post.createdAt)} hours ago.
         </SmallText>
         <Title>{post.title}</Title>
         <Text>{post.content}</Text>
-      </InfoSection>
+        <Image
+          src={"https://source.unsplash.com/random/980x540"}
+          height={540}
+          width={980}
+          layout="intrinsic"
+        />
+      </ContentSection>
     </Container>
   )
 }
 
 const Container = styled.article`
   display: flex;
-  min-width: 600px;
+  width: 50%;
+  min-width: 480px;
   background-color: ${({ theme }) => theme.palette.grey[100]};
   margin-bottom: 10px;
   cursor: pointer;
@@ -138,7 +148,7 @@ const VoteSection = styled.section`
   }
 `
 
-const InfoSection = styled.section`
+const ContentSection = styled.section`
   display: flex;
   flex-direction: column;
 `
@@ -151,6 +161,7 @@ const Title = styled.h1`
 
 const Text = styled.p`
   font-size: 14px;
+  margin-bottom: 20px;
 `
 
 const SmallText = styled.p`
