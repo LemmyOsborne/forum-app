@@ -64,7 +64,7 @@ export type Post = {
   content: string
   image?: string | null
   comments?: ModelCommentConnection | null
-  votes?: ModelVoteConnection | null
+  votes: ModelVoteConnection
   createdAt: string
   updatedAt: string
   owner?: string | null
@@ -101,7 +101,7 @@ export type Vote = {
   createdAt: string
   updatedAt: string
   postVotesId: string
-  owner?: string | null
+  owner?: string
 }
 
 export type UpdatePostInput = {
@@ -470,7 +470,7 @@ export type CreateVoteMutation = {
         __typename: "ModelCommentConnection"
         nextToken?: string | null
       } | null
-      votes?: {
+      votes: {
         __typename: "ModelVoteConnection"
         nextToken?: string | null
       } | null
