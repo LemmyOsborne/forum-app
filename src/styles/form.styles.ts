@@ -63,4 +63,7 @@ export const ServerError = styled.div`
   min-height: 100px;
   padding: 10px 20px;
   border-radius: 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
 `
