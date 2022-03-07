@@ -22,6 +22,7 @@ export default function Home() {
         throw new Error("Something went wrong.")
       }
     }
+
     getAllPosts()
   }, [])
   return posts ? (

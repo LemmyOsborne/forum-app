@@ -53,12 +53,13 @@ const Inner = styled.div`
   width: 80%;
   height: 100%;
   position: relative;
+  padding-top: 6rem;
 `
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 50px;
-  right: 50px;
+  top: 100px;
+  right: 100px;
   color: white;
   font-size: 15px;
   font-weight: 500;
@@ -117,5 +118,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // We'll pre-render only these paths at build time.
   // { fallback: blocking } will server-render pages
   // on-demand if the path doesn't exist.
+
   return { paths, fallback: "blocking" }
 }

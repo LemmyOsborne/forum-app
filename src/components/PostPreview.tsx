@@ -6,7 +6,7 @@ import Upvote from "assets/icons/upvote.svg"
 import UpvoteFill from "assets/icons/upvote-fill.svg"
 import DownvoteFill from "assets/icons/downvote-fill.svg"
 import { formatDate } from "helpers/formatDate"
-import { API } from "aws-amplify"
+import { API, Storage } from "aws-amplify"
 import { updateVote, createVote } from "graphql/mutations"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { useUser } from "context/AuthContext"
@@ -18,21 +18,21 @@ interface Props {
 }
 
 export const PostPreview: React.FC<Props> = ({ post }) => {
+  const [imageUrl, setImageUrl] = useState("")
   const router = useRouter()
   const { user } = useUser()
   const [existingVote, setExistingVote] = useState<string | undefined>(undefined)
   const [existingVoteId, setExistingVoteId] = useState<string | undefined>(undefined)
   const [upvotes, setUpvotes] = useState<number>(
-    post.votes.items ? post.votes.items.filter((v) => v?.vote === "upvote").length : 0
+    post.votes?.items ? post.votes?.items.filter((vote) => vote?.vote === "upvote").length : 0
   )
 
   const [downvotes, setDownvotes] = useState<number>(
-    post.votes.items ? post.votes.items.filter((v) => v?.vote === "downvote").length : 0
+    post.votes.items ? post.votes.items.filter((vote) => vote?.vote === "downvote").length : 0
   )
-
   useEffect(() => {
     if (user) {
-      const tryFindVote = post.votes.items?.find((v) => v?.owner === user.getUsername())
+      const tryFindVote = post.votes.items?.find((vote) => vote.owner === user.getUsername())
 
       if (tryFindVote) {
         setExistingVote(tryFindVote.vote)
@@ -40,6 +40,21 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
       }
     }
   }, [user])
+
+  useEffect(() => {
+    const getPostImageUrl = async () => {
+      if (post.image) {
+        try {
+          const imageUrl = await Storage.get(post.image)
+          console.log(imageUrl)
+          setImageUrl(imageUrl)
+        } catch (error) {
+          console.error(error)
+        }
+      }
+    }
+    getPostImageUrl()
+  }, [])
 
   const addVote = async (voteType: string) => {
     if (existingVote && existingVoteId && existingVote != voteType) {
@@ -110,12 +125,9 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
         </SmallText>
         <Title>{post.title}</Title>
         <Text>{post.content}</Text>
-        <Image
-          src={"https://source.unsplash.com/random/980x540"}
-          height={540}
-          width={980}
-          layout="intrinsic"
-        />
+        {post.image && imageUrl && (
+          <Image src={imageUrl} height={540} width={980} layout="intrinsic" />
+        )}
       </ContentSection>
     </Container>
   )

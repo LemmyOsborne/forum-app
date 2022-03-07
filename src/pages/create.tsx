@@ -1,7 +1,7 @@
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { CreatePostInput, CreatePostMutation } from "API"
 import { API, Storage } from "aws-amplify"
-import { ImageDropzone } from "components/ImageDropzone"
+import { ImageDropzone } from "components"
 import { createPost } from "graphql/mutations"
 import { useRouter } from "next/router"
 import React, { useState } from "react"
