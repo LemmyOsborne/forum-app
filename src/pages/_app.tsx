@@ -4,12 +4,13 @@ import React from "react"
 import { ThemeProvider } from "styled-components"
 import { theme } from "styles/default-theme"
 import { GlobalStyle } from "styles/global-style"
-import { Amplify } from "aws-amplify"
+import { Amplify, Auth } from "aws-amplify"
 import awsconfig from "../aws-exports"
 import { AuthProvider } from "helpers/AuthProvider"
 import { Header } from "components"
 
 Amplify.configure({ ...awsconfig, ssr: true })
+Auth.configure(awsconfig)
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (

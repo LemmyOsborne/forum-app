@@ -58,12 +58,16 @@ export const ErrorMessage = styled.div`
 
 export const ServerError = styled.div`
   background-color: ${({ theme }) => theme.palette.info.dark};
-  color: ${({ theme }) => theme.palette.error.dark};
+  color: ${({ theme }) => theme.palette.warning.dark};
   width: 100vw;
   min-height: 100px;
   padding: 10px 20px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 4px;
   position: absolute;
-  top: 0;
+  top: 3rem;
   left: 0;
 `
