@@ -9,6 +9,7 @@ import LogoutIcon from "assets/icons/logout.svg"
 import { Auth } from "aws-amplify"
 import { useRouter } from "next/router"
 import { useUser } from "context/AuthContext"
+import AddIcon from "assets/icons/add.svg"
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -49,6 +50,10 @@ export const Header = () => {
           {showMenu && (
             <DropdownMenu>
               <MenuItem>Switch Theme</MenuItem>
+              <MenuItem onClick={() => router.push(ROUTES.CREATE)}>
+                <AddIcon />
+                Create Post
+              </MenuItem>
               <MenuItem onClick={signOut}>
                 <LogoutIcon />
                 Logout
@@ -115,7 +120,7 @@ const DropdownMenu = styled.div`
 const MenuItem = styled.div`
   width: 100%;
   border-bottom: 1px solid lightgrey;
-  padding: 5px;
+  padding: 5px 10px;
   display: flex;
   align-items: center;
   cursor: pointer;

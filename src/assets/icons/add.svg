@@ -1,0 +1,9 @@
+<svg
+                  width="22"
+                  height="22"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                >
+                  <path d="M9 11v-9h1v9h9v1h-9v9h-1v-9h-9v-1h9z" />
+                </svg>
