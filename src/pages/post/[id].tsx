@@ -19,18 +19,20 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
   console.log("comments: ", post.comments?.items)
   return (
     <Container>
-      <Inner>
-        <Link href={ROUTES.HOME}>
-          <CloseButton>
-            <CloseIcon />
-            Close
-          </CloseButton>
-        </Link>
-        <PostPreview post={post} />
-        {post.comments?.items.map((comment) => (
-          <PostComment key={comment?.id} comment={comment} />
-        ))}
-      </Inner>
+      <Wrapper>
+        <Inner>
+          <Link href={ROUTES.HOME}>
+            <CloseButton>
+              <CloseIcon />
+              Close
+            </CloseButton>
+          </Link>
+          <PostPreview post={post} />
+          {post.comments?.items.map((comment) => (
+            <PostComment key={comment?.id} comment={comment} />
+          ))}
+        </Inner>
+      </Wrapper>
     </Container>
   )
 }
@@ -38,22 +40,30 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
 const Container = styled.main`
   background-color: ${({ theme }) => theme.palette.grey[800]};
   width: 100vw;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 `
 
-const Inner = styled.div`
+const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.palette.common.black};
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 80%;
   height: 100%;
   position: relative;
-  padding-top: 6rem;
+  padding: 6rem 0;
+`
+
+const Inner = styled.div`
+  background-color: ${({ theme }) => theme.palette.grey[100]};
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  max-width: 60%;
 `
 
 const CloseButton = styled.button`

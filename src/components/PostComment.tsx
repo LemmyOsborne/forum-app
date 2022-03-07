@@ -22,8 +22,6 @@ export const PostComment: React.FC<Props> = ({ comment }) => {
 }
 
 const Container = styled.section`
-  background-color: ${({ theme }) => theme.palette.common.white};
-  width: 50%;
   display: flex;
   flex-direction: column;
   padding: 20px;
