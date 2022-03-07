@@ -36,13 +36,9 @@ export const getPost = /* GraphQL */ `
       owner
     }
   }
-`;
+`
 export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListPosts($filter: ModelPostFilterInput, $limit: Int, $nextToken: String) {
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -51,9 +47,22 @@ export const listPosts = /* GraphQL */ `
         image
         comments {
           nextToken
+          items {
+            content
+            createdAt
+            id
+            owner
+            postCommentsId
+          }
         }
         votes {
           nextToken
+          items {
+            id
+            vote
+            owner
+            postVotesId
+          }
         }
         createdAt
         updatedAt
@@ -62,7 +71,7 @@ export const listPosts = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
@@ -89,13 +98,9 @@ export const getComment = /* GraphQL */ `
       owner
     }
   }
-`;
+`
 export const listComments = /* GraphQL */ `
-  query ListComments(
-    $filter: ModelCommentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListComments($filter: ModelCommentFilterInput, $limit: Int, $nextToken: String) {
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -117,7 +122,7 @@ export const listComments = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getVote = /* GraphQL */ `
   query GetVote($id: ID!) {
     getVote(id: $id) {
@@ -144,13 +149,9 @@ export const getVote = /* GraphQL */ `
       owner
     }
   }
-`;
+`
 export const listVotes = /* GraphQL */ `
-  query ListVotes(
-    $filter: ModelVoteFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListVotes($filter: ModelVoteFilterInput, $limit: Int, $nextToken: String) {
     listVotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -172,4 +173,4 @@ export const listVotes = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
