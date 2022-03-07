@@ -2,6 +2,7 @@ import { ListPostsQuery, Post } from "API"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { API } from "aws-amplify"
+import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { listPosts } from "graphql/queries"
 import { PostPreview } from "components"
 
@@ -10,7 +11,10 @@ export default function Home() {
 
   useEffect(() => {
     const getAllPosts = async () => {
-      const allPosts = (await API.graphql({ query: listPosts })) as {
+      const allPosts = (await API.graphql({
+        query: listPosts,
+        authMode: GRAPHQL_AUTH_MODE.API_KEY,
+      })) as {
         data: ListPostsQuery
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         errors: any[]

@@ -19,6 +19,7 @@ import CloseIcon from "assets/icons/close.svg"
 import { PostComment } from "components"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { createComment } from "graphql/mutations"
+import { useUser } from "context/AuthContext"
 
 interface Props {
   post: Post
@@ -36,6 +37,7 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
     formState: { errors },
     resetField,
   } = useForm()
+  const { user } = useUser()
 
   const compare = (a: Comment, b: Comment) => {
     const firstDate = Number(new Date(a.createdAt))
@@ -76,23 +78,25 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
             </CloseButton>
           </Link>
           <PostPreview post={post} />
+          {user && (
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Textarea
+                placeholder="Have thoughts to share?"
+                {...register("comment", {
+                  required: { value: true, message: "Please enter a username." },
+                  maxLength: {
+                    value: 300,
+                    message: "Comment can't be more than 300 characters.",
+                  },
+                })}
+              />
+              {errors.comment && <ErrorMessage>{errors.comment.message}</ErrorMessage>}
+              <Button type="submit">Comment</Button>
+            </form>
+          )}
           {comments.sort(compare).map((comment) => (
             <PostComment key={comment?.id} comment={comment} />
           ))}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Textarea
-              placeholder="Have thoughts to share?"
-              {...register("comment", {
-                required: { value: true, message: "Please enter a username." },
-                maxLength: {
-                  value: 300,
-                  message: "Comment can't be more than 300 characters.",
-                },
-              })}
-            />
-            {errors.comment && <ErrorMessage>{errors.comment.message}</ErrorMessage>}
-            <Button type="submit">Comment</Button>
-          </form>
         </Inner>
       </Wrapper>
     </Container>
