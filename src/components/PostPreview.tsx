@@ -12,6 +12,7 @@ import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { useUser } from "context/AuthContext"
 import Image from "next/image"
 import { useRouter } from "next/router"
+import CommentIcon from "assets/icons/comment.svg"
 
 interface Props {
   post: Post
@@ -57,7 +58,7 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
   }, [])
 
   const addVote = async (voteType: string) => {
-    if (existingVote && existingVoteId && existingVote != voteType) {
+    if (existingVote && existingVoteId && existingVote !== voteType) {
       const updateVoteInput: UpdateVoteInput = {
         id: existingVoteId,
         vote: voteType,
@@ -108,8 +109,11 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
     }
   }
 
+  console.log("downvotes: ", downvotes)
+  console.log("upvotes: ", upvotes)
+
   return (
-    <Container onClick={() => router.push(`/post/${post.id}`)}>
+    <Container>
       <VoteSection>
         <UpvoteWrapper onClick={() => addVote("upvote")}>
           {existingVote === "upvote" ? <UpvoteFill /> : <Upvote />}
@@ -119,7 +123,7 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
           {existingVote === "downvote" ? <DownvoteFill /> : <Downvote />}
         </DownvoteWrapper>
       </VoteSection>
-      <ContentSection>
+      <ContentSection onClick={() => router.push(`/post/${post.id}`)}>
         <SmallText>
           Posted by <b>{post.owner}</b> {formatDate(post.createdAt)} hours ago.
         </SmallText>
@@ -128,6 +132,10 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
         {post.image && imageUrl && (
           <Image src={imageUrl} height={540} width={980} layout="intrinsic" />
         )}
+        <Comment>
+          <CommentIcon />
+          {post.comments?.items.length} Comment(s)
+        </Comment>
       </ContentSection>
     </Container>
   )
@@ -197,5 +205,25 @@ const DownvoteWrapper = styled(UpvoteWrapper)`
 
   :hover {
     color: ${({ theme }) => theme.palette.primary.main};
+  }
+`
+
+const Comment = styled.div`
+  max-width: fit-content;
+  padding: 10px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.palette.text.secondary};
+
+  svg {
+    color: ${({ theme }) => theme.palette.text.secondary};
+    margin-right: 5px;
+  }
+
+  :hover {
+    background-color: ${({ theme }) => theme.palette.grey[300]};
   }
 `
