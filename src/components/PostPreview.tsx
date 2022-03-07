@@ -47,7 +47,6 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
       if (post.image) {
         try {
           const imageUrl = await Storage.get(post.image)
-          console.log(imageUrl)
           setImageUrl(imageUrl)
         } catch (error) {
           console.error(error)
@@ -82,7 +81,6 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
       }
       setExistingVote(voteType)
       setExistingVoteId(updateThisVote.data.updateVote?.id)
-      console.log("Updated vote:", updateThisVote)
     }
 
     if (!existingVote) {
@@ -105,12 +103,8 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
       }
       setExistingVote(voteType)
       setExistingVoteId(createNewVote.data.createVote?.id)
-      console.log("Created vote:", createNewVote)
     }
   }
-
-  console.log("downvotes: ", downvotes)
-  console.log("upvotes: ", upvotes)
 
   return (
     <Container>

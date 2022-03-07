@@ -26,9 +26,6 @@ const Create = () => {
   } = useForm<IFormData>()
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
-    console.log(file)
-    console.log(data)
-
     if (file) {
       try {
         const imagePath = uuidv4()
@@ -47,8 +44,6 @@ const Create = () => {
           variables: { input: createNewPostInput },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as { data: CreatePostMutation }
-
-        console.log("New post created successfully:", createNewPost)
 
         router.push(`/post/${createNewPost.data.createPost?.id}`)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

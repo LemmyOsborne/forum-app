@@ -351,7 +351,7 @@ export type CreateCommentMutationVariables = {
 }
 
 export type CreateCommentMutation = {
-  createComment?: {
+  createComment: {
     __typename: "Comment"
     id: string
     post?: {
@@ -376,7 +376,7 @@ export type CreateCommentMutation = {
     createdAt: string
     updatedAt: string
     postCommentsId: string
-    owner?: string | null
+    owner: string
   } | null
 }
 

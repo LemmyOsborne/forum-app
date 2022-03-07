@@ -41,7 +41,6 @@ const SignIn = () => {
         username,
         password,
       })
-      console.log("Signed in a user: ", user)
       return user
     } catch (error) {
       console.error(error)

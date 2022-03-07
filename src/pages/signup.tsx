@@ -50,7 +50,6 @@ const SignUp = () => {
           email,
         },
       })
-      console.log("Signed up a user: ", user)
       return user
     } catch (error) {
       console.error(error)

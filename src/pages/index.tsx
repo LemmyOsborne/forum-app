@@ -7,7 +7,6 @@ import { PostPreview } from "components"
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>()
-  console.log(posts)
 
   useEffect(() => {
     const getAllPosts = async () => {
