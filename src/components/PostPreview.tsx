@@ -13,6 +13,7 @@ import { useUser } from "context/AuthContext"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import CommentIcon from "assets/icons/comment.svg"
+import { createPortal } from "react-dom"
 
 interface Props {
   post: Post
@@ -106,17 +107,32 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
     }
   }
 
+  const [showWarn, setShowWarn] = useState(false)
+
   return (
-    <Container>
-      <VoteSection>
-        <UpvoteWrapper onClick={() => addVote("upvote")}>
-          {existingVote === "upvote" ? <UpvoteFill /> : <Upvote />}
-        </UpvoteWrapper>
-        <p>{upvotes - downvotes}</p>
-        <DownvoteWrapper onClick={() => addVote("downvote")}>
-          {existingVote === "downvote" ? <DownvoteFill /> : <Downvote />}
-        </DownvoteWrapper>
-      </VoteSection>
+    <Container id="container" style={{ position: "relative" }}>
+      {user ? (
+        <VoteSection>
+          <UpvoteWrapper onClick={() => addVote("upvote")}>
+            {existingVote === "upvote" ? <UpvoteFill /> : <Upvote />}
+          </UpvoteWrapper>
+          <p>{upvotes - downvotes}</p>
+          <DownvoteWrapper onClick={() => addVote("downvote")}>
+            {existingVote === "downvote" ? <DownvoteFill /> : <Downvote />}
+          </DownvoteWrapper>
+        </VoteSection>
+      ) : (
+        <VoteSection>
+          {showWarn && <Warn />}
+          <UpvoteWrapper onClick={() => setShowWarn((showWarn) => !showWarn)}>
+            <Upvote />
+          </UpvoteWrapper>
+          <p>{upvotes - downvotes}</p>
+          <DownvoteWrapper onClick={() => setShowWarn((showWarn) => !showWarn)}>
+            <Downvote />
+          </DownvoteWrapper>
+        </VoteSection>
+      )}
       <ContentSection onClick={() => router.push(`/post/${post.id}`)}>
         <SmallText>
           Posted by <b>{post.owner}</b> {formatDate(post.createdAt)} hours ago.
@@ -134,6 +150,27 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
     </Container>
   )
 }
+
+const Warn = () => {
+  return createPortal(
+    <WarnContainer>
+      <p>In order to upvote/downvote post you should be authorized.</p>
+    </WarnContainer>,
+    document.getElementById("container") as Element
+  )
+}
+
+const WarnContainer = styled.div`
+  width: 400px;
+  max-width: 80%;
+  padding: 10px;
+  position: absolute;
+  border-radius: 4px;
+  left: 40px;
+  z-index: 50;
+  background-color: ${({ theme }) => theme.palette.warning.light};
+  color: ${({ theme }) => theme.palette.warning.contrastText};
+`
 
 const Container = styled.article`
   display: flex;
