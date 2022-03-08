@@ -28,6 +28,7 @@ import {
   Textarea,
   Wrapper,
 } from "styles/components/post.styles"
+import { compare } from "helpers/compare"
 
 interface Props {
   post: Post
@@ -46,14 +47,6 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
     resetField,
   } = useForm()
   const { user } = useUser()
-
-  const compare = (a: Comment, b: Comment) => {
-    const firstDate = Number(new Date(a.createdAt))
-    const secondDate = Number(new Date(b.createdAt))
-    if (firstDate > secondDate) return -1
-    if (firstDate < secondDate) return 1
-    return 0
-  }
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
     if (data.comment) {

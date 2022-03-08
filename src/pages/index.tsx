@@ -5,6 +5,7 @@ import { API } from "aws-amplify"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { listPosts } from "graphql/queries"
 import { PostPreview } from "components"
+import { compare } from "helpers/compare"
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>()
@@ -28,9 +29,10 @@ export default function Home() {
 
     getAllPosts()
   }, [])
+
   return posts ? (
     <Container>
-      {posts.map((post) => (
+      {posts.sort(compare).map((post) => (
         <PostPreview key={post.id} post={post} />
       ))}
     </Container>
