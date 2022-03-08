@@ -1,6 +1,6 @@
 import { AppProps } from "next/app"
 import Head from "next/head"
-import React, { createContext, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { ThemeProvider } from "styled-components"
 import { defaultTheme, darkTheme } from "styles/theme"
 import { GlobalStyle } from "styles/global-style"
@@ -8,18 +8,25 @@ import { Amplify } from "aws-amplify"
 import awsconfig from "../aws-exports"
 import { AuthProvider } from "helpers/AuthProvider"
 import { Header } from "components"
+import { ToggleThemeContext } from "context/ToggleThemeContext"
 
 Amplify.configure({ ...awsconfig, ssr: true })
 
-interface IToggleTheme {
-  theme: "light" | "dark"
-  setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>
-}
-
-export const ToggleThemeContext = createContext<IToggleTheme>({} as IToggleTheme)
-
 const App = ({ Component, pageProps }: AppProps) => {
-  const [theme, setTheme] = useState<"light" | "dark">("light")
+  const checkWindow = (action: unknown) => {
+    return typeof window !== undefined ? action : null
+  }
+  const [theme, setTheme] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (theme === "light") {
+      checkWindow(window.localStorage.setItem("theme", "light"))
+      setTheme("light")
+    } else {
+      checkWindow(window.localStorage.setItem("theme", "dark"))
+      setTheme("dark")
+    }
+  }, [theme])
 
   return (
     <>

@@ -24,7 +24,7 @@ import {
   ButtonGroup,
   Username,
 } from "styles/components/header.styles"
-import { ToggleThemeContext } from "pages/_app"
+import { ToggleThemeContext } from "context/ToggleThemeContext"
 import { useWindowSize } from "hooks/useWindowSize"
 
 export const Header = () => {

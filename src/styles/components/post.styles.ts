@@ -53,7 +53,7 @@ export const Button = styled.button`
   max-height: 30px;
   padding: 5px 20px;
   border-radius: 20px;
-  background-color: ${({ theme }) => theme.palette.secondary.dark};
+  background-color: ${({ theme }) => theme.palette.info.dark};
   color: ${({ theme }) => theme.palette.secondary.contrastText};
 `
 
