@@ -14,6 +14,10 @@ export const Container = styled.header`
   padding: 0 20px;
 `
 
+export const Logo = styled.div`
+  cursor: pointer;
+`
+
 export const ButtonGroup = styled.div`
   @media (max-width: ${({ theme }) => theme.media.sm}) {
     display: none;
@@ -72,6 +76,7 @@ export const MenuItem = styled.div`
   font-size: 18px;
   font-weight: 500;
   transition: background-color 0.23s ease, color 0.23s ease;
+  color: ${({ theme }) => theme.palette.text.primary};
 
   &:first-of-type {
     border-radius: 4px 4px 0 0;
@@ -90,6 +95,10 @@ export const MenuItem = styled.div`
   :hover {
     color: ${({ theme }) => theme.palette.primary.contrastText};
     background-color: ${({ theme }) => theme.palette.primary.main};
+
+    svg {
+      fill: ${({ theme }) => theme.palette.primary.contrastText};
+    }
   }
 `
 

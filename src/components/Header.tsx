@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import React, { useContext, useState } from "react"
 import * as ROUTES from "constants/routes"
-import Logo from "assets/logo.png"
+import LogoImage from "assets/logo.png"
 import MenuIcon from "assets/icons/menu.svg"
 import LogoutIcon from "assets/icons/logout.svg"
 import { Auth } from "aws-amplify"
@@ -10,9 +10,12 @@ import { useRouter } from "next/router"
 import { useUser } from "context/AuthContext"
 import AddIcon from "assets/icons/add.svg"
 import SignInIcon from "assets/icons/signin.svg"
+import SunIcon from "assets/icons/sun.svg"
+import MoonIcon from "assets/icons/moon.svg"
 import {
   Container,
   Dropdown,
+  Logo,
   DropdownMenu,
   MenuButton,
   MenuItem,
@@ -29,7 +32,7 @@ export const Header = () => {
   const router = useRouter()
   const { user } = useUser()
   const username = user?.getUsername()
-  const { setTheme } = useContext(ToggleThemeContext)
+  const { theme, setTheme } = useContext(ToggleThemeContext)
   const { width } = useWindowSize()
 
   const signOut = async () => {
@@ -42,9 +45,9 @@ export const Header = () => {
   }
   return (
     <Container>
-      <Link href={ROUTES.HOME}>
-        <Image src={Logo} height={120} width={200} />
-      </Link>
+      <Logo onClick={() => router.push(ROUTES.HOME)}>
+        <Image src={LogoImage} height={120} width={200} />
+      </Logo>
       <div style={{ display: "flex" }}>
         {user ? (
           <Username>{username}</Username>
@@ -64,7 +67,17 @@ export const Header = () => {
           </MenuButton>
           {showMenu && (
             <DropdownMenu>
-              <MenuItem onClick={() => setTheme("dark")}>Switch Theme</MenuItem>
+              {theme === "light" ? (
+                <MenuItem onClick={() => setTheme("dark")}>
+                  <MoonIcon />
+                  Dark mode
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={() => setTheme("light")}>
+                  <SunIcon />
+                  Light mode
+                </MenuItem>
+              )}
               <MenuItem onClick={() => router.push(ROUTES.CREATE)}>
                 <AddIcon />
                 Create Post
