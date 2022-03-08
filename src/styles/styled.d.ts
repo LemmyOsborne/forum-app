@@ -8,7 +8,7 @@ interface IPallete {
 }
 
 declare module "styled-components" {
-  export interface DefaultTheme {
+  export interface Theme {
     palette: {
       common: {
         black: string
@@ -39,6 +39,7 @@ declare module "styled-components" {
       }
       background: {
         default: string
+        header: string
       }
     }
     media: {

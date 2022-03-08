@@ -1,8 +1,8 @@
 import { AppProps } from "next/app"
 import Head from "next/head"
-import React from "react"
+import React, { createContext, useState } from "react"
 import { ThemeProvider } from "styled-components"
-import { theme } from "styles/default-theme"
+import { defaultTheme, darkTheme } from "styles/default-theme"
 import { GlobalStyle } from "styles/global-style"
 import { Amplify } from "aws-amplify"
 import awsconfig from "../aws-exports"
@@ -11,7 +11,16 @@ import { Header } from "components"
 
 Amplify.configure({ ...awsconfig, ssr: true })
 
+interface IToggleTheme {
+  theme: "light" | "dark"
+  setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>
+}
+
+export const ToggleThemeContext = createContext<IToggleTheme>({} as IToggleTheme)
+
 const App = ({ Component, pageProps }: AppProps) => {
+  const [theme, setTheme] = useState<"light" | "dark">("light")
+
   return (
     <>
       <Head>
@@ -19,11 +28,13 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <Header />
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <ToggleThemeContext.Provider value={{ theme, setTheme }}>
+          <ThemeProvider theme={theme === "light" ? defaultTheme : darkTheme}>
+            <GlobalStyle />
+            <Header />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </ToggleThemeContext.Provider>
       </AuthProvider>
     </>
   )

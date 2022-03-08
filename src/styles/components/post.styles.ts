@@ -10,29 +10,20 @@ export const Container = styled.main`
 
 export const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.palette.common.black};
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 90%;
   height: 100%;
-  position: relative;
-  padding: 6rem 0;
-`
-
-export const Inner = styled.div`
-  background-color: ${({ theme }) => theme.palette.grey[100]};
-  border-radius: 2px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px;
-  max-width: 60%;
+  padding: 7rem 0 30px;
 `
 
 export const CloseButton = styled.button`
   position: absolute;
-  top: 100px;
-  right: 100px;
+  z-index: 10;
+  top: 75px;
+  right: 50px;
   color: white;
   font-size: 15px;
   font-weight: 500;

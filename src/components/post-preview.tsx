@@ -30,7 +30,7 @@ interface Props {
   post: Post
 }
 
-export const PostPreview: React.FC<Props> = ({ post }) => {
+export const PostPreview: React.FC<Props> = ({ post, children }) => {
   const [imageUrl, setImageUrl] = useState("")
   const router = useRouter()
   const { user } = useUser()
@@ -157,6 +157,7 @@ export const PostPreview: React.FC<Props> = ({ post }) => {
           <CommentIcon />
           {post.comments?.items.length} Comment(s)
         </Comment>
+        {children}
       </ContentSection>
     </Container>
   )

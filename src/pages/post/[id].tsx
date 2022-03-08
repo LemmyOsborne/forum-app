@@ -24,7 +24,6 @@ import {
   CloseButton,
   Container,
   ErrorMessage,
-  Inner,
   Textarea,
   Wrapper,
 } from "styles/components/post.styles"
@@ -71,14 +70,13 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
   return (
     <Container>
       <Wrapper>
-        <Inner>
-          <Link href={ROUTES.HOME}>
-            <CloseButton>
-              <CloseIcon />
-              Close
-            </CloseButton>
-          </Link>
-          <PostPreview post={post} />
+        <Link href={ROUTES.HOME}>
+          <CloseButton>
+            <CloseIcon />
+            Close
+          </CloseButton>
+        </Link>
+        <PostPreview post={post}>
           {user && (
             <form onSubmit={handleSubmit(onSubmit)}>
               <Textarea
@@ -95,10 +93,12 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
               <Button type="submit">Comment</Button>
             </form>
           )}
-          {comments.sort(compare).map((comment) => (
-            <PostComment key={comment?.id} comment={comment} />
-          ))}
-        </Inner>
+          <div>
+            {comments.sort(compare).map((comment) => (
+              <PostComment key={comment?.id} comment={comment} />
+            ))}
+          </div>
+        </PostPreview>
       </Wrapper>
     </Container>
   )

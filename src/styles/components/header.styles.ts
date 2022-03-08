@@ -6,7 +6,7 @@ export const Container = styled.header`
   right: 0;
   left: 0;
   height: 60px;
-  background-color: ${({ theme }) => theme.palette.grey[200]};
+  background-color: ${({ theme }) => theme.palette.background.header};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,7 +22,7 @@ export const SignInButton = styled.button`
   font-weight: 600;
   color: ${({ theme }) => theme.palette.primary.main};
   margin-right: 10px;
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: transparent;
   border-radius: 20px;
 `
 
@@ -38,13 +38,17 @@ export const Dropdown = styled.div`
 export const MenuButton = styled.button`
   width: 30px;
   height: 30px;
+
+  svg {
+    fill: ${({ theme }) => theme.palette.text.primary};
+  }
 `
 export const DropdownMenu = styled.div`
   display: flex;
   flex-direction: column;
   width: 150px;
   min-height: 50px;
-  background-color: ${({ theme }) => theme.palette.grey[200]};
+  background-color: ${({ theme }) => theme.palette.background.header};
   position: absolute;
   top: 30px;
   right: 0;
@@ -52,6 +56,7 @@ export const DropdownMenu = styled.div`
 `
 
 export const MenuItem = styled.div`
+  background-color: inherit;
   width: 100%;
   border-bottom: 1px solid lightgrey;
   padding: 5px 10px;
@@ -68,10 +73,12 @@ export const MenuItem = styled.div`
 
   &:last-of-type {
     border-radius: 0 0 4px 4px;
+    border: none;
   }
 
   svg {
     margin-right: 5px;
+    fill: ${({ theme }) => theme.palette.text.primary};
   }
 
   :hover {

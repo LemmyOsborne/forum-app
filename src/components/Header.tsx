@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import * as ROUTES from "constants/routes"
 import Logo from "assets/logo.png"
 import MenuIcon from "assets/icons/menu.svg"
@@ -19,12 +19,14 @@ import {
   SignUpButton,
   Username,
 } from "styles/components/header.styles"
+import { ToggleThemeContext } from "pages/_app"
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const router = useRouter()
   const { user } = useUser()
   const username = user?.getUsername()
+  const { setTheme } = useContext(ToggleThemeContext)
 
   const signOut = async () => {
     try {
@@ -37,7 +39,7 @@ export const Header = () => {
   return (
     <Container>
       <Link href={ROUTES.HOME}>
-        <Image src={Logo} height={150} width={200} />
+        <Image src={Logo} height={120} width={200} />
       </Link>
       <div style={{ display: "flex" }}>
         {user ? (
@@ -58,7 +60,7 @@ export const Header = () => {
           </MenuButton>
           {showMenu && (
             <DropdownMenu>
-              <MenuItem>Switch Theme</MenuItem>
+              <MenuItem onClick={() => setTheme("dark")}>Switch Theme</MenuItem>
               <MenuItem onClick={() => router.push(ROUTES.CREATE)}>
                 <AddIcon />
                 Create Post

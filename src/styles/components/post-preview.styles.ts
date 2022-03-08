@@ -14,9 +14,10 @@ export const WarnContainer = styled.div`
 
 export const Container = styled.article`
   display: flex;
-  width: 50%;
-  min-width: 480px;
-  background-color: ${({ theme }) => theme.palette.grey[100]};
+  min-width: 400px;
+  width: 90%;
+  max-width: 700px;
+  background-color: ${({ theme }) => theme.palette.secondary.main};
   margin-bottom: 10px;
   cursor: pointer;
   padding: 10px;
@@ -75,7 +76,7 @@ export const DownvoteWrapper = styled(UpvoteWrapper)`
   margin-top: 2px;
 
   :hover {
-    color: ${({ theme }) => theme.palette.primary.main};
+    color: ${({ theme }) => theme.palette.info.main};
   }
 `
 
@@ -95,6 +96,6 @@ export const Comment = styled.div`
   }
 
   :hover {
-    background-color: ${({ theme }) => theme.palette.grey[300]};
+    background-color: ${({ theme }) => theme.palette.secondary.dark};
   }
 `

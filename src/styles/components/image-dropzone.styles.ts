@@ -14,6 +14,6 @@ export const Container = styled.div`
   margin-bottom: 20px;
 
   p {
-    color: ${({ theme }) => theme.palette.text.secondary};
+    color: ${({ theme }) => theme.palette.grey[600]};
   }
 `

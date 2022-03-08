@@ -1,7 +1,8 @@
 import styled from "styled-components"
 
 export const Form = styled.form`
-  width: 800px;
+  max-width: 800px;
+  width: 80%;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.palette.grey[700]};
   padding: 40px 40px;
@@ -18,4 +19,12 @@ export const Textarea = styled.textarea`
   min-width: 100%;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.palette.grey[200]};
+
+  :hover {
+    outline: ${({ theme }) => theme.palette.warning.main} 2px solid;
+  }
+
+  :focus {
+    outline: ${({ theme }) => theme.palette.info.light} 2px solid;
+  }
 `

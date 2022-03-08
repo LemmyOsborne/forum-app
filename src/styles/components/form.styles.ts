@@ -39,7 +39,7 @@ export const Input = styled.input`
 `
 
 export const Button = styled.button`
-  background-color: ${({ theme }) => theme.palette.primary.dark};
+  background-color: ${({ theme }) => theme.palette.success.light};
   padding: 10px 15px;
   border-radius: 4px;
   color: ${({ theme }) => theme.palette.common.white};
