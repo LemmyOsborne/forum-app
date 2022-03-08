@@ -1,4 +1,4 @@
-export { PostPreview } from "./PostPreview"
-export { PostComment } from "./PostComment"
-export { Header } from "./Header"
-export { ImageDropzone } from "./ImageDropzone"
+export { PostPreview } from "./post-preview"
+export { PostComment } from "./post-comment"
+export { ImageDropzone } from "./image-dropzone"
+export { Header } from "./header"

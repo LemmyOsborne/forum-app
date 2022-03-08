@@ -6,8 +6,8 @@ import { createPost } from "graphql/mutations"
 import { useRouter } from "next/router"
 import React, { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import styled from "styled-components"
-import { Button, Container, ErrorMessage, Input } from "styles/form.styles"
+import { Button, Container, ErrorMessage, Input } from "styles/components/form.styles"
+import { Form, Textarea } from "styles/components/create.styles"
 import { v4 as uuidv4 } from "uuid"
 
 interface IFormData {
@@ -96,25 +96,5 @@ const Create = () => {
     </Container>
   )
 }
-
-const Form = styled.form`
-  width: 800px;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.palette.grey[700]};
-  padding: 40px 40px;
-  user-select: none;
-  position: absolute;
-  top: 6rem;
-`
-
-const Textarea = styled.textarea`
-  padding: 10px 20px;
-  margin-bottom: 5px;
-  min-height: 150px;
-  max-width: 100%;
-  min-width: 100%;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.palette.grey[200]};
-`
 
 export default Create

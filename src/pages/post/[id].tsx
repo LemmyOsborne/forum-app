@@ -7,12 +7,11 @@ import {
   Post,
 } from "API"
 import { withSSRContext } from "aws-amplify"
-import { PostPreview } from "components/PostPreview"
+import { PostPreview } from "components/post-preview"
 import { getPost, listPosts } from "graphql/queries"
 import { GetStaticPaths, GetStaticProps } from "next"
 import React, { useState } from "react"
 import API, { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
-import styled from "styled-components"
 import Link from "next/link"
 import * as ROUTES from "constants/routes"
 import CloseIcon from "assets/icons/close.svg"
@@ -20,6 +19,15 @@ import { PostComment } from "components"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { createComment } from "graphql/mutations"
 import { useUser } from "context/AuthContext"
+import {
+  Button,
+  CloseButton,
+  Container,
+  ErrorMessage,
+  Inner,
+  Textarea,
+  Wrapper,
+} from "styles/components/post.styles"
 
 interface Props {
   post: Post
@@ -102,78 +110,6 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
     </Container>
   )
 }
-
-const Container = styled.main`
-  background-color: ${({ theme }) => theme.palette.grey[800]};
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.palette.common.black};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  height: 100%;
-  position: relative;
-  padding: 6rem 0;
-`
-
-const Inner = styled.div`
-  background-color: ${({ theme }) => theme.palette.grey[100]};
-  border-radius: 2px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px;
-  max-width: 60%;
-`
-
-const CloseButton = styled.button`
-  position: absolute;
-  top: 100px;
-  right: 100px;
-  color: white;
-  font-size: 15px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-
-  svg {
-    margin-right: 3px;
-  }
-
-  :hover {
-    opacity: 0.8;
-  }
-`
-
-const Textarea = styled.textarea`
-  min-height: 150px;
-  min-width: 100%;
-  max-width: 100%;
-  padding: 20px;
-  border-radius: 3px;
-  background-color: inherit;
-  border: 1px solid lightgrey;
-`
-
-const Button = styled.button`
-  max-height: 30px;
-  padding: 5px 20px;
-  border-radius: 20px;
-  background-color: ${({ theme }) => theme.palette.secondary.dark};
-  color: ${({ theme }) => theme.palette.secondary.contrastText};
-`
-
-export const ErrorMessage = styled.div`
-  color: ${({ theme }) => theme.palette.warning.light};
-  width: 100%;
-  margin: 10px 0 15px;
-`
 
 export default IndividualPost
 

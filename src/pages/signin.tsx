@@ -4,7 +4,14 @@ import { useRouter } from "next/router"
 import React, { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import * as ROUTES from "constants/routes"
-import { Button, Container, ErrorMessage, Form, Input, ServerError } from "styles/form.styles"
+import {
+  Button,
+  Container,
+  ErrorMessage,
+  Form,
+  Input,
+  ServerError,
+} from "styles/components/form.styles"
 
 interface IFormData {
   username: string

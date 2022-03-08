@@ -1,6 +1,6 @@
 import React, { useCallback } from "react"
 import { useDropzone } from "react-dropzone"
-import styled from "styled-components"
+import { Container } from "styles/components/image-dropzone.styles"
 
 interface Props {
   file: File | undefined
@@ -28,21 +28,3 @@ export const ImageDropzone: React.FC<Props> = ({ file, setFile }) => {
     </Container>
   )
 }
-
-const Container = styled.div`
-  border: 1px dashed snow;
-  height: 250px;
-  padding-left: 20px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-  background-color: ${({ theme }) => theme.palette.grey[200]};
-  cursor: pointer;
-  border-radius: 4px;
-  margin-bottom: 20px;
-
-  p {
-    color: ${({ theme }) => theme.palette.text.secondary};
-  }
-`
