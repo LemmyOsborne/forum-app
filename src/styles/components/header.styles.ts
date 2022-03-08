@@ -14,6 +14,12 @@ export const Container = styled.header`
   padding: 0 20px;
 `
 
+export const ButtonGroup = styled.div`
+  @media (max-width: ${({ theme }) => theme.media.sm}) {
+    display: none;
+  }
+`
+
 export const SignInButton = styled.button`
   border: 1px solid ${({ theme }) => theme.palette.primary.main};
   padding: 0 25px;

@@ -9,6 +9,7 @@ import { Auth } from "aws-amplify"
 import { useRouter } from "next/router"
 import { useUser } from "context/AuthContext"
 import AddIcon from "assets/icons/add.svg"
+import SignInIcon from "assets/icons/signin.svg"
 import {
   Container,
   Dropdown,
@@ -17,9 +18,11 @@ import {
   MenuItem,
   SignInButton,
   SignUpButton,
+  ButtonGroup,
   Username,
 } from "styles/components/header.styles"
 import { ToggleThemeContext } from "pages/_app"
+import { useWindowSize } from "hooks/useWindowSize"
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -27,6 +30,7 @@ export const Header = () => {
   const { user } = useUser()
   const username = user?.getUsername()
   const { setTheme } = useContext(ToggleThemeContext)
+  const { width } = useWindowSize()
 
   const signOut = async () => {
     try {
@@ -45,14 +49,14 @@ export const Header = () => {
         {user ? (
           <Username>{username}</Username>
         ) : (
-          <div>
+          <ButtonGroup>
             <Link href={ROUTES.SIGN_IN}>
               <SignInButton>Sign In</SignInButton>
             </Link>
             <Link href={ROUTES.SIGN_UP}>
               <SignUpButton>Sign Up</SignUpButton>
             </Link>
-          </div>
+          </ButtonGroup>
         )}
         <Dropdown>
           <MenuButton onClick={() => setShowMenu(!showMenu)}>
@@ -65,10 +69,24 @@ export const Header = () => {
                 <AddIcon />
                 Create Post
               </MenuItem>
-              <MenuItem onClick={signOut}>
-                <LogoutIcon />
-                Logout
-              </MenuItem>
+              {!user && width <= 600 && (
+                <>
+                  <MenuItem onClick={() => router.push(ROUTES.SIGN_IN)}>
+                    <SignInIcon />
+                    Sign In
+                  </MenuItem>
+                  <MenuItem onClick={() => router.push(ROUTES.SIGN_UP)}>
+                    <SignInIcon />
+                    Sign Up
+                  </MenuItem>
+                </>
+              )}
+              {user && (
+                <MenuItem onClick={signOut}>
+                  <LogoutIcon />
+                  Logout
+                </MenuItem>
+              )}
             </DropdownMenu>
           )}
         </Dropdown>
