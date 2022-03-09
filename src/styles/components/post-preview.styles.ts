@@ -22,6 +22,7 @@ export const Container = styled.article`
   cursor: pointer;
   padding: 10px;
   border-radius: 4px;
+  height: 100%;
 
   :hover {
     outline: ${({ theme }) => theme.palette.grey[500]} 1px solid;
