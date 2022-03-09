@@ -46,7 +46,7 @@ export const Header = () => {
   return (
     <Container>
       <Logo onClick={() => router.push(ROUTES.HOME)}>
-        <Image src={LogoImage} height={120} width={200} />
+        <Image src={LogoImage} height={150} width={150} alt="Logo" />
       </Logo>
       <div style={{ display: "flex" }}>
         {user ? (
@@ -62,7 +62,7 @@ export const Header = () => {
           </ButtonGroup>
         )}
         <Dropdown>
-          <MenuButton onClick={() => setShowMenu(!showMenu)}>
+          <MenuButton aria-label="menu-button" onClick={() => setShowMenu(!showMenu)}>
             <MenuIcon />
           </MenuButton>
           {showMenu && (

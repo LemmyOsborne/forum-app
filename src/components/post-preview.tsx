@@ -151,7 +151,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
         <Title>{post.title}</Title>
         <Text>{post.content}</Text>
         {post.image && imageUrl && (
-          <Image src={imageUrl} height={540} width={980} layout="intrinsic" />
+          <Image src={imageUrl} height={540} width={980} layout="intrinsic" alt="Post image" />
         )}
         <Comment>
           <CommentIcon />

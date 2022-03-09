@@ -32,7 +32,11 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
         <meta charSet="utf-8" />
-        <title>Forum App</title>x
+        <meta
+          name="description"
+          content="Littl pet project, created in order to improve my hard skills as a frontend developer.It's a forum app, inspired by reddit. In development I used next js, typescript, aws amplify."
+        ></meta>
+        <title>Forum App</title>
       </Head>
       <AuthProvider>
         <ToggleThemeContext.Provider value={{ theme, setTheme }}>
