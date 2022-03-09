@@ -6,6 +6,7 @@ import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { listPosts } from "graphql/queries"
 import { PostPreview } from "components/post-preview"
 import { compare } from "helpers/compare"
+import { Skeleton, SkeletonText, SkeletonTitle } from "styles/skeleton.styles"
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>()
@@ -14,7 +15,7 @@ export default function Home() {
     const getAllPosts = async () => {
       const allPosts = (await API.graphql({
         query: listPosts,
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        authMode: GRAPHQL_AUTH_MODE.API_KEY,
       })) as {
         data: ListPostsQuery
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,7 +38,21 @@ export default function Home() {
       ))}
     </Container>
   ) : (
-    <p>Loading...</p>
+    <Container>
+      {Array(9)
+        .fill("")
+        .map((_, index) => (
+          <Skeleton key={index}>
+            <SkeletonText style={{ width: "50%" }} />
+            <SkeletonTitle />
+            {Array(9)
+              .fill("")
+              .map((_, index) => (
+                <SkeletonText key={index} />
+              ))}
+          </Skeleton>
+        ))}
+    </Container>
   )
 }
 

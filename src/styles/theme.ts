@@ -1,6 +1,7 @@
 import { DefaultTheme } from "styled-components"
 
 export const defaultTheme: DefaultTheme = {
+  title: "light",
   palette: {
     common: {
       black: "#000",
@@ -73,6 +74,7 @@ export const defaultTheme: DefaultTheme = {
 
 export const darkTheme: DefaultTheme = {
   ...defaultTheme,
+  title: "dark",
   palette: {
     common: {
       black: "#000",

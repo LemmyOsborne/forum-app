@@ -19,7 +19,6 @@ export const Wrapper = styled.div`
   width: 90%;
   height: 100%;
   min-height: 100vh;
-
   padding: 7rem 0 30px;
 `
 
