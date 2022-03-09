@@ -7,7 +7,7 @@ import { GlobalStyle } from "styles/global-style"
 import { Amplify } from "aws-amplify"
 import awsconfig from "../aws-exports"
 import { AuthProvider } from "helpers/AuthProvider"
-import { Header } from "components"
+import { Header } from "components/header"
 import { ToggleThemeContext } from "context/ToggleThemeContext"
 
 Amplify.configure({ ...awsconfig, ssr: true })
