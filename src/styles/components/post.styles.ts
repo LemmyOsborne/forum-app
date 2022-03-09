@@ -47,6 +47,7 @@ export const Textarea = styled.textarea`
   border-radius: 3px;
   background-color: inherit;
   border: 1px solid lightgrey;
+  color: ${({ theme }) => theme.palette.text.secondary};
 `
 
 export const Button = styled.button`

@@ -14,7 +14,7 @@ export default function Home() {
     const getAllPosts = async () => {
       const allPosts = (await API.graphql({
         query: listPosts,
-        authMode: GRAPHQL_AUTH_MODE.API_KEY,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as {
         data: ListPostsQuery
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

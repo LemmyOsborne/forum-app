@@ -8,7 +8,7 @@ interface IPallete {
 }
 
 declare module "styled-components" {
-  export interface Theme {
+  export interface DefaultTheme {
     palette: {
       common: {
         black: string

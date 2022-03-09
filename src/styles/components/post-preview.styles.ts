@@ -43,6 +43,7 @@ export const VoteSection = styled.section`
 export const ContentSection = styled.section`
   display: flex;
   flex-direction: column;
+  max-width: 90%;
 `
 
 export const Title = styled.h1`
@@ -54,6 +55,7 @@ export const Title = styled.h1`
 export const Text = styled.p`
   font-size: 14px;
   margin-bottom: 20px;
+  overflow-wrap: anywhere;
 `
 
 export const SmallText = styled.p`
