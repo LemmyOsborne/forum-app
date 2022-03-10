@@ -4,11 +4,13 @@ import { API, Storage } from "aws-amplify"
 import { ImageDropzone } from "components/image-dropzone"
 import { createPost } from "graphql/mutations"
 import { useRouter } from "next/router"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Button, Container, ErrorMessage, Input } from "styles/components/form.styles"
 import { Form, Textarea } from "styles/components/create.styles"
 import { v4 as uuidv4 } from "uuid"
+import { useUser } from "context/AuthContext"
+import * as ROUTES from "constants/routes"
 
 interface IFormData {
   title: string
@@ -18,6 +20,13 @@ interface IFormData {
 const Create = () => {
   const [file, setFile] = useState<File>()
   const router = useRouter()
+  const { user } = useUser()
+
+  useEffect(() => {
+    if (!user) {
+      router.push(ROUTES.HOME)
+    }
+  }, [user])
 
   const {
     register,

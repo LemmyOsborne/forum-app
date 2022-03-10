@@ -1,7 +1,7 @@
 import { CognitoUser } from "@aws-amplify/auth"
 import { Auth } from "aws-amplify"
 import { useRouter } from "next/router"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import * as ROUTES from "constants/routes"
 import {
@@ -12,6 +12,7 @@ import {
   Input,
   ServerError,
 } from "styles/components/form.styles"
+import { useUser } from "context/AuthContext"
 
 interface IFormData {
   email: string
@@ -30,6 +31,14 @@ const SignUp = () => {
   const [signUpError, setSignUpError] = useState("")
   const [showCode, setShowCode] = useState(false)
   const router = useRouter()
+
+  const { user } = useUser()
+
+  useEffect(() => {
+    if (user) {
+      router.push(ROUTES.HOME)
+    }
+  }, [user])
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
     try {
