@@ -32,13 +32,13 @@ export default function Home() {
   }, [])
 
   return posts ? (
-    <Container>
+    <Container id="posts-container">
       {posts.sort(compare).map((post) => (
         <PostPreview key={post.id} post={post} />
       ))}
     </Container>
   ) : (
-    <Container>
+    <Container id="posts-skeleton-container">
       {Array(9)
         .fill("")
         .map((_, index) => (
