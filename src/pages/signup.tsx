@@ -101,9 +101,12 @@ const SignUp = () => {
         {errors.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}
         <Input
           placeholder="Email"
-          type="email"
           {...register("email", {
-            required: { value: true, message: "Please enter a valid email." },
+            required: { value: true, message: "Email is required." },
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Please enter a valid email.",
+            },
           })}
         />
         {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
