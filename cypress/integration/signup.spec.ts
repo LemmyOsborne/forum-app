@@ -6,7 +6,7 @@ context("Sign up page", () => {
     cy.visit("http://localhost:3000/signup")
   })
 
-  it("should let user type valid email", () => {
+  it("should check if email is valid", () => {
     cy.contains("Please enter a valid email.").should("not.exist")
     cy.get("[name='email']").type("some_email@mail.ru")
     cy.get("form>button").click()
