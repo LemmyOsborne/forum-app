@@ -9,7 +9,6 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { Button, Container, ErrorMessage, Input } from "styles/components/form.styles"
 import { Form, Textarea } from "styles/components/create.styles"
 import { v4 as uuidv4 } from "uuid"
-import { useUser } from "context/AuthContext"
 import * as ROUTES from "constants/routes"
 
 interface IFormData {
@@ -20,13 +19,16 @@ interface IFormData {
 const Create = () => {
   const [file, setFile] = useState<File>()
   const router = useRouter()
-  const { user } = useUser()
 
   useEffect(() => {
-    if (!user) {
+    if (
+      !localStorage.getItem(
+        "CognitoIdentityServiceProvider.5rj6ud7ornl6odgesokbgimbtb.LastAuthUser"
+      )
+    ) {
       router.push(ROUTES.HOME)
     }
-  }, [user])
+  }, [])
 
   const {
     register,
