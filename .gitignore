@@ -52,3 +52,6 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+#cypress
+cypress.env.js

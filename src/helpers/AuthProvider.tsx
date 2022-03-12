@@ -32,9 +32,5 @@ export const AuthProvider = ({ children }: Props): ReactElement => {
     }
   }
 
-  return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>
 }
