@@ -13,6 +13,22 @@ import { ToggleThemeContext } from "context/ToggleThemeContext"
 Amplify.configure({ ...awsconfig, ssr: true })
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const [showChild, setShowChild] = useState(false)
+
+  // Wait until after client-side hydration to show
+  useEffect(() => {
+    setShowChild(true)
+  }, [])
+
+  if (!showChild) {
+    // You can show some kind of placeholder UI here
+    return null
+  }
+
+  return <Child Component={Component} pageProps={pageProps} />
+}
+
+const Child = ({ Component, pageProps }: any) => {
   const [theme, setTheme] = useState<string | null>(null)
 
   useLayoutEffect(() => {
