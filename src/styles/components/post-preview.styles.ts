@@ -109,4 +109,11 @@ export const TrashboxIconWrapper = styled.div`
   top: 10px;
   right: 20px;
   fill: ${({ theme }) => theme.palette.text.secondary};
+  padding: 3px 3px 1px;
+  border-radius: 4px;
+
+  :hover {
+    fill: ${({ theme }) => theme.palette.error.main};
+    background-color: ${({ theme }) => theme.palette.secondary.dark};
+  }
 `
