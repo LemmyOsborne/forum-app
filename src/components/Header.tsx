@@ -62,7 +62,11 @@ export const Header = () => {
           </ButtonGroup>
         )}
         <Dropdown>
-          <MenuButton aria-label="menu-button" onClick={() => setShowMenu(!showMenu)}>
+          <MenuButton
+            aria-label="menu-button"
+            onBlur={() => setShowMenu(false)}
+            onClick={() => setShowMenu(!showMenu)}
+          >
             <MenuIcon />
           </MenuButton>
           {showMenu && (
