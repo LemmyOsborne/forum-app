@@ -23,6 +23,7 @@ export const Container = styled.article`
   padding: 10px;
   border-radius: 4px;
   height: 100%;
+  position: relative;
 
   :hover {
     outline: ${({ theme }) => theme.palette.grey[500]} 1px solid;
@@ -101,4 +102,11 @@ export const Comment = styled.div`
   :hover {
     background-color: ${({ theme }) => theme.palette.secondary.dark};
   }
+`
+
+export const TrashboxIconWrapper = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  fill: ${({ theme }) => theme.palette.text.secondary};
 `

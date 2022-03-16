@@ -1,4 +1,11 @@
-import { Post, UpdateVoteMutation, CreateVoteMutation, UpdateVoteInput, CreateVoteInput } from "API"
+import {
+  Post,
+  UpdateVoteMutation,
+  CreateVoteMutation,
+  UpdateVoteInput,
+  CreateVoteInput,
+  DeletePostInput,
+} from "API"
 import React, { useEffect, useState } from "react"
 import Downvote from "assets/icons/downvote.svg"
 import Upvote from "assets/icons/upvote.svg"
@@ -6,12 +13,13 @@ import UpvoteFill from "assets/icons/upvote-fill.svg"
 import DownvoteFill from "assets/icons/downvote-fill.svg"
 import { formatDate } from "helpers/formatDate"
 import { API, Storage } from "aws-amplify"
-import { updateVote, createVote } from "graphql/mutations"
+import { updateVote, createVote, deletePost } from "graphql/mutations"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { useUser } from "context/AuthContext"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import CommentIcon from "assets/icons/comment.svg"
+import TrashboxIcon from "assets/icons/trashbox.svg"
 import { createPortal } from "react-dom"
 import {
   Comment,
@@ -24,6 +32,7 @@ import {
   UpvoteWrapper,
   VoteSection,
   WarnContainer,
+  TrashboxIconWrapper,
 } from "styles/components/post-preview.styles"
 
 interface Props {
@@ -31,6 +40,7 @@ interface Props {
 }
 
 export const PostPreview: React.FC<Props> = ({ post, children }) => {
+  const [isPostDelete, setIsPostDelete] = useState(false)
   const [imageUrl, setImageUrl] = useState("")
   const router = useRouter()
   const { user } = useUser()
@@ -118,9 +128,21 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
     }
   }
 
+  const deleteExistingPost = async (postId: string) => {
+    const deletePostInput: DeletePostInput = {
+      id: postId,
+    }
+    await API.graphql({
+      query: deletePost,
+      variables: { input: deletePostInput },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    })
+    setIsPostDelete(true)
+  }
+
   const [showWarn, setShowWarn] = useState(false)
 
-  return (
+  return !isPostDelete ? (
     <Container id="container" style={{ position: "relative" }}>
       {user ? (
         <VoteSection>
@@ -144,6 +166,11 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
           </DownvoteWrapper>
         </VoteSection>
       )}
+      {user?.getUsername() === post.owner ? (
+        <TrashboxIconWrapper onClick={() => deleteExistingPost(post.id)}>
+          <TrashboxIcon />
+        </TrashboxIconWrapper>
+      ) : null}
       <ContentSection onClick={() => router.push(`/post/${post.id}`)}>
         <SmallText>
           Posted by <b>{post.owner}</b> {formatDate(post.createdAt)} hours ago.
@@ -168,7 +195,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
         {children}
       </ContentSection>
     </Container>
-  )
+  ) : null
 }
 
 const Warn = () => {

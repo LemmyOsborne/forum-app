@@ -21,7 +21,6 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [])
 
   if (!showChild) {
-    // You can show some kind of placeholder UI here
     return null
   }
 
