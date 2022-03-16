@@ -73,7 +73,6 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
         <Link href={ROUTES.HOME}>
           <CloseButton>
             <CloseIcon />
-            Close
           </CloseButton>
         </Link>
         <PostPreview post={post}>
@@ -82,7 +81,7 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
               <Textarea
                 placeholder="Have thoughts to share?"
                 {...register("comment", {
-                  required: { value: true, message: "Please enter a username." },
+                  required: { value: true, message: "Please enter a comment." },
                   maxLength: {
                     value: 300,
                     message: "Comment can't be more than 300 characters.",

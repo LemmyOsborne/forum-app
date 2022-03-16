@@ -61,12 +61,8 @@ export const Header = () => {
             </Link>
           </ButtonGroup>
         )}
-        <Dropdown>
-          <MenuButton
-            aria-label="menu-button"
-            onBlur={() => setShowMenu(false)}
-            onClick={() => setShowMenu(!showMenu)}
-          >
+        <Dropdown onMouseLeave={() => setShowMenu(false)}>
+          <MenuButton aria-label="menu-button" onClick={() => setShowMenu(!showMenu)}>
             <MenuIcon />
           </MenuButton>
           {showMenu && (
