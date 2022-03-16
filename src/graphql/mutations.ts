@@ -9,6 +9,7 @@ export const createThread = /* GraphQL */ `
   ) {
     createThread(input: $input, condition: $condition) {
       id
+      name
       posts {
         items {
           id
@@ -35,6 +36,7 @@ export const updateThread = /* GraphQL */ `
   ) {
     updateThread(input: $input, condition: $condition) {
       id
+      name
       posts {
         items {
           id
@@ -61,6 +63,7 @@ export const deleteThread = /* GraphQL */ `
   ) {
     deleteThread(input: $input, condition: $condition) {
       id
+      name
       posts {
         items {
           id
@@ -92,6 +95,7 @@ export const createPost = /* GraphQL */ `
       image
       thread {
         id
+        name
         posts {
           nextToken
         }
@@ -140,6 +144,7 @@ export const updatePost = /* GraphQL */ `
       image
       thread {
         id
+        name
         posts {
           nextToken
         }
@@ -188,6 +193,7 @@ export const deletePost = /* GraphQL */ `
       image
       thread {
         id
+        name
         posts {
           nextToken
         }
@@ -238,6 +244,7 @@ export const createComment = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -275,6 +282,7 @@ export const updateComment = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -312,6 +320,7 @@ export const deleteComment = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -350,6 +359,7 @@ export const createVote = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -387,6 +397,7 @@ export const updateVote = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -424,6 +435,7 @@ export const deleteVote = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner

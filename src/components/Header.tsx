@@ -26,6 +26,7 @@ import {
 } from "styles/components/header.styles"
 import { ToggleThemeContext } from "context/ToggleThemeContext"
 import { useWindowSize } from "hooks/useWindowSize"
+import { CreateThread } from "./create-thread-modal"
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -34,6 +35,7 @@ export const Header = () => {
   const username = user?.getUsername()
   const { theme, setTheme } = useContext(ToggleThemeContext)
   const { width } = useWindowSize()
+  const [showThreadModal, setShowThreadModal] = useState(false)
 
   const signOut = async () => {
     try {
@@ -82,6 +84,10 @@ export const Header = () => {
                 <AddIcon />
                 Create Post
               </MenuItem>
+              <MenuItem onClick={() => setShowThreadModal(true)}>
+                <AddIcon />
+                Create Thread
+              </MenuItem>
               {!user && width <= 600 && (
                 <>
                   <MenuItem onClick={() => router.push(ROUTES.SIGN_IN)}>
@@ -104,6 +110,7 @@ export const Header = () => {
           )}
         </Dropdown>
       </div>
+      {showThreadModal && <CreateThread />}
     </Container>
   )
 }

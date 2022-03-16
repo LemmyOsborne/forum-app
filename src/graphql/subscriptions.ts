@@ -6,6 +6,7 @@ export const onCreateThread = /* GraphQL */ `
   subscription OnCreateThread($owner: String) {
     onCreateThread(owner: $owner) {
       id
+      name
       posts {
         items {
           id
@@ -29,6 +30,7 @@ export const onUpdateThread = /* GraphQL */ `
   subscription OnUpdateThread($owner: String) {
     onUpdateThread(owner: $owner) {
       id
+      name
       posts {
         items {
           id
@@ -52,6 +54,7 @@ export const onDeleteThread = /* GraphQL */ `
   subscription OnDeleteThread($owner: String) {
     onDeleteThread(owner: $owner) {
       id
+      name
       posts {
         items {
           id
@@ -80,6 +83,7 @@ export const onCreatePost = /* GraphQL */ `
       image
       thread {
         id
+        name
         posts {
           nextToken
         }
@@ -125,6 +129,7 @@ export const onUpdatePost = /* GraphQL */ `
       image
       thread {
         id
+        name
         posts {
           nextToken
         }
@@ -170,6 +175,7 @@ export const onDeletePost = /* GraphQL */ `
       image
       thread {
         id
+        name
         posts {
           nextToken
         }
@@ -217,6 +223,7 @@ export const onCreateComment = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -251,6 +258,7 @@ export const onUpdateComment = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -285,6 +293,7 @@ export const onDeleteComment = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -320,6 +329,7 @@ export const onCreateVote = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -354,6 +364,7 @@ export const onUpdateVote = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner
@@ -388,6 +399,7 @@ export const onDeleteVote = /* GraphQL */ `
         image
         thread {
           id
+          name
           createdAt
           updatedAt
           owner

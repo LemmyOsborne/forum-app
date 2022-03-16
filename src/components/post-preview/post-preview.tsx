@@ -54,11 +54,11 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
   const [existingVote, setExistingVote] = useState<string | undefined>(undefined)
   const [existingVoteId, setExistingVoteId] = useState<string | undefined>(undefined)
   const [upvotes, setUpvotes] = useState<number>(
-    post.votes?.items ? post.votes?.items.filter((vote) => vote?.vote === "upvote").length : 0
+    post.votes.items ? post.votes.items.filter((vote) => vote.vote === "upvote").length : 0
   )
 
   const [downvotes, setDownvotes] = useState<number>(
-    post.votes.items ? post.votes.items.filter((vote) => vote?.vote === "downvote").length : 0
+    post.votes.items ? post.votes.items.filter((vote) => vote.vote === "downvote").length : 0
   )
   const [isUpdatePostText, setIsUpdatePostText] = useState(false)
   const [postText, setPostText] = useState(post.content)
@@ -67,7 +67,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
 
   useEffect(() => {
     if (user) {
-      const tryFindVote = post.votes.items?.find((vote) => vote.owner === user.getUsername())
+      const tryFindVote = post.votes?.items?.find((vote) => vote?.owner === user.getUsername())
 
       if (tryFindVote) {
         setExistingVote(tryFindVote.vote)
@@ -244,7 +244,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
         )}
         <Comment>
           <CommentIcon />
-          {post.comments?.items.length} Comment(s)
+          {post.comments.items ? post.comments.items.length : "0"} Comment(s)
         </Comment>
         {children}
       </ContentSection>
