@@ -2,6 +2,84 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createThread = /* GraphQL */ `
+  mutation CreateThread(
+    $input: CreateThreadInput!
+    $condition: ModelThreadConditionInput
+  ) {
+    createThread(input: $input, condition: $condition) {
+      id
+      posts {
+        items {
+          id
+          title
+          content
+          image
+          createdAt
+          updatedAt
+          threadPostsId
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateThread = /* GraphQL */ `
+  mutation UpdateThread(
+    $input: UpdateThreadInput!
+    $condition: ModelThreadConditionInput
+  ) {
+    updateThread(input: $input, condition: $condition) {
+      id
+      posts {
+        items {
+          id
+          title
+          content
+          image
+          createdAt
+          updatedAt
+          threadPostsId
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteThread = /* GraphQL */ `
+  mutation DeleteThread(
+    $input: DeleteThreadInput!
+    $condition: ModelThreadConditionInput
+  ) {
+    deleteThread(input: $input, condition: $condition) {
+      id
+      posts {
+        items {
+          id
+          title
+          content
+          image
+          createdAt
+          updatedAt
+          threadPostsId
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
 export const createPost = /* GraphQL */ `
   mutation CreatePost(
     $input: CreatePostInput!
@@ -12,6 +90,15 @@ export const createPost = /* GraphQL */ `
       title
       content
       image
+      thread {
+        id
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       comments {
         items {
           id
@@ -36,6 +123,7 @@ export const createPost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      threadPostsId
       owner
     }
   }
@@ -50,6 +138,15 @@ export const updatePost = /* GraphQL */ `
       title
       content
       image
+      thread {
+        id
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       comments {
         items {
           id
@@ -74,6 +171,7 @@ export const updatePost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      threadPostsId
       owner
     }
   }
@@ -88,6 +186,15 @@ export const deletePost = /* GraphQL */ `
       title
       content
       image
+      thread {
+        id
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       comments {
         items {
           id
@@ -112,6 +219,7 @@ export const deletePost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      threadPostsId
       owner
     }
   }
@@ -128,6 +236,12 @@ export const createComment = /* GraphQL */ `
         title
         content
         image
+        thread {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
         comments {
           nextToken
         }
@@ -136,6 +250,7 @@ export const createComment = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        threadPostsId
         owner
       }
       content
@@ -158,6 +273,12 @@ export const updateComment = /* GraphQL */ `
         title
         content
         image
+        thread {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
         comments {
           nextToken
         }
@@ -166,6 +287,7 @@ export const updateComment = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        threadPostsId
         owner
       }
       content
@@ -188,6 +310,12 @@ export const deleteComment = /* GraphQL */ `
         title
         content
         image
+        thread {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
         comments {
           nextToken
         }
@@ -196,6 +324,7 @@ export const deleteComment = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        threadPostsId
         owner
       }
       content
@@ -219,6 +348,12 @@ export const createVote = /* GraphQL */ `
         title
         content
         image
+        thread {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
         comments {
           nextToken
         }
@@ -227,6 +362,7 @@ export const createVote = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        threadPostsId
         owner
       }
       createdAt
@@ -249,6 +385,12 @@ export const updateVote = /* GraphQL */ `
         title
         content
         image
+        thread {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
         comments {
           nextToken
         }
@@ -257,6 +399,7 @@ export const updateVote = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        threadPostsId
         owner
       }
       createdAt
@@ -279,6 +422,12 @@ export const deleteVote = /* GraphQL */ `
         title
         content
         image
+        thread {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
         comments {
           nextToken
         }
@@ -287,6 +436,7 @@ export const deleteVote = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        threadPostsId
         owner
       }
       createdAt

@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const Container = styled.div`
   width: 400px;
   height: 50%;
+  max-height: 100px;
   max-width: 80%;
   padding: 10px;
   position: absolute;

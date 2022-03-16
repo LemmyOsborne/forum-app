@@ -2,6 +2,49 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getThread = /* GraphQL */ `
+  query GetThread($id: ID!) {
+    getThread(id: $id) {
+      id
+      posts {
+        items {
+          id
+          title
+          content
+          image
+          createdAt
+          updatedAt
+          threadPostsId
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listThreads = /* GraphQL */ `
+  query ListThreads(
+    $filter: ModelThreadFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listThreads(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
@@ -9,6 +52,15 @@ export const getPost = /* GraphQL */ `
       title
       content
       image
+      thread {
+        id
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       comments {
         items {
           id
@@ -33,45 +85,44 @@ export const getPost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      threadPostsId
       owner
     }
   }
-`
+`;
 export const listPosts = /* GraphQL */ `
-  query ListPosts($filter: ModelPostFilterInput, $limit: Int, $nextToken: String) {
+  query ListPosts(
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         title
         content
         image
+        thread {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
         comments {
           nextToken
-          items {
-            content
-            createdAt
-            id
-            owner
-            postCommentsId
-          }
         }
         votes {
           nextToken
-          items {
-            id
-            vote
-            owner
-            postVotesId
-          }
         }
         createdAt
         updatedAt
+        threadPostsId
         owner
       }
       nextToken
     }
   }
-`
+`;
 export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
@@ -81,6 +132,12 @@ export const getComment = /* GraphQL */ `
         title
         content
         image
+        thread {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
         comments {
           nextToken
         }
@@ -89,6 +146,7 @@ export const getComment = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        threadPostsId
         owner
       }
       content
@@ -98,9 +156,13 @@ export const getComment = /* GraphQL */ `
       owner
     }
   }
-`
+`;
 export const listComments = /* GraphQL */ `
-  query ListComments($filter: ModelCommentFilterInput, $limit: Int, $nextToken: String) {
+  query ListComments(
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -111,6 +173,7 @@ export const listComments = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          threadPostsId
           owner
         }
         content
@@ -122,7 +185,7 @@ export const listComments = /* GraphQL */ `
       nextToken
     }
   }
-`
+`;
 export const getVote = /* GraphQL */ `
   query GetVote($id: ID!) {
     getVote(id: $id) {
@@ -133,6 +196,12 @@ export const getVote = /* GraphQL */ `
         title
         content
         image
+        thread {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
         comments {
           nextToken
         }
@@ -141,6 +210,7 @@ export const getVote = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        threadPostsId
         owner
       }
       createdAt
@@ -149,9 +219,13 @@ export const getVote = /* GraphQL */ `
       owner
     }
   }
-`
+`;
 export const listVotes = /* GraphQL */ `
-  query ListVotes($filter: ModelVoteFilterInput, $limit: Int, $nextToken: String) {
+  query ListVotes(
+    $filter: ModelVoteFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
     listVotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -163,6 +237,7 @@ export const listVotes = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          threadPostsId
           owner
         }
         createdAt
@@ -173,4 +248,4 @@ export const listVotes = /* GraphQL */ `
       nextToken
     }
   }
-`
+`;

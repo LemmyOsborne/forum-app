@@ -61,7 +61,7 @@ export const defaultTheme: DefaultTheme = {
       disabled: "rgba(0, 0, 0, 0.3)",
     },
     background: {
-      default: "#fff",
+      default: "#FFF8F3",
       header: "#EAEAEA",
     },
   },
