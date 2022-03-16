@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { API } from "aws-amplify"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { listPosts } from "graphql/queries"
-import { PostPreview } from "components/post-preview"
+import { PostPreview } from "components/post-preview/post-preview"
 import { compare } from "helpers/compare"
 import { Skeleton, SkeletonText, SkeletonTitle } from "styles/skeleton.styles"
 

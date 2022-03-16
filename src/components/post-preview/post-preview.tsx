@@ -39,7 +39,8 @@ import {
   UpdatePostIconWrapper,
   ButtonGroup,
   Button,
-} from "styles/components/post-preview.styles"
+} from "styles/components/post-preview/post-preview.styles"
+import { DeletePostWarn } from "./delete-post-warn"
 
 interface Props {
   post: Post
@@ -61,6 +62,8 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
   )
   const [isUpdatePostText, setIsUpdatePostText] = useState(false)
   const [postText, setPostText] = useState(post.content)
+  const [showWarn, setShowWarn] = useState(false)
+  const [showDeletePostWarn, setShowDeletePostWarn] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -163,10 +166,8 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
     setIsPostDelete(true)
   }
 
-  const [showWarn, setShowWarn] = useState(false)
-
   return !isPostDelete ? (
-    <Container id="container" style={{ position: "relative" }}>
+    <Container id={`container-${post.id}`} style={{ position: "relative" }}>
       {user ? (
         <VoteSection>
           <UpvoteWrapper onClick={() => addVote("upvote")}>
@@ -191,10 +192,17 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
       )}
       {user?.getUsername() === post.owner ? (
         <ButtonGroup>
+          {showDeletePostWarn && (
+            <DeletePostWarn
+              deleteExistingPost={deleteExistingPost}
+              setShowDeletePostWarn={setShowDeletePostWarn}
+              id={post.id}
+            />
+          )}
           <UpdatePostIconWrapper onClick={() => setIsUpdatePostText((prevState) => !prevState)}>
             <UpdatePostIcon />
           </UpdatePostIconWrapper>
-          <TrashboxIconWrapper onClick={() => deleteExistingPost(post.id)}>
+          <TrashboxIconWrapper onClick={() => setShowDeletePostWarn(true)}>
             <TrashboxIcon />
           </TrashboxIconWrapper>
         </ButtonGroup>

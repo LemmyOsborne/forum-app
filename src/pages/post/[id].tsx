@@ -7,7 +7,7 @@ import {
   Post,
 } from "API"
 import { withSSRContext } from "aws-amplify"
-import { PostPreview } from "components/post-preview"
+import { PostPreview } from "components/post-preview/post-preview"
 import { getPost, listPosts } from "graphql/queries"
 import { GetStaticPaths, GetStaticProps } from "next"
 import React, { useState } from "react"
