@@ -71,3 +71,11 @@ export const ServerError = styled.div`
   top: 3rem;
   left: 0;
 `
+
+export const Select = styled.select`
+  width: 50%;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.palette.grey[200]};
+  margin-bottom: 8px;
+`
