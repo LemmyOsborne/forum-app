@@ -5,22 +5,25 @@ import {
   UpdateVoteInput,
   CreateVoteInput,
   DeletePostInput,
+  UpdatePostInput,
 } from "API"
 import React, { useEffect, useState } from "react"
 import Downvote from "assets/icons/downvote.svg"
 import Upvote from "assets/icons/upvote.svg"
 import UpvoteFill from "assets/icons/upvote-fill.svg"
 import DownvoteFill from "assets/icons/downvote-fill.svg"
+import CommentIcon from "assets/icons/comment.svg"
+import TrashboxIcon from "assets/icons/trashbox.svg"
+import UpdatePostIcon from "assets/icons/update-post.svg"
 import { formatDate } from "helpers/formatDate"
 import { API, Storage } from "aws-amplify"
-import { updateVote, createVote, deletePost } from "graphql/mutations"
+import { updateVote, createVote, deletePost, updatePost } from "graphql/mutations"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { useUser } from "context/AuthContext"
 import Image from "next/image"
 import { useRouter } from "next/router"
-import CommentIcon from "assets/icons/comment.svg"
-import TrashboxIcon from "assets/icons/trashbox.svg"
 import { createPortal } from "react-dom"
+import TextareaAutosize from "react-textarea-autosize"
 import {
   Comment,
   Container,
@@ -33,6 +36,9 @@ import {
   VoteSection,
   WarnContainer,
   TrashboxIconWrapper,
+  UpdatePostIconWrapper,
+  ButtonGroup,
+  Button,
 } from "styles/components/post-preview.styles"
 
 interface Props {
@@ -53,6 +59,9 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
   const [downvotes, setDownvotes] = useState<number>(
     post.votes.items ? post.votes.items.filter((vote) => vote?.vote === "downvote").length : 0
   )
+  const [isUpdatePostText, setIsUpdatePostText] = useState(false)
+  const [postText, setPostText] = useState(post.content)
+
   useEffect(() => {
     if (user) {
       const tryFindVote = post.votes.items?.find((vote) => vote.owner === user.getUsername())
@@ -128,6 +137,20 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
     }
   }
 
+  const updatePostText = async (postId: string, content: string) => {
+    const updatePostTextInput: UpdatePostInput = {
+      id: postId,
+      content: content,
+    }
+
+    await API.graphql({
+      query: updatePost,
+      variables: { input: updatePostTextInput },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    })
+    setIsUpdatePostText(false)
+  }
+
   const deleteExistingPost = async (postId: string) => {
     const deletePostInput: DeletePostInput = {
       id: postId,
@@ -167,16 +190,39 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
         </VoteSection>
       )}
       {user?.getUsername() === post.owner ? (
-        <TrashboxIconWrapper onClick={() => deleteExistingPost(post.id)}>
-          <TrashboxIcon />
-        </TrashboxIconWrapper>
+        <ButtonGroup>
+          <UpdatePostIconWrapper onClick={() => setIsUpdatePostText((prevState) => !prevState)}>
+            <UpdatePostIcon />
+          </UpdatePostIconWrapper>
+          <TrashboxIconWrapper onClick={() => deleteExistingPost(post.id)}>
+            <TrashboxIcon />
+          </TrashboxIconWrapper>
+        </ButtonGroup>
       ) : null}
       <ContentSection onClick={() => router.push(`/post/${post.id}`)}>
         <SmallText>
           Posted by <b>{post.owner}</b> {formatDate(post.createdAt)} hours ago.
         </SmallText>
         <Title>{post.title}</Title>
-        <Text>{post.content}</Text>
+        {postText && isUpdatePostText ? (
+          <>
+            <TextareaAutosize
+              value={postText}
+              onChange={({ target }) => setPostText(target.value)}
+              autoFocus
+              style={{
+                padding: "4px",
+                overflow: "hidden",
+                margin: "10px 0",
+                borderRadius: "4px",
+                resize: "vertical",
+              }}
+            />
+            <Button onClick={() => updatePostText(post.id, postText)}>Save</Button>
+          </>
+        ) : (
+          <Text>{post.content}</Text>
+        )}
         {post.image && imageUrl && (
           <Image
             src={imageUrl}

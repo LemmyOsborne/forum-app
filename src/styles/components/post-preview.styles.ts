@@ -58,6 +58,7 @@ export const Text = styled.p`
   font-size: 14px;
   margin-bottom: 20px;
   overflow-wrap: anywhere;
+  white-space: pre-line;
 `
 
 export const SmallText = styled.p`
@@ -104,16 +105,42 @@ export const Comment = styled.div`
   }
 `
 
-export const TrashboxIconWrapper = styled.div`
+export const ButtonGroup = styled.div`
   position: absolute;
   top: 10px;
   right: 20px;
+  display: flex;
+  z-index: 100;
+`
+
+export const TrashboxIconWrapper = styled.div`
   fill: ${({ theme }) => theme.palette.text.secondary};
-  padding: 3px 3px 1px;
+  padding: 1px 1px 0;
   border-radius: 4px;
 
   :hover {
     fill: ${({ theme }) => theme.palette.error.main};
     background-color: ${({ theme }) => theme.palette.secondary.dark};
   }
+`
+
+export const UpdatePostIconWrapper = styled.div`
+  color: ${({ theme }) => theme.palette.text.secondary};
+  padding: 3px;
+  border-radius: 4px;
+
+  :hover {
+    color: ${({ theme }) => theme.palette.success.light};
+    background-color: ${({ theme }) => theme.palette.secondary.dark};
+  }
+`
+
+export const Button = styled.button`
+  max-height: 30px;
+  max-width: 100px;
+  padding: 5px 20px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  background-color: ${({ theme }) => theme.palette.info.dark};
+  color: ${({ theme }) => theme.palette.secondary.contrastText};
 `
