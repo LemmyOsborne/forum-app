@@ -65,6 +65,13 @@ export const SmallText = styled.p`
   color: ${({ theme }) => theme.palette.text.secondary};
   font-size: 12px;
   margin-bottom: 10px;
+
+  :first-of-type {
+    :after {
+      content: "-";
+      margin: 0 4px;
+    }
+  }
 `
 
 export const UpvoteWrapper = styled.div`
