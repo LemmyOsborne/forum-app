@@ -5,8 +5,8 @@ import React from "react"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { GetThreadQuery, ListThreadsQuery, Thread } from "API"
 import { PostPreview } from "components/post-preview/post-preview"
-import styled from "styled-components"
 import { compare } from "helpers/compare"
+import { Container, Header, Subtitle, Title } from "styles/components/thread.styles"
 
 interface Props {
   thread: Thread
@@ -29,40 +29,6 @@ const IndividualThread: React.FC<Props> = ({ thread }) => {
 }
 
 export default IndividualThread
-
-const Container = styled.div`
-  margin-top: 3.7rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: ${({ theme }) => theme.palette.secondary.dark};
-`
-
-const Header = styled.header`
-  background-color: ${({ theme }) => theme.palette.secondary.light};
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  padding: 20px;
-  margin-bottom: 40px;
-`
-
-const Title = styled.h1`
-  color: ${({ theme }) => theme.palette.text.primary};
-  font-size: 40px;
-  margin-right: 10px;
-`
-
-const Subtitle = styled.h2`
-  color: ${({ theme }) => theme.palette.text.secondary};
-  font-size: 30px;
-
-  span {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-`
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const SSR = withSSRContext()

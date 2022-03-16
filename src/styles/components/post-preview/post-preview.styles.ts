@@ -67,6 +67,13 @@ export const SmallText = styled.p`
   margin-bottom: 10px;
 
   :first-of-type {
+    b {
+      :hover {
+        color: ${({ theme }) => theme.palette.text.primary};
+        text-decoration: underline;
+      }
+    }
+
     :after {
       content: "-";
       margin: 0 4px;
