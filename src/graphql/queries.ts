@@ -7,22 +7,41 @@ export const getThread = /* GraphQL */ `
     getThread(id: $id) {
       id
       name
+      owner
       posts {
         items {
-          id
-          title
           content
-          image
           createdAt
-          updatedAt
-          threadPostsId
+          id
+          image
           owner
+          threadPostsId
+          title
+          updatedAt
+          comments {
+            items {
+              id
+              content
+              createdAt
+              updatedAt
+              postCommentsId
+              owner
+            }
+            nextToken
+          }
+          votes {
+            items {
+              id
+              vote
+              createdAt
+              updatedAt
+              postVotesId
+              owner
+            }
+            nextToken
+          }
         }
-        nextToken
       }
-      createdAt
-      updatedAt
-      owner
     }
   }
 `
@@ -34,6 +53,22 @@ export const listThreads = /* GraphQL */ `
         name
         posts {
           nextToken
+          items {
+            id
+            title
+            content
+            image
+            comments {
+              nextToken
+            }
+            votes {
+              nextToken
+            }
+            threadPostsId
+            createdAt
+            updatedAt
+            owner
+          }
         }
         createdAt
         updatedAt

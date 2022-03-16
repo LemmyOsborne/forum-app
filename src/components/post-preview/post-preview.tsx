@@ -208,10 +208,12 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
         </ButtonGroup>
       ) : null}
       <ContentSection onClick={() => router.push(`/post/${post.id}`)}>
-        <div style={{ display: "flex" }}>
-          <SmallText>
-            From <b>{post.thread?.name}</b>
-          </SmallText>
+        <div style={{ display: "flex", zIndex: "800" }}>
+          {post.thread?.name && (
+            <SmallText onClick={() => router.push(`/thread/${post.threadPostsId}`)}>
+              From <b>{post.thread.name}</b>
+            </SmallText>
+          )}
           <SmallText>
             Posted by <b>{post.owner}</b> {formatDate(post.createdAt)} hours ago.
           </SmallText>

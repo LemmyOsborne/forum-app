@@ -57,7 +57,7 @@ export type Thread = {
   __typename: "Thread"
   id: string
   name: string
-  posts?: ModelPostConnection | null
+  posts?: ModelPostConnection
   createdAt: string
   updatedAt: string
   owner?: string | null
@@ -65,7 +65,7 @@ export type Thread = {
 
 export type ModelPostConnection = {
   __typename: "ModelPostConnection"
-  items: Array<Post | null>
+  items: Array<Post>
   nextToken?: string | null
 }
 
@@ -75,7 +75,7 @@ export type Post = {
   title: string
   content: string
   image?: string | null
-  thread?: Thread | null
+  thread: Thread
   comments: ModelCommentConnection
   votes: ModelVoteConnection
   createdAt: string
@@ -812,7 +812,33 @@ export type GetThreadQuery = {
         createdAt: string
         updatedAt: string
         threadPostsId: string
-        owner?: string | null
+        owner: string
+        comments?: {
+          __typename: "ModelCommentConnection"
+          items: Array<{
+            __typename: "Comment"
+            id: string
+            content: string
+            createdAt: string
+            updatedAt: string
+            postCommentsId: string
+            owner?: string | null
+          }>
+          nextToken?: string | null
+        }
+        votes?: {
+          __typename: "ModelVoteConnection"
+          items: Array<{
+            __typename: "Vote"
+            id: string
+            vote: string
+            createdAt: string
+            updatedAt: string
+            postVotesId: string
+            owner?: string
+          }>
+          nextToken?: string | null
+        }
       } | null>
       nextToken?: string | null
     } | null
@@ -829,7 +855,7 @@ export type ListThreadsQueryVariables = {
 }
 
 export type ListThreadsQuery = {
-  listThreads?: {
+  listThreads: {
     __typename: "ModelThreadConnection"
     items: Array<{
       __typename: "Thread"
@@ -838,13 +864,14 @@ export type ListThreadsQuery = {
       posts?: {
         __typename: "ModelPostConnection"
         nextToken?: string | null
-      } | null
+        items: Array<Post>
+      }
       createdAt: string
       updatedAt: string
-      owner?: string | null
+      owner: string
     } | null>
     nextToken?: string | null
-  } | null
+  }
 }
 
 export type GetPostQueryVariables = {
@@ -910,7 +937,7 @@ export type ListPostsQueryVariables = {
 }
 
 export type ListPostsQuery = {
-  listPosts?: {
+  listPosts: {
     __typename: "ModelPostConnection"
     items: Array<{
       __typename: "Post"
@@ -942,7 +969,7 @@ export type ListPostsQuery = {
       owner?: string | null
     } | null>
     nextToken?: string | null
-  } | null
+  }
 }
 
 export type GetCommentQueryVariables = {

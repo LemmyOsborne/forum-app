@@ -17,7 +17,7 @@ export const CreateThread = () => {
   const onSubmit: SubmitHandler<{ name: string }> = async (data) => {
     const createThreadInput: CreateThreadInput = { name: data.name }
 
-    const createNewThread = await API.graphql({
+    await API.graphql({
       query: createThread,
       variables: { input: createThreadInput },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
