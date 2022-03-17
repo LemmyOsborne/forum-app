@@ -10,6 +10,9 @@ export const createThread = /* GraphQL */ `
     createThread(input: $input, condition: $condition) {
       id
       name
+      description
+      image
+      subscribers
       posts {
         items {
           id
@@ -37,6 +40,9 @@ export const updateThread = /* GraphQL */ `
     updateThread(input: $input, condition: $condition) {
       id
       name
+      description
+      image
+      subscribers
       posts {
         items {
           id
@@ -64,6 +70,9 @@ export const deleteThread = /* GraphQL */ `
     deleteThread(input: $input, condition: $condition) {
       id
       name
+      description
+      image
+      subscribers
       posts {
         items {
           id
@@ -96,6 +105,9 @@ export const createPost = /* GraphQL */ `
       thread {
         id
         name
+        description
+        image
+        subscribers
         posts {
           nextToken
         }
@@ -145,6 +157,9 @@ export const updatePost = /* GraphQL */ `
       thread {
         id
         name
+        description
+        image
+        subscribers
         posts {
           nextToken
         }
@@ -194,6 +209,9 @@ export const deletePost = /* GraphQL */ `
       thread {
         id
         name
+        description
+        image
+        subscribers
         posts {
           nextToken
         }
@@ -245,6 +263,9 @@ export const createComment = /* GraphQL */ `
         thread {
           id
           name
+          description
+          image
+          subscribers
           createdAt
           updatedAt
           owner
@@ -283,6 +304,9 @@ export const updateComment = /* GraphQL */ `
         thread {
           id
           name
+          description
+          image
+          subscribers
           createdAt
           updatedAt
           owner
@@ -321,6 +345,9 @@ export const deleteComment = /* GraphQL */ `
         thread {
           id
           name
+          description
+          image
+          subscribers
           createdAt
           updatedAt
           owner
@@ -360,6 +387,9 @@ export const createVote = /* GraphQL */ `
         thread {
           id
           name
+          description
+          image
+          subscribers
           createdAt
           updatedAt
           owner
@@ -398,6 +428,9 @@ export const updateVote = /* GraphQL */ `
         thread {
           id
           name
+          description
+          image
+          subscribers
           createdAt
           updatedAt
           owner
@@ -436,6 +469,9 @@ export const deleteVote = /* GraphQL */ `
         thread {
           id
           name
+          description
+          image
+          subscribers
           createdAt
           updatedAt
           owner

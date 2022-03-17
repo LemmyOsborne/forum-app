@@ -9,6 +9,9 @@ type Thread
   ) {
   id: ID!
   name: String!
+  description: String
+  image: String
+  subscribers: [String]
   posts: [Post!]! @hasMany
 }
 

@@ -5,10 +5,16 @@
 export type CreateThreadInput = {
   id?: string | null
   name: string
+  description?: string | null
+  image?: string | null
+  subscribers?: Array<string | null> | null
 }
 
 export type ModelThreadConditionInput = {
   name?: ModelStringInput | null
+  description?: ModelStringInput | null
+  image?: ModelStringInput | null
+  subscribers?: ModelStringInput | null
   and?: Array<ModelThreadConditionInput | null> | null
   or?: Array<ModelThreadConditionInput | null> | null
   not?: ModelThreadConditionInput | null
@@ -57,10 +63,13 @@ export type Thread = {
   __typename: "Thread"
   id: string
   name: string
+  description?: string | null
+  image?: string | null
+  subscribers?: Array<string | null> | null
   posts?: ModelPostConnection
   createdAt: string
   updatedAt: string
-  owner?: string | null
+  owner: string
 }
 
 export type ModelPostConnection = {
@@ -111,7 +120,7 @@ export type Vote = {
   __typename: "Vote"
   id: string
   vote: string
-  post?: Post
+  post: Post
   createdAt: string
   updatedAt: string
   postVotesId: string
@@ -121,6 +130,9 @@ export type Vote = {
 export type UpdateThreadInput = {
   id: string
   name?: string | null
+  description?: string | null
+  image?: string | null
+  subscribers?: Array<string | null> | null
 }
 
 export type DeleteThreadInput = {
@@ -224,6 +236,9 @@ export type DeleteVoteInput = {
 export type ModelThreadFilterInput = {
   id?: ModelIDInput | null
   name?: ModelStringInput | null
+  description?: ModelStringInput | null
+  image?: ModelStringInput | null
+  subscribers?: ModelStringInput | null
   and?: Array<ModelThreadFilterInput | null> | null
   or?: Array<ModelThreadFilterInput | null> | null
   not?: ModelThreadFilterInput | null
@@ -274,6 +289,9 @@ export type CreateThreadMutation = {
     __typename: "Thread"
     id: string
     name: string
+    description?: string | null
+    image?: string | null
+    subscribers?: Array<string | null> | null
     posts?: {
       __typename: "ModelPostConnection"
       items: Array<{
@@ -305,6 +323,9 @@ export type UpdateThreadMutation = {
     __typename: "Thread"
     id: string
     name: string
+    description?: string | null
+    image?: string | null
+    subscribers?: Array<string | null> | null
     posts?: {
       __typename: "ModelPostConnection"
       items: Array<{
@@ -336,6 +357,9 @@ export type DeleteThreadMutation = {
     __typename: "Thread"
     id: string
     name: string
+    description?: string | null
+    image?: string | null
+    subscribers?: Array<string | null> | null
     posts?: {
       __typename: "ModelPostConnection"
       items: Array<{
@@ -373,6 +397,9 @@ export type CreatePostMutation = {
       __typename: "Thread"
       id: string
       name: string
+      description?: string | null
+      image?: string | null
+      subscribers?: Array<string | null> | null
       posts?: {
         __typename: "ModelPostConnection"
         nextToken?: string | null
@@ -430,6 +457,9 @@ export type UpdatePostMutation = {
       __typename: "Thread"
       id: string
       name: string
+      description?: string | null
+      image?: string | null
+      subscribers?: Array<string | null> | null
       posts?: {
         __typename: "ModelPostConnection"
         nextToken?: string | null
@@ -487,6 +517,9 @@ export type DeletePostMutation = {
       __typename: "Thread"
       id: string
       name: string
+      description?: string | null
+      image?: string | null
+      subscribers?: Array<string | null> | null
       posts?: {
         __typename: "ModelPostConnection"
         nextToken?: string | null
@@ -547,6 +580,9 @@ export type CreateCommentMutation = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -591,6 +627,9 @@ export type UpdateCommentMutation = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -635,6 +674,9 @@ export type DeleteCommentMutation = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -680,6 +722,9 @@ export type CreateVoteMutation = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -724,6 +769,9 @@ export type UpdateVoteMutation = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -768,6 +816,9 @@ export type DeleteVoteMutation = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -801,6 +852,9 @@ export type GetThreadQuery = {
     __typename: "Thread"
     id: string
     name: string
+    description?: string | null
+    image?: string | null
+    subscribers?: Array<string | null> | null
     posts?: {
       __typename: "ModelPostConnection"
       items: Array<{
@@ -861,6 +915,9 @@ export type ListThreadsQuery = {
       __typename: "Thread"
       id: string
       name: string
+      description?: string | null
+      image?: string | null
+      subscribers?: Array<string | null> | null
       posts?: {
         __typename: "ModelPostConnection"
         nextToken?: string | null
@@ -889,6 +946,9 @@ export type GetPostQuery = {
       __typename: "Thread"
       id: string
       name: string
+      description?: string | null
+      image?: string | null
+      subscribers?: Array<string | null> | null
       posts?: {
         __typename: "ModelPostConnection"
         nextToken?: string | null
@@ -919,14 +979,14 @@ export type GetPostQuery = {
         createdAt: string
         updatedAt: string
         postVotesId: string
-        owner?: string
+        owner: string
       }>
       nextToken?: string | null
     }
     createdAt: string
     updatedAt: string
     threadPostsId: string
-    owner?: string
+    owner: string
   } | null
 }
 
@@ -949,6 +1009,9 @@ export type ListPostsQuery = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -990,6 +1053,9 @@ export type GetCommentQuery = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -1067,6 +1133,9 @@ export type GetVoteQuery = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -1133,6 +1202,9 @@ export type OnCreateThreadSubscription = {
     __typename: "Thread"
     id: string
     name: string
+    description?: string | null
+    image?: string | null
+    subscribers?: Array<string | null> | null
     posts?: {
       __typename: "ModelPostConnection"
       items: Array<{
@@ -1163,6 +1235,9 @@ export type OnUpdateThreadSubscription = {
     __typename: "Thread"
     id: string
     name: string
+    description?: string | null
+    image?: string | null
+    subscribers?: Array<string | null> | null
     posts?: {
       __typename: "ModelPostConnection"
       items: Array<{
@@ -1193,6 +1268,9 @@ export type OnDeleteThreadSubscription = {
     __typename: "Thread"
     id: string
     name: string
+    description?: string | null
+    image?: string | null
+    subscribers?: Array<string | null> | null
     posts?: {
       __typename: "ModelPostConnection"
       items: Array<{
@@ -1229,6 +1307,9 @@ export type OnCreatePostSubscription = {
       __typename: "Thread"
       id: string
       name: string
+      description?: string | null
+      image?: string | null
+      subscribers?: Array<string | null> | null
       posts?: {
         __typename: "ModelPostConnection"
         nextToken?: string | null
@@ -1285,6 +1366,9 @@ export type OnUpdatePostSubscription = {
       __typename: "Thread"
       id: string
       name: string
+      description?: string | null
+      image?: string | null
+      subscribers?: Array<string | null> | null
       posts?: {
         __typename: "ModelPostConnection"
         nextToken?: string | null
@@ -1341,6 +1425,9 @@ export type OnDeletePostSubscription = {
       __typename: "Thread"
       id: string
       name: string
+      description?: string | null
+      image?: string | null
+      subscribers?: Array<string | null> | null
       posts?: {
         __typename: "ModelPostConnection"
         nextToken?: string | null
@@ -1400,6 +1487,9 @@ export type OnCreateCommentSubscription = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -1443,6 +1533,9 @@ export type OnUpdateCommentSubscription = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -1486,6 +1579,9 @@ export type OnDeleteCommentSubscription = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -1530,6 +1626,9 @@ export type OnCreateVoteSubscription = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -1573,6 +1672,9 @@ export type OnUpdateVoteSubscription = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null
@@ -1616,6 +1718,9 @@ export type OnDeleteVoteSubscription = {
         __typename: "Thread"
         id: string
         name: string
+        description?: string | null
+        image?: string | null
+        subscribers?: Array<string | null> | null
         createdAt: string
         updatedAt: string
         owner?: string | null

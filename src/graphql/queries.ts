@@ -7,41 +7,25 @@ export const getThread = /* GraphQL */ `
     getThread(id: $id) {
       id
       name
-      owner
+      description
+      image
+      subscribers
       posts {
         items {
-          content
-          createdAt
           id
-          image
-          owner
-          threadPostsId
           title
+          content
+          image
+          createdAt
           updatedAt
-          comments {
-            items {
-              id
-              content
-              createdAt
-              updatedAt
-              postCommentsId
-              owner
-            }
-            nextToken
-          }
-          votes {
-            items {
-              id
-              vote
-              createdAt
-              updatedAt
-              postVotesId
-              owner
-            }
-            nextToken
-          }
+          threadPostsId
+          owner
         }
+        nextToken
       }
+      createdAt
+      updatedAt
+      owner
     }
   }
 `
@@ -51,6 +35,9 @@ export const listThreads = /* GraphQL */ `
       items {
         id
         name
+        description
+        image
+        subscribers
         posts {
           nextToken
           items {
@@ -88,6 +75,9 @@ export const getPost = /* GraphQL */ `
       thread {
         id
         name
+        description
+        image
+        subscribers
         posts {
           nextToken
         }
@@ -119,6 +109,7 @@ export const getPost = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      threadPostsId
       owner
     }
   }
@@ -134,6 +125,9 @@ export const listPosts = /* GraphQL */ `
         thread {
           id
           name
+          description
+          image
+          subscribers
           createdAt
           updatedAt
           owner
@@ -160,9 +154,9 @@ export const listPosts = /* GraphQL */ `
             owner
           }
         }
-        threadPostsId
         createdAt
         updatedAt
+        threadPostsId
         owner
       }
       nextToken
@@ -181,6 +175,9 @@ export const getComment = /* GraphQL */ `
         thread {
           id
           name
+          description
+          image
+          subscribers
           createdAt
           updatedAt
           owner
@@ -196,7 +193,6 @@ export const getComment = /* GraphQL */ `
         threadPostsId
         owner
       }
-      threadPostsId
       content
       createdAt
       updatedAt
@@ -243,6 +239,9 @@ export const getVote = /* GraphQL */ `
         thread {
           id
           name
+          description
+          image
+          subscribers
           createdAt
           updatedAt
           owner
