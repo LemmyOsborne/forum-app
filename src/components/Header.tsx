@@ -12,6 +12,7 @@ import AddIcon from "assets/icons/add.svg"
 import SignInIcon from "assets/icons/signin.svg"
 import SunIcon from "assets/icons/sun.svg"
 import MoonIcon from "assets/icons/moon.svg"
+import SearchIcon from "assets/icons/search.svg"
 import {
   Container,
   Dropdown,
@@ -62,6 +63,7 @@ export const Header = () => {
         <Image src={LogoImage} height={150} width={150} alt="Logo" />
       </Logo>
       <SearchContainer>
+        <SearchIcon />
         <Search
           placeholder="Find threads"
           value={search}

@@ -110,15 +110,22 @@ export const Username = styled.p`
 export const SearchContainer = styled.div`
   position: relative;
   width: 400px;
+
+  svg {
+    position: absolute;
+    fill: ${({ theme }) => theme.palette.text.primary};
+    top: 5px;
+    left: 8px;
+  }
 `
 
 export const Search = styled.input`
   border: 1px solid lightgray;
-  padding: 10px;
-  background: none;
+  padding: 10px 0 10px 45px;
   width: 100%;
   border-radius: 4px;
   color: white;
+  background: none;
 `
 export const SearchResult = styled.div`
   background-color: ${({ theme }) => theme.palette.secondary.dark};
