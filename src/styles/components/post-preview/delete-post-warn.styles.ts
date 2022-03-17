@@ -9,7 +9,7 @@ export const Container = styled.div`
   position: absolute;
   border-radius: 4px;
   right: 20px;
-  z-index: 150;
+  z-index: 1050;
   background-color: ${({ theme }) => theme.palette.warning.light};
   color: ${({ theme }) => theme.palette.warning.contrastText};
   font-size: 18px;

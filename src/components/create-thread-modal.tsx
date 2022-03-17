@@ -7,7 +7,11 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import styled from "styled-components"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 
-export const CreateThread = () => {
+interface Props {
+  setModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const CreateThread: React.FC<Props> = ({ setModal }) => {
   const {
     register,
     handleSubmit,
@@ -29,8 +33,8 @@ export const CreateThread = () => {
   }, [])
 
   return createPortal(
-    <Overlay>
-      <Container>
+    <Overlay onClick={() => setModal(false)}>
+      <Container onClick={(e) => e.stopPropagation()}>
         <Top>
           <Title>Create new community.</Title>
           <Subtitle>Community names cannot be changed after creating.</Subtitle>
@@ -64,7 +68,7 @@ export const CreateThread = () => {
 const Overlay = styled.div`
   width: 100%;
   height: 100%;
-  background: #1c1c1ce6;
+  background: hsl(0, 0%, 20%, 0.7);
   z-index: 999;
   position: absolute;
   top: 0;
@@ -81,6 +85,7 @@ const Container = styled.div`
   padding: 20px;
   border-radius: 4px;
   position: relative;
+  z-index: 1001;
 `
 
 const Top = styled.section`

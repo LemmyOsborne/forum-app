@@ -110,7 +110,7 @@ export const Header = () => {
           )}
         </Dropdown>
       </div>
-      {showThreadModal && <CreateThread />}
+      {showThreadModal && <CreateThread setModal={setShowThreadModal} />}
     </Container>
   )
 }

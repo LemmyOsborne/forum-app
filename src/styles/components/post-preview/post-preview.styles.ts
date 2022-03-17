@@ -7,7 +7,7 @@ export const WarnContainer = styled.div`
   position: absolute;
   border-radius: 4px;
   left: 40px;
-  z-index: 50;
+  z-index: 1050;
   background-color: ${({ theme }) => theme.palette.warning.light};
   color: ${({ theme }) => theme.palette.warning.contrastText};
 `

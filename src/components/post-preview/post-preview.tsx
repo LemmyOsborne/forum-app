@@ -180,7 +180,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
         </VoteSection>
       ) : (
         <VoteSection>
-          {showWarn && <Warn />}
+          {showWarn && <Warn setShowWarn={setShowWarn} postId={post.id} />}
           <UpvoteWrapper onClick={() => setShowWarn((showWarn) => !showWarn)}>
             <Upvote />
           </UpvoteWrapper>
@@ -259,11 +259,20 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
   ) : null
 }
 
-const Warn = () => {
+interface IWarn {
+  setShowWarn: React.Dispatch<React.SetStateAction<boolean>>
+  postId: string
+}
+
+const Warn: React.FC<IWarn> = ({ postId, setShowWarn }) => {
+  useEffect(() => {
+    setTimeout(() => setShowWarn(false), 2000)
+  }, [])
+
   return createPortal(
-    <WarnContainer>
+    <WarnContainer onBlur={() => setShowWarn(false)}>
       <p>In order to upvote/downvote post you should be authorized.</p>
     </WarnContainer>,
-    document.getElementById("container") as Element
+    document.getElementById(`container-${postId}`) as Element
   )
 }
