@@ -9,6 +9,7 @@ import awsconfig from "../aws-exports"
 import { AuthProvider } from "helpers/AuthProvider"
 import { Header } from "components/Header"
 import { ToggleThemeContext } from "context/ToggleThemeContext"
+import { ThreadsProvider } from "helpers/ThreadsProvider"
 
 Amplify.configure({ ...awsconfig, ssr: true })
 
@@ -56,9 +57,11 @@ const Child = ({ Component, pageProps }: any) => {
       <AuthProvider>
         <ToggleThemeContext.Provider value={{ theme, setTheme }}>
           <ThemeProvider theme={theme === "light" ? defaultTheme : darkTheme}>
-            <GlobalStyle />
-            <Header />
-            <Component {...pageProps} />
+            <ThreadsProvider>
+              <GlobalStyle />
+              <Header />
+              <Component {...pageProps} />
+            </ThreadsProvider>
           </ThemeProvider>
         </ToggleThemeContext.Provider>
       </AuthProvider>

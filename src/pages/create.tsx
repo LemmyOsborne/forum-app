@@ -1,16 +1,16 @@
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
-import { CreatePostInput, CreatePostMutation, ListThreadsQuery, Thread } from "API"
+import { CreatePostInput, CreatePostMutation } from "API"
 import { API, Storage } from "aws-amplify"
 import { ImageDropzone } from "components/image-dropzone"
 import { createPost } from "graphql/mutations"
 import { useRouter } from "next/router"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Button, Container, ErrorMessage, Input, Select } from "styles/components/form.styles"
 import { Form, Textarea } from "styles/components/create.styles"
 import { v4 as uuidv4 } from "uuid"
 import * as ROUTES from "constants/routes"
-import { listThreads } from "graphql/queries"
+import { ThreadsContext } from "context/ThreadsContext"
 
 interface IFormData {
   title: string
@@ -21,7 +21,7 @@ interface IFormData {
 const Create = () => {
   const [file, setFile] = useState<File>()
   const router = useRouter()
-  const [threads, setThreads] = useState<Thread[]>()
+  const { threads } = useContext(ThreadsContext)
   const { threadName } = router.query
 
   useEffect(() => {
@@ -39,17 +39,6 @@ const Create = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<IFormData>()
-
-  useEffect(() => {
-    const getAllThreads = async () => {
-      const { data } = (await API.graphql({
-        query: listThreads,
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as { data: ListThreadsQuery }
-      setThreads(data.listThreads?.items as Thread[])
-    }
-    getAllThreads()
-  }, [])
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
     if (file) {
