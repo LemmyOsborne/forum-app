@@ -1,11 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import * as ROUTES from "constants/routes"
 import LogoImage from "assets/logo.png"
 import MenuIcon from "assets/icons/menu.svg"
 import LogoutIcon from "assets/icons/logout.svg"
-import { Auth } from "aws-amplify"
+import { API, Auth } from "aws-amplify"
 import { useRouter } from "next/router"
 import { useUser } from "context/AuthContext"
 import AddIcon from "assets/icons/add.svg"
@@ -23,10 +23,16 @@ import {
   SignUpButton,
   ButtonGroup,
   Username,
+  Search,
+  SearchContainer,
+  SearchResult,
+  SearchItem,
 } from "styles/components/header.styles"
 import { ToggleThemeContext } from "context/ToggleThemeContext"
 import { useWindowSize } from "hooks/useWindowSize"
 import { CreateThread } from "./create-thread-modal"
+import { ListThreadsQuery, Thread } from "API"
+import { listThreads } from "graphql/queries"
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -36,6 +42,11 @@ export const Header = () => {
   const { theme, setTheme } = useContext(ToggleThemeContext)
   const { width } = useWindowSize()
   const [showThreadModal, setShowThreadModal] = useState(false)
+  const [threads, setThreads] = useState<Thread[]>()
+  const [search, setSearch] = useState<string>()
+  const searchResult = threads
+    ?.map((thread) => thread.name)
+    .filter((name) => name.includes(search as string))
 
   const signOut = async () => {
     try {
@@ -45,11 +56,47 @@ export const Header = () => {
       console.log("error signing out: ", error)
     }
   }
+
+  useEffect(() => {
+    const getAllThreads = async () => {
+      const { data } = (await API.graphql({
+        query: listThreads,
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+      })) as { data: ListThreadsQuery }
+      setThreads(data.listThreads?.items as Thread[])
+    }
+    getAllThreads()
+  }, [])
+
   return (
     <Container>
       <Logo onClick={() => router.push(ROUTES.HOME)}>
         <Image src={LogoImage} height={150} width={150} alt="Logo" />
       </Logo>
+      <SearchContainer>
+        <Search
+          placeholder="Find threads"
+          value={search}
+          onChange={({ target }) => setSearch(target.value)}
+        />
+        {search && (
+          <SearchResult>
+            {searchResult?.map((result) => (
+              <SearchItem
+                onClick={async () => {
+                  await router.push(
+                    `/thread/${threads?.find((thread) => thread.name === result)?.id}`
+                  )
+                  setSearch("")
+                }}
+                key={result}
+              >
+                {result}
+              </SearchItem>
+            ))}
+          </SearchResult>
+        )}
+      </SearchContainer>
       <div style={{ display: "flex" }}>
         {user ? (
           <Username>{username}</Username>

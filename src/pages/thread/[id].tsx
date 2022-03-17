@@ -16,16 +16,6 @@ interface Props {
 const IndividualThread: React.FC<Props> = ({ thread }) => {
   const router = useRouter()
 
-  const redirectCreatePost = (threadName: string) => {
-    router.push(
-      {
-        pathname: "/create",
-        query: { threadName: threadName },
-      },
-      "/create"
-    )
-  }
-
   return (
     <Container>
       <Header>
@@ -33,7 +23,7 @@ const IndividualThread: React.FC<Props> = ({ thread }) => {
         <Subtitle>
           by <span>{thread.owner}</span>
         </Subtitle>
-        <Button onClick={() => redirectCreatePost(thread.name)}>Create Post</Button>
+        <Button onClick={() => router.push("/create")}>Create Post</Button>
       </Header>
       {thread.posts?.items.sort(compare).map((post) => (
         <PostPreview key={post.id} post={post} />

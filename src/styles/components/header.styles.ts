@@ -106,3 +106,34 @@ export const Username = styled.p`
   margin: 5px 15px 0;
   font-weight: 600;
 `
+
+export const SearchContainer = styled.div`
+  position: relative;
+  width: 400px;
+`
+
+export const Search = styled.input`
+  border: 1px solid lightgray;
+  padding: 10px;
+  background: none;
+  width: 100%;
+  border-radius: 4px;
+  color: white;
+`
+export const SearchResult = styled.div`
+  background-color: ${({ theme }) => theme.palette.secondary.dark};
+  position: absolute;
+  top: 40px;
+  width: 100%;
+`
+
+export const SearchItem = styled.div`
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+
+  :hover {
+    background-color: ${({ theme }) => theme.palette.secondary.light};
+    color: ${({ theme }) => theme.palette.secondary.contrastText};
+  }
+`
