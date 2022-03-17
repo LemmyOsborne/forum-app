@@ -7,7 +7,7 @@ import {
   DeletePostInput,
   UpdatePostInput,
 } from "API"
-import React, { useEffect, useState } from "react"
+import React, { SyntheticEvent, useEffect, useState } from "react"
 import Downvote from "assets/icons/downvote.svg"
 import Upvote from "assets/icons/upvote.svg"
 import UpvoteFill from "assets/icons/upvote-fill.svg"
@@ -166,6 +166,11 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
     setIsPostDelete(true)
   }
 
+  const handleThreadRedirect = (e: SyntheticEvent) => {
+    e.stopPropagation()
+    router.push(`/thread/${post.threadPostsId}`)
+  }
+
   return !isPostDelete ? (
     <Container id={`container-${post.id}`} style={{ position: "relative" }}>
       {user ? (
@@ -210,7 +215,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
       <ContentSection onClick={() => router.push(`/post/${post.id}`)}>
         <div style={{ display: "flex", zIndex: "800", width: "fit-content" }}>
           {post.thread?.name && (
-            <SmallText onClick={() => router.push(`/thread/${post.threadPostsId}`)}>
+            <SmallText onClick={handleThreadRedirect}>
               From <b>{post.thread.name}</b>
             </SmallText>
           )}

@@ -57,7 +57,7 @@ export const DropdownMenu = styled.div`
   display: flex;
   flex-direction: column;
   width: 180px;
-  min-height: 50px;
+  min-height: 30px;
   background-color: ${({ theme }) => theme.palette.background.header};
   position: absolute;
   top: 30px;

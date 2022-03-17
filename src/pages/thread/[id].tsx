@@ -6,13 +6,26 @@ import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { GetThreadQuery, ListThreadsQuery, Thread } from "API"
 import { PostPreview } from "components/post-preview/post-preview"
 import { compare } from "helpers/compare"
-import { Container, Header, Subtitle, Title } from "styles/components/thread.styles"
+import { Container, Header, Subtitle, Title, Button } from "styles/components/thread.styles"
+import { useRouter } from "next/router"
 
 interface Props {
   thread: Thread
 }
 
 const IndividualThread: React.FC<Props> = ({ thread }) => {
+  const router = useRouter()
+
+  const redirectCreatePost = (threadName: string) => {
+    router.push(
+      {
+        pathname: "/create",
+        query: { threadName: threadName },
+      },
+      "/create"
+    )
+  }
+
   return (
     <Container>
       <Header>
@@ -20,6 +33,7 @@ const IndividualThread: React.FC<Props> = ({ thread }) => {
         <Subtitle>
           by <span>{thread.owner}</span>
         </Subtitle>
+        <Button onClick={() => redirectCreatePost(thread.name)}>Create Post</Button>
       </Header>
       {thread.posts?.items.sort(compare).map((post) => (
         <PostPreview key={post.id} post={post} />

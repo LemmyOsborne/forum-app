@@ -22,6 +22,7 @@ const Create = () => {
   const [file, setFile] = useState<File>()
   const router = useRouter()
   const [threads, setThreads] = useState<Thread[]>()
+  const { threadName } = router.query
 
   useEffect(() => {
     if (
@@ -36,7 +37,7 @@ const Create = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<IFormData>()
 
   useEffect(() => {
@@ -71,7 +72,9 @@ const Create = () => {
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as { data: CreatePostMutation }
 
-        router.push(`/post/${createNewPost.data.createPost?.id}`)
+        threadName
+          ? router.push(`/thread/${createNewPost.data.createPost?.threadPostsId}`)
+          : router.push(`/post/${createNewPost.data.createPost?.id}`)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         console.error("Error uploading file: ", error)
@@ -89,7 +92,9 @@ const Create = () => {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as { data: CreatePostMutation }
 
-      router.push(`/post/${createNewPostWithoutImage.data.createPost?.id}`)
+      threadName
+        ? router.push(`/thread/${createNewPostWithoutImage.data.createPost?.threadPostsId}`)
+        : router.push(`/post/${createNewPostWithoutImage.data.createPost?.id}`)
     }
   }
 
@@ -118,23 +123,30 @@ const Create = () => {
         />
         {errors.content && <ErrorMessage>{errors.content.message}</ErrorMessage>}
         <Select
-          defaultValue={"shit"}
           {...register("threadId", {
             required: { value: true, message: "Please choose where you want to public this post." },
           })}
         >
           {threads?.map((thread) => (
             <React.Fragment key={thread.id}>
-              <option value="" selected disabled hidden>
-                Choose thread
-              </option>
+              {threadName ? (
+                <option selected disabled hidden>
+                  {threadName}
+                </option>
+              ) : (
+                <option value={""} selected disabled hidden>
+                  Choose thread
+                </option>
+              )}
               <option value={thread.id}>{thread.name}</option>
             </React.Fragment>
           ))}
         </Select>
         {errors.threadId && <ErrorMessage>{errors.threadId.message}</ErrorMessage>}
         <ImageDropzone file={file} setFile={setFile} />
-        <Button type="submit">Post</Button>
+        <Button disabled={!isSubmitting} type="submit">
+          Post
+        </Button>
       </Form>
     </Container>
   )

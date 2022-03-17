@@ -1,4 +1,4 @@
-import { CreateThreadInput } from "API"
+import { CreateThreadInput, CreateThreadMutation } from "API"
 import { API } from "aws-amplify"
 import { createThread } from "graphql/mutations"
 import React, { useEffect } from "react"
@@ -6,6 +6,7 @@ import { createPortal } from "react-dom"
 import { SubmitHandler, useForm } from "react-hook-form"
 import styled from "styled-components"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
+import { useRouter } from "next/router"
 
 interface Props {
   setModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,14 +19,18 @@ export const CreateThread: React.FC<Props> = ({ setModal }) => {
     formState: { errors },
   } = useForm<{ name: string }>()
 
+  const router = useRouter()
+
   const onSubmit: SubmitHandler<{ name: string }> = async (data) => {
     const createThreadInput: CreateThreadInput = { name: data.name }
 
-    await API.graphql({
+    const newThread = (await API.graphql({
       query: createThread,
       variables: { input: createThreadInput },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    })) as { data: CreateThreadMutation }
+
+    router.push(`/thread/${newThread.data.createThread?.id}`)
   }
 
   useEffect(() => {

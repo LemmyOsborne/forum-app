@@ -80,14 +80,6 @@ export const Header = () => {
                   Light mode
                 </MenuItem>
               )}
-              <MenuItem onClick={() => router.push(ROUTES.CREATE)}>
-                <AddIcon />
-                Create Post
-              </MenuItem>
-              <MenuItem onClick={() => setShowThreadModal(true)}>
-                <AddIcon />
-                Create Thread
-              </MenuItem>
               {!user && width <= 600 && (
                 <>
                   <MenuItem onClick={() => router.push(ROUTES.SIGN_IN)}>
@@ -101,10 +93,20 @@ export const Header = () => {
                 </>
               )}
               {user && (
-                <MenuItem onClick={signOut}>
-                  <LogoutIcon />
-                  Logout
-                </MenuItem>
+                <>
+                  <MenuItem onClick={() => router.push(ROUTES.CREATE)}>
+                    <AddIcon />
+                    Create Post
+                  </MenuItem>
+                  <MenuItem onClick={() => setShowThreadModal(true)}>
+                    <AddIcon />
+                    Create Thread
+                  </MenuItem>
+                  <MenuItem onClick={signOut}>
+                    <LogoutIcon />
+                    Logout
+                  </MenuItem>
+                </>
               )}
             </DropdownMenu>
           )}
