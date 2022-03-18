@@ -1,33 +1,110 @@
-import { withSSRContext } from "aws-amplify"
+import { withSSRContext, API } from "aws-amplify"
 import { getThread, listThreads } from "graphql/queries"
 import { GetStaticPaths, GetStaticProps } from "next"
-import React from "react"
+import React, { useState } from "react"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
-import { GetThreadQuery, ListThreadsQuery, Thread } from "API"
+import {
+  GetThreadQuery,
+  ListThreadsQuery,
+  Thread,
+  UpdateThreadInput,
+  UpdateThreadMutation,
+} from "API"
 import { PostPreview } from "components/post-preview/post-preview"
 import { compare } from "helpers/compare"
-import { Container, Header, Subtitle, Title, Button } from "styles/components/thread.styles"
+import {
+  Container,
+  Header,
+  Subtitle,
+  Title,
+  Button,
+  CreatedAt,
+  Description,
+  Info,
+  InfoTitle,
+  Subs,
+  PostsContainer,
+  HeaderContent,
+  CreatePostButton,
+} from "styles/components/thread.styles"
 import { useRouter } from "next/router"
+import { format } from "date-fns"
+import { updateThread } from "graphql/mutations"
+import { useUser } from "context/AuthContext"
 
 interface Props {
   thread: Thread
 }
 
-const IndividualThread: React.FC<Props> = ({ thread }) => {
+const IndividualThread: React.FC<Props> = ({
+  thread: { id, name, owner, posts, description, createdAt, subscribers },
+}) => {
   const router = useRouter()
+  const [subs, setSubs] = useState(subscribers)
+  const { user } = useUser()
+  const username = user?.getUsername()
+
+  const addSubscriber = async () => {
+    if (subscribers && username) {
+      const updateThreadInput: UpdateThreadInput = {
+        id: id,
+        subscribers: [...subscribers, username],
+      }
+
+      const addNewSubscriber = (await API.graphql({
+        query: updateThread,
+        variables: { input: updateThreadInput },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })) as { data: UpdateThreadMutation }
+
+      setSubs(addNewSubscriber.data.updateThread?.subscribers)
+    }
+  }
+
+  const deleteSubscriber = async () => {
+    if (subscribers && username) {
+      const updateThreadInput: UpdateThreadInput = {
+        id: id,
+        subscribers: subscribers.filter((sub) => sub !== username),
+      }
+
+      const addNewSubscriber = (await API.graphql({
+        query: updateThread,
+        variables: { input: updateThreadInput },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })) as { data: UpdateThreadMutation }
+
+      setSubs(addNewSubscriber.data.updateThread?.subscribers)
+    }
+  }
 
   return (
     <Container>
       <Header>
-        <Title>{thread.name}</Title>
-        <Subtitle>
-          by <span>{thread.owner}</span>
-        </Subtitle>
-        <Button onClick={() => router.push("/create")}>Create Post</Button>
+        <HeaderContent>
+          <Title>{name}</Title>
+          <Subtitle>
+            by <span>{owner}</span>
+          </Subtitle>
+          {subs?.includes(username as string) ? (
+            <Button onClick={deleteSubscriber}>Leave</Button>
+          ) : (
+            <Button onClick={addSubscriber}>Join</Button>
+          )}
+        </HeaderContent>
       </Header>
-      {thread.posts?.items.sort(compare).map((post) => (
-        <PostPreview key={post.id} post={post} />
-      ))}
+      <PostsContainer>
+        {posts?.items.sort(compare).map((post) => (
+          <PostPreview key={post.id} post={post} />
+        ))}
+      </PostsContainer>
+      <Info>
+        <InfoTitle>About Thread</InfoTitle>
+        <Description>{description}</Description>
+        <Subs>{subs ? subs.length : "Doesn't nave"} subscribers</Subs>
+        <CreatedAt>Created at {format(new Date(createdAt), "MMMM d, Y")}</CreatedAt>
+        <CreatePostButton onClick={() => router.push("/create")}>Create Post</CreatePostButton>
+      </Info>
     </Container>
   )
 }

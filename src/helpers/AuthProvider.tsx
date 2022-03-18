@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }: Props): ReactElement => {
         setUser(amplifyUser)
       }
     } catch (error) {
+      console.error(error)
       setUser(null)
     }
   }
