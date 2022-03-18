@@ -1005,17 +1005,17 @@ export type ListPostsQuery = {
       title: string
       content?: string | null
       image?: string | null
-      thread?: {
+      thread: {
         __typename: "Thread"
         id: string
         name: string
         description?: string | null
         image?: string | null
-        subscribers?: Array<string | null> | null
+        subscribers?: Array<string>
         createdAt: string
         updatedAt: string
-        owner?: string | null
-      } | null
+        owner: string
+      }
       comments: {
         __typename: "ModelCommentConnection"
         nextToken?: string | null
@@ -1030,7 +1030,7 @@ export type ListPostsQuery = {
       updatedAt: string
       threadPostsId: string
       owner?: string | null
-    } | null>
+    }>
     nextToken?: string | null
   }
 }

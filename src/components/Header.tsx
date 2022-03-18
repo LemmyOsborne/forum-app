@@ -45,8 +45,8 @@ export const Header = () => {
   const [search, setSearch] = useState<string>()
   const { threads } = useContext(ThreadsContext)
   const searchResult = threads
-    ?.map((thread) => thread.name)
-    .filter((name) => name.includes(search as string))
+    ?.map((thread) => thread.name.toLowerCase())
+    .filter((name) => name.includes(search?.toLowerCase() as string))
 
   const signOut = async () => {
     try {

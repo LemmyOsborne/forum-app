@@ -24,19 +24,20 @@ export default function Home() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         errors: any[]
       }
-      if (allPosts) {
-        setPosts(
-          allPosts.data.listPosts?.items.filter((post) =>
-            post?.thread?.subscribers?.includes(username as string)
+      try {
+        if (allPosts && username) {
+          const filteredPosts = allPosts.data.listPosts.items.filter((post) =>
+            post.thread.subscribers?.includes(username)
           ) as Post[]
-        )
-      } else {
-        throw new Error("Something went wrong.")
+          setPosts(filteredPosts)
+        }
+      } catch (e) {
+        console.log(e)
       }
     }
 
     getAllPosts()
-  }, [])
+  }, [user])
 
   return posts ? (
     <Container id="posts-container">
