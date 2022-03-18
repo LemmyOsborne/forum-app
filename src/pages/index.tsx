@@ -7,9 +7,12 @@ import { listPosts } from "graphql/queries"
 import { PostPreview } from "components/post-preview/post-preview"
 import { compare } from "helpers/compare"
 import { Skeleton, SkeletonText, SkeletonTitle } from "styles/skeleton.styles"
+import { useUser } from "context/AuthContext"
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>()
+  const { user } = useUser()
+  const username = user?.getUsername()
 
   useEffect(() => {
     const getAllPosts = async () => {
@@ -22,7 +25,11 @@ export default function Home() {
         errors: any[]
       }
       if (allPosts) {
-        setPosts(allPosts.data.listPosts?.items as Post[])
+        setPosts(
+          allPosts.data.listPosts?.items.filter((post) =>
+            post?.thread?.subscribers?.includes(username as string)
+          ) as Post[]
+        )
       } else {
         throw new Error("Something went wrong.")
       }
