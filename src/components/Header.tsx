@@ -28,6 +28,7 @@ import {
   SearchContainer,
   SearchResult,
   SearchItem,
+  SearchTag,
 } from "styles/components/header.styles"
 import { ToggleThemeContext } from "context/ToggleThemeContext"
 import { useWindowSize } from "hooks/useWindowSize"
@@ -47,6 +48,7 @@ export const Header = () => {
   const searchResult = threads
     ?.map((thread) => thread.name)
     .filter((name) => name.toLowerCase().includes(search?.toLowerCase() as string))
+  const [searchTag, setSearchTag] = useState<string>()
 
   const signOut = async () => {
     try {
@@ -57,23 +59,33 @@ export const Header = () => {
     }
   }
 
+  const backspaceHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === "Backspace") setSearchTag("")
+  }
+
+  const [isFocus, setIsFocus] = useState(false)
   return (
     <Container>
       <Logo onClick={() => router.push(ROUTES.HOME)}>
         <Image src={LogoImage} height={150} width={150} alt="Logo" />
       </Logo>
-      <SearchContainer>
+      <SearchContainer focus={isFocus}>
         <SearchIcon />
+        {searchTag && <SearchTag>{searchTag}</SearchTag>}
         <Search
           placeholder="Find threads"
           value={search}
           onChange={({ target }) => setSearch(target.value)}
+          onKeyDown={(e) => backspaceHandler(e)}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
         />
         {search && (
           <SearchResult>
             {searchResult?.map((result) => (
               <SearchItem
                 onClick={async () => {
+                  setSearchTag(result)
                   await router.push(
                     `/thread/${threads?.find((thread) => thread.name === result)?.id}`
                   )

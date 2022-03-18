@@ -34,6 +34,7 @@ export const HeaderContent = styled.div`
 export const PostsContainer = styled.section`
   grid-area: posts;
   justify-self: end;
+  align-self: start;
 `
 
 export const Title = styled.h1`

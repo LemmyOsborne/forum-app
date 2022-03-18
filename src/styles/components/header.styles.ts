@@ -107,30 +107,31 @@ export const Username = styled.p`
   font-weight: 600;
 `
 
-export const SearchContainer = styled.div`
+export const SearchContainer = styled.div<{ focus: boolean }>`
   position: relative;
   width: 400px;
+  display: flex;
+  border: ${({ focus }) => (focus ? "1px solid white;" : "1px solid gray;")};
+  border-radius: 4px;
+  align-items: center;
 
   svg {
-    position: absolute;
     fill: ${({ theme }) => theme.palette.text.primary};
-    top: 5px;
-    left: 8px;
+    margin-right: 5px;
+    margin-left: 20px;
+    width: 40px;
+  }
+
+  :hover {
+    border: 1px solid ${({ theme }) => theme.palette.primary.light};
   }
 `
 
 export const Search = styled.input`
-  border: 1px solid ${({ theme }) => theme.palette.secondary.light};
-  padding: 10px 0 10px 45px;
+  padding: 10px 0;
   width: 100%;
-  border-radius: 4px;
   color: white;
   background: none;
-
-  :hover,
-  :focus {
-    border: 1px solid ${({ theme }) => theme.palette.primary.light};
-  }
 `
 export const SearchResult = styled.div`
   background-color: ${({ theme }) => theme.palette.secondary.dark};
@@ -148,4 +149,14 @@ export const SearchItem = styled.div`
     background-color: ${({ theme }) => theme.palette.secondary.light};
     color: ${({ theme }) => theme.palette.secondary.contrastText};
   }
+`
+
+export const SearchTag = styled.div`
+  background-color: ${({ theme }) => theme.palette.primary.dark};
+  color: ${({ theme }) => theme.palette.primary.contrastText};
+  height: 80%;
+  padding: 1px 6px 3px;
+  border-radius: 15px;
+  cursor: default;
+  margin-right: 5px;
 `
