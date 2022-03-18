@@ -120,12 +120,17 @@ export const SearchContainer = styled.div`
 `
 
 export const Search = styled.input`
-  border: 1px solid lightgray;
+  border: 1px solid ${({ theme }) => theme.palette.secondary.light};
   padding: 10px 0 10px 45px;
   width: 100%;
   border-radius: 4px;
   color: white;
   background: none;
+
+  :hover,
+  :focus {
+    border: 1px solid ${({ theme }) => theme.palette.primary.light};
+  }
 `
 export const SearchResult = styled.div`
   background-color: ${({ theme }) => theme.palette.secondary.dark};
