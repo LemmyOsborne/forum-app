@@ -15,7 +15,7 @@ export const WarnContainer = styled.div`
 export const Container = styled.article`
   display: flex;
   min-width: 400px;
-  width: 90%;
+  width: 100%;
   max-width: 700px;
   background-color: ${({ theme }) => theme.palette.secondary.main};
   margin-bottom: 10px;

@@ -1,23 +1,39 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-  margin-top: 3.7rem;
-  display: flex;
-  flex-direction: column;
+  margin-top: 3rem;
+  display: grid;
+  position: relative;
   align-items: center;
   min-height: 100vh;
+  grid-template-areas:
+    "head head "
+    "posts info"
+    "posts .";
+  grid-template-rows: 100px 1fr;
+  grid-template-columns: 1fr 35vw;
+  gap: 20px;
   background-color: ${({ theme }) => theme.palette.secondary.dark};
 `
 
 export const Header = styled.header`
   background-color: ${({ theme }) => theme.palette.secondary.light};
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
   padding: 20px;
-  margin-bottom: 40px;
-  position: relative;
+  grid-area: head;
+`
+
+export const HeaderContent = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+`
+
+export const PostsContainer = styled.section`
+  grid-area: posts;
+  justify-self: end;
 `
 
 export const Title = styled.h1`
@@ -37,14 +53,14 @@ export const Subtitle = styled.h2`
 `
 
 export const Button = styled.button`
-  padding: 10px 20px;
+  padding: 4px 25px;
+  margin-top: 10px;
   border-radius: 25px;
+  margin-left: 20px;
   font-weight: 600;
   border: 2px solid ${({ theme }) => theme.palette.secondary.contrastText};
   color: ${({ theme }) => theme.palette.secondary.contrastText};
   align-self: center;
-  position: absolute;
-  right: 40px;
 
   :hover {
     background-color: ${({ theme }) => theme.palette.primary.main};
@@ -52,3 +68,48 @@ export const Button = styled.button`
     border: 2px solid ${({ theme }) => theme.palette.primary.contrastText};
   }
 `
+
+export const Info = styled.section`
+  grid-area: info;
+  background-color: ${({ theme }) => theme.palette.secondary.main};
+  color: ${({ theme }) => theme.palette.text.primary};
+  width: 300px;
+  padding: 10px 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: start;
+  justify-self: start;
+`
+
+export const InfoTitle = styled.h1`
+  color: ${({ theme }) => theme.palette.secondary.contrastText};
+  font-size: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.secondary.contrastText};
+`
+export const CreatePostButton = styled.button`
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 25px;
+  background-color: ${({ theme }) => theme.palette.primary.main};
+  transition: all 0.33s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  :hover {
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+    text-decoration: underline;
+  }
+`
+
+export const Description = styled.p`
+  font-weight: 500;
+  letter-spacing: 0.3px;
+`
+
+export const Subs = styled.p``
+
+export const CreatedAt = styled.p``
