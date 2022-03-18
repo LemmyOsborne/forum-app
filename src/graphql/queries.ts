@@ -20,6 +20,28 @@ export const getThread = /* GraphQL */ `
           updatedAt
           threadPostsId
           owner
+          comments {
+            items {
+              id
+              content
+              createdAt
+              updatedAt
+              postCommentsId
+              owner
+            }
+            nextToken
+          }
+          votes {
+            items {
+              id
+              vote
+              createdAt
+              updatedAt
+              postVotesId
+              owner
+            }
+            nextToken
+          }
         }
         nextToken
       }

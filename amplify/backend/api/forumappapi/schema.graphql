@@ -3,7 +3,7 @@ type Thread
   @auth(
     rules: [
       { allow: owner, operations: [create, read, update, delete] }
-      { allow: private, operations: [read] }
+      { allow: private, operations: [read, update] }
       { allow: public, operations: [read] }
     ]
   ) {
