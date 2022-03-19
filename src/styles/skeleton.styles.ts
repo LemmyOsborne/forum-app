@@ -22,8 +22,8 @@ const skeletonLight = keyframes`
 
 export const Skeleton = styled.div`
   background-color: ${({ theme }) => theme.palette.secondary.main};
-  min-width: 400px;
-  width: 90%;
+  min-width: 310px;
+  width: 100%;
   max-width: 700px;
   margin-bottom: 3rem;
   border-radius: 4px;
