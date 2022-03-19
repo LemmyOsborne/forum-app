@@ -108,11 +108,13 @@ const IndividualThread: React.FC<Props> = ({
           <Subtitle>
             by <span>{owner}</span>
           </Subtitle>
-          {subs?.includes(username as string) ? (
-            <Button onClick={deleteSubscriber}>Leave</Button>
-          ) : (
-            <Button onClick={addSubscriber}>Join</Button>
-          )}
+          {owner !== username ? (
+            subs?.includes(username as string) ? (
+              <Button onClick={deleteSubscriber}>Leave</Button>
+            ) : (
+              <Button onClick={addSubscriber}>Join</Button>
+            )
+          ) : null}
         </HeaderContent>
       </Header>
       <PostsContainer>
