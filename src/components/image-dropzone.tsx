@@ -19,15 +19,13 @@ export const ImageDropzone: React.FC<Props> = ({ file, setFile }) => {
 
   return file ? (
     <Container>
-      <h3 style={{ marginBottom: "10px" }}>Your image:</h3>
+      <h3>Your image:</h3>
       <img src={URL.createObjectURL(file)} style={{ width: "auto", maxHeight: 150 }} />
     </Container>
   ) : (
     <Container style={{ padding: 0 }} {...getRootProps()}>
       <input {...getInputProps()} />
-      <p style={{ alignSelf: "center" }}>
-        Drag &apos;n&apos; drop some files here, or click to select files
-      </p>
+      <p>Drag &apos;n&apos; drop some files here, or click to select files</p>
     </Container>
   )
 }

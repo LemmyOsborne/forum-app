@@ -15,5 +15,11 @@ export const Container = styled.div`
 
   p {
     color: ${({ theme }) => theme.palette.grey[600]};
+    align-self: "center";
+  }
+
+  h3 {
+    margin-bottom: 10px;
+    color: ${({ theme }) => theme.palette.grey[600]};
   }
 `

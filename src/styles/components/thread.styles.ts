@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-  margin-top: 3rem;
+  margin-top: 4rem;
   display: grid;
   position: relative;
   align-items: center;
@@ -20,16 +20,17 @@ export const Header = styled.header`
   background-color: ${({ theme }) => theme.palette.secondary.contrastText};
   opacity: 0.9;
   width: 100%;
-  padding: 20px;
   grid-area: head;
+  margin-bottom: 20px;
 `
 
 export const HeaderContent = styled.div`
-  max-width: 900px;
+  max-width: 1050px;
   margin: 0 auto;
   display: flex;
   justify-content: flex-start;
-  align-items: baseline;
+  align-items: center;
+  padding: 20px;
 `
 
 export const PostsContainer = styled.section`

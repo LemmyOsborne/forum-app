@@ -1,7 +1,8 @@
-import { withSSRContext, API } from "aws-amplify"
+import { withSSRContext, API, Storage } from "aws-amplify"
 import { getThread, listThreads } from "graphql/queries"
 import { GetStaticPaths, GetStaticProps } from "next"
-import React, { useState } from "react"
+import Image from "next/image"
+import React, { useEffect, useState } from "react"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import {
   GetThreadQuery,
@@ -37,12 +38,28 @@ interface Props {
 }
 
 const IndividualThread: React.FC<Props> = ({
-  thread: { id, name, owner, posts, description, createdAt, subscribers },
+  thread: { id, name, owner, posts, description, createdAt, subscribers, image },
 }) => {
   const router = useRouter()
   const [subs, setSubs] = useState(subscribers)
   const { user } = useUser()
   const username = user?.getUsername()
+  const [imageUrl, setImageUrl] = useState("")
+
+  useEffect(() => {
+    const getImageUrl = async () => {
+      if (image) {
+        try {
+          const imageUrl = await Storage.get(image)
+          setImageUrl(imageUrl)
+        } catch (e) {
+          console.error(e)
+        }
+      }
+    }
+
+    getImageUrl()
+  }, [image])
 
   const addSubscriber = async () => {
     if (subscribers && username) {
@@ -82,6 +99,11 @@ const IndividualThread: React.FC<Props> = ({
     <Container>
       <Header>
         <HeaderContent>
+          {imageUrl && (
+            <div style={{ borderRadius: "50%", overflow: "hidden", marginRight: "20px" }}>
+              <Image src={imageUrl} layout="intrinsic" objectFit="cover" height={70} width={70} />
+            </div>
+          )}
           <Title>{name}</Title>
           <Subtitle>
             by <span>{owner}</span>
