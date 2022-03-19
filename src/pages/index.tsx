@@ -71,4 +71,5 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 5rem;
+  overflow-x: hidden;
 `
