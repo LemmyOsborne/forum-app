@@ -25,11 +25,13 @@ export default function Home() {
         errors: any[]
       }
       try {
-        if (allPosts && username) {
+        if (allPosts && user && username) {
           const filteredPosts = allPosts.data.listPosts.items.filter((post) =>
             post.thread.subscribers?.includes(username)
           ) as Post[]
           setPosts(filteredPosts)
+        } else {
+          setPosts(allPosts.data.listPosts.items as Post[])
         }
       } catch (e) {
         console.log(e)

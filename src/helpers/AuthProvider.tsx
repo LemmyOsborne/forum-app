@@ -26,6 +26,8 @@ export const AuthProvider = ({ children }: Props): ReactElement => {
       const amplifyUser = await Auth.currentAuthenticatedUser()
       if (amplifyUser) {
         setUser(amplifyUser)
+      } else {
+        setUser(null)
       }
     } catch (error) {
       console.error(error)
