@@ -8,15 +8,15 @@ export const defaultTheme: DefaultTheme = {
       white: "#fff",
     },
     primary: {
-      main: "#1976d2",
-      light: "#42a5f5",
-      dark: "#1565c0",
+      main: "#e85a4f",
+      light: "#E44437",
+      dark: "#CB5046",
       contrastText: "#fff",
     },
     secondary: {
-      main: "#F4EEFF",
-      light: "#ba68c8",
-      dark: "#bdbdbd",
+      main: "#8e8d8a",
+      light: "#ABAAA6",
+      dark: "#666666",
       contrastText: "#fff",
     },
     error: {
@@ -61,8 +61,8 @@ export const defaultTheme: DefaultTheme = {
       disabled: "rgba(0, 0, 0, 0.3)",
     },
     background: {
-      default: "#FFF8F3",
-      header: "#EAEAEA",
+      default: "#eae7dc",
+      header: "#8e8d8a",
     },
   },
   media: {
