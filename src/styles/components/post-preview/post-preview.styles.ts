@@ -14,7 +14,7 @@ export const WarnContainer = styled.div`
 
 export const Container = styled.article`
   display: flex;
-  min-width: 400px;
+  min-width: 300px;
   width: 100%;
   max-width: 700px;
   background-color: ${({ theme }) => theme.palette.secondary.main};
@@ -54,6 +54,17 @@ export const Title = styled.h1`
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 20px;
+`
+
+export const TextWrapper = styled.div`
+  display: flex;
+  z-index: 800;
+  width: fit-content;
+
+  @media (max-width: ${({ theme }) => theme.media.sm}) {
+    flex-direction: column;
+    width: 130px;
+  }
 `
 
 export const Text = styled.p`

@@ -20,6 +20,10 @@ export const Wrapper = styled.div`
   height: 100%;
   min-height: 100vh;
   padding: 7rem 0 30px;
+
+  @media (max-width: ${({ theme }) => theme.media.sm}) {
+    width: 300px;
+  }
 `
 
 export const CloseButton = styled.button`
@@ -39,6 +43,10 @@ export const CloseButton = styled.button`
 
   :hover {
     opacity: 0.8;
+  }
+
+  @media (max-width: ${({ theme }) => theme.media.sm}) {
+    right: 30px;
   }
 `
 

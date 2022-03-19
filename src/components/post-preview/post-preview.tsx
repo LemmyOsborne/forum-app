@@ -39,6 +39,7 @@ import {
   UpdatePostIconWrapper,
   ButtonGroup,
   Button,
+  TextWrapper,
 } from "styles/components/post-preview/post-preview.styles"
 import { DeletePostWarn } from "./delete-post-warn"
 
@@ -213,7 +214,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
         </ButtonGroup>
       ) : null}
       <ContentSection onClick={() => router.push(`/post/${post.id}`)}>
-        <div style={{ display: "flex", zIndex: "800", width: "fit-content" }}>
+        <TextWrapper>
           {post.thread?.name && (
             <SmallText onClick={handleThreadRedirect}>
               From <b>{post.thread.name}</b>
@@ -222,7 +223,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
           <SmallText>
             Posted by <b>{post.owner}</b> {formatDate(post.createdAt)} hours ago.
           </SmallText>
-        </div>
+        </TextWrapper>
         <Title>{post.title}</Title>
         {postText && isUpdatePostText ? (
           <>

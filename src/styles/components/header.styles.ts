@@ -126,6 +126,10 @@ export const SearchContainer = styled.div<{ focus: boolean }>`
   :hover {
     border: 1px solid ${({ theme }) => theme.palette.common.white};
   }
+
+  @media (max-width: ${({ theme }) => theme.media.sm}) {
+    display: none;
+  }
 `
 
 export const Search = styled.input`

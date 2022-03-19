@@ -39,7 +39,7 @@ export default function Home() {
     }
 
     getAllPosts()
-  }, [user])
+  }, [])
 
   return posts ? (
     <Container id="posts-container">
