@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const Form = styled.form`
   max-width: 800px;
   width: 80%;
+  min-width: 310px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.palette.grey[700]};
   padding: 40px 40px;

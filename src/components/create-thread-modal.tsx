@@ -140,15 +140,19 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 60px;
+  overflow: scroll;
 `
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.palette.background.header};
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
+  min-width: 310px;
   padding: 20px;
   border-radius: 4px;
   position: relative;
   z-index: 1001;
+  overflow: scroll;
 `
 
 const Top = styled.section`
