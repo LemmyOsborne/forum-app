@@ -40,7 +40,7 @@ const Create = () => {
     formState: { errors, isSubmitting },
   } = useForm<IFormData>()
 
-  const onSubmit: SubmitHandler<IFormData> = async (data) => {
+  const onSubmit: SubmitHandler<IFormData> = async ({ title, content, threadId }) => {
     if (file) {
       try {
         const imagePath = uuidv4()
@@ -50,10 +50,10 @@ const Create = () => {
         })
 
         const createNewPostInput: CreatePostInput = {
-          title: data.title,
-          content: data.content,
+          title: title,
+          content: content,
           image: imagePath,
-          threadPostsId: data.threadId,
+          threadPostsId: threadId,
         }
         const createNewPost = (await API.graphql({
           query: createPost,
@@ -70,9 +70,9 @@ const Create = () => {
       }
     } else {
       const createNewPostWithoutImageInput: CreatePostInput = {
-        title: data.title,
-        content: data.content,
-        threadPostsId: data.threadId,
+        title: title,
+        content: content,
+        threadPostsId: threadId,
       }
 
       const createNewPostWithoutImage = (await API.graphql({

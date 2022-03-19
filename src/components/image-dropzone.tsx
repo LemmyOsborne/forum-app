@@ -5,6 +5,7 @@ import { Container } from "styles/components/image-dropzone.styles"
 interface Props {
   file: File | undefined
   setFile: React.Dispatch<React.SetStateAction<File | undefined>>
+  id?: string
 }
 
 export const ImageDropzone: React.FC<Props> = ({ file, setFile }) => {
@@ -22,9 +23,11 @@ export const ImageDropzone: React.FC<Props> = ({ file, setFile }) => {
       <img src={URL.createObjectURL(file)} style={{ width: "auto", maxHeight: 150 }} />
     </Container>
   ) : (
-    <Container {...getRootProps()}>
+    <Container style={{ padding: 0 }} {...getRootProps()}>
       <input {...getInputProps()} />
-      <p>Drag &apos;n&apos; drop some files here, or click to select files</p>
+      <p style={{ alignSelf: "center" }}>
+        Drag &apos;n&apos; drop some files here, or click to select files
+      </p>
     </Container>
   )
 }

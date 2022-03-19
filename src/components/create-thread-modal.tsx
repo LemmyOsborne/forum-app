@@ -1,15 +1,22 @@
 import { CreateThreadInput, CreateThreadMutation } from "API"
-import { API } from "aws-amplify"
+import { API, Storage } from "aws-amplify"
 import { createThread } from "graphql/mutations"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import { SubmitHandler, useForm } from "react-hook-form"
 import styled from "styled-components"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { useRouter } from "next/router"
+import { ImageDropzone } from "./image-dropzone"
+import { v4 as uuidv4 } from "uuid"
 
 interface Props {
   setModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+interface IFormData {
+  name: string
+  description?: string
 }
 
 export const CreateThread: React.FC<Props> = ({ setModal }) => {
@@ -17,20 +24,54 @@ export const CreateThread: React.FC<Props> = ({ setModal }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{ name: string }>()
+  } = useForm<IFormData>()
 
   const router = useRouter()
+  const [file, setFile] = useState<File>()
 
-  const onSubmit: SubmitHandler<{ name: string }> = async (data) => {
-    const createThreadInput: CreateThreadInput = { name: data.name }
+  const onSubmit: SubmitHandler<IFormData> = async ({ name, description }) => {
+    if (file) {
+      try {
+        const imagePath = uuidv4()
 
-    const newThread = (await API.graphql({
-      query: createThread,
-      variables: { input: createThreadInput },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })) as { data: CreateThreadMutation }
+        await Storage.put(imagePath, file, {
+          contentType: file.type,
+        })
 
-    router.push(`/thread/${newThread.data.createThread?.id}`)
+        const createThreadInput: CreateThreadInput = {
+          name: name,
+          description: description,
+          image: imagePath,
+        }
+
+        const newThread = (await API.graphql({
+          query: createThread,
+          variables: { input: createThreadInput },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as { data: CreateThreadMutation }
+
+        router.push(`/thread/${newThread.data.createThread?.id}`)
+      } catch (e) {
+        console.error(e)
+      }
+    } else {
+      try {
+        const createThreadInput: CreateThreadInput = {
+          name: name,
+          description: description,
+        }
+
+        const newThread = (await API.graphql({
+          query: createThread,
+          variables: { input: createThreadInput },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as { data: CreateThreadMutation }
+
+        router.push(`/thread/${newThread.data.createThread?.id}`)
+      } catch (e) {
+        console.error(e)
+      }
+    }
   }
 
   useEffect(() => {
@@ -45,11 +86,11 @@ export const CreateThread: React.FC<Props> = ({ setModal }) => {
           <Subtitle>Community names cannot be changed after creating.</Subtitle>
         </Top>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Label htmlFor="input">Name of community</Label>
+          <Label htmlFor="name">Name of community</Label>
           <InputWrapper>
             <Input
               placeholder="Name"
-              id="input"
+              id="name"
               {...register("name", {
                 required: true,
                 maxLength: {
@@ -58,7 +99,24 @@ export const CreateThread: React.FC<Props> = ({ setModal }) => {
                 },
               })}
             />
+          </InputWrapper>
+          <Label htmlFor="description">Describe your community</Label>
+          <InputWrapper>
+            <Input
+              placeholder="Describe your community"
+              id="description"
+              {...register("description", {
+                maxLength: {
+                  value: 300,
+                  message: "Description must be shorter than 301 character.",
+                },
+              })}
+            />
             {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+          </InputWrapper>
+          <Label htmlFor="image">Add an avatar of your community</Label>
+          <InputWrapper>
+            <ImageDropzone id="image" file={file} setFile={setFile} />
           </InputWrapper>
           <Footer>
             <Button type="submit">Create Community</Button>
@@ -73,7 +131,7 @@ export const CreateThread: React.FC<Props> = ({ setModal }) => {
 const Overlay = styled.div`
   width: 100%;
   height: 100%;
-  background: hsl(0, 0%, 10%, 0.9);
+  background: hsl(0, 0%, 15%, 0.9);
   z-index: 999;
   position: absolute;
   top: 0;
@@ -81,11 +139,11 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 60px;
 `
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.palette.background.header};
-  height: 350px;
   width: 600px;
   padding: 20px;
   border-radius: 4px;
@@ -116,7 +174,7 @@ const Label = styled.label`
 `
 
 const InputWrapper = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   width: 100%;
 `
 
