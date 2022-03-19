@@ -36,6 +36,7 @@ export const SkeletonTitle = styled.div`
     infinite alternate;
   margin: 30px 0;
   width: 50%;
+  border-radius: 2px;
 `
 
 export const SkeletonText = styled.div`
@@ -43,6 +44,7 @@ export const SkeletonText = styled.div`
   animation: ${({ theme }) => (theme.title === "light" ? skeletonLight : skeletonDark)} 1s linear
     infinite alternate;
   margin-bottom: 10px;
+  border-radius: 2px;
 
   :last-of-type {
     width: 80%;
