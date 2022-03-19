@@ -13,11 +13,12 @@ export const Container = styled.div`
   grid-template-rows: 100px 1fr;
   grid-template-columns: 1fr 35vw;
   gap: 20px;
-  background-color: ${({ theme }) => theme.palette.secondary.dark};
+  background-color: ${({ theme }) => theme.palette.background.default};
 `
 
 export const Header = styled.header`
-  background-color: ${({ theme }) => theme.palette.secondary.light};
+  background-color: ${({ theme }) => theme.palette.secondary.contrastText};
+  opacity: 0.9;
   width: 100%;
   padding: 20px;
   grid-area: head;
@@ -38,13 +39,14 @@ export const PostsContainer = styled.section`
 `
 
 export const Title = styled.h1`
-  color: ${({ theme }) => theme.palette.text.primary};
+  color: ${({ theme }) => theme.palette.error.contrastText};
   font-size: 40px;
   margin-right: 10px;
 `
 
 export const Subtitle = styled.h2`
-  color: ${({ theme }) => theme.palette.text.secondary};
+  color: ${({ theme }) => theme.palette.error.contrastText};
+  opacity: 0.8;
   font-size: 30px;
 
   span {
@@ -59,13 +61,13 @@ export const Button = styled.button`
   border-radius: 25px;
   margin-left: 20px;
   font-weight: 600;
-  border: 2px solid ${({ theme }) => theme.palette.secondary.contrastText};
-  color: ${({ theme }) => theme.palette.secondary.contrastText};
+  border: 2px solid ${({ theme }) => theme.palette.error.contrastText};
+  color: ${({ theme }) => theme.palette.error.contrastText};
   align-self: center;
 
   :hover {
-    background-color: ${({ theme }) => theme.palette.primary.main};
-    color: ${({ theme }) => theme.palette.primary.contrastText};
+    background-color: ${({ theme }) => theme.palette.secondary.main};
+    color: ${({ theme }) => theme.palette.secondary.contrastText};
     border: 2px solid ${({ theme }) => theme.palette.primary.contrastText};
   }
 `
@@ -81,6 +83,8 @@ export const Info = styled.section`
   gap: 20px;
   align-self: start;
   justify-self: start;
+  border-radius: 4px;
+  border: 1px solid ${({ theme }) => theme.palette.secondary.dark};
 `
 
 export const InfoTitle = styled.h1`

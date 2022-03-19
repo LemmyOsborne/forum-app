@@ -12,6 +12,7 @@ export const Container = styled.header`
   align-items: center;
   z-index: 1000;
   padding: 0 20px;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.background.default};
 `
 
 export const Logo = styled.div`
@@ -30,7 +31,7 @@ export const SignInButton = styled.button`
   height: 30px;
   font-size: 16px;
   font-weight: 600;
-  color: ${({ theme }) => theme.palette.primary.main};
+  color: ${({ theme }) => theme.palette.primary.contrastText};
   margin-right: 10px;
   background-color: transparent;
   border-radius: 20px;
@@ -111,7 +112,7 @@ export const SearchContainer = styled.div<{ focus: boolean }>`
   position: relative;
   width: 400px;
   display: flex;
-  border: ${({ focus }) => (focus ? "1px solid white;" : "1px solid gray;")};
+  border: ${({ focus }) => (focus ? "1px solid white;" : "1px solid lightgrey;")};
   border-radius: 4px;
   align-items: center;
 
@@ -123,7 +124,7 @@ export const SearchContainer = styled.div<{ focus: boolean }>`
   }
 
   :hover {
-    border: 1px solid ${({ theme }) => theme.palette.primary.light};
+    border: 1px solid ${({ theme }) => theme.palette.common.white};
   }
 `
 
@@ -132,6 +133,11 @@ export const Search = styled.input`
   width: 100%;
   color: white;
   background: none;
+  color: ${({ theme }) => theme.palette.text.primary};
+
+  ::placeholder {
+    color: ${({ theme }) => theme.palette.text.primary};
+  }
 `
 export const SearchResult = styled.div`
   background-color: ${({ theme }) => theme.palette.secondary.dark};

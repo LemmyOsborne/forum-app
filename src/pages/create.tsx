@@ -133,7 +133,7 @@ const Create = () => {
         </Select>
         {errors.threadId && <ErrorMessage>{errors.threadId.message}</ErrorMessage>}
         <ImageDropzone file={file} setFile={setFile} />
-        <Button disabled={!isSubmitting} type="submit">
+        <Button disabled={isSubmitting} type="submit">
           Post
         </Button>
       </Form>

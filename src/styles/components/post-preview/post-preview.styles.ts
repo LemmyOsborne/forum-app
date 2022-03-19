@@ -18,15 +18,17 @@ export const Container = styled.article`
   width: 100%;
   max-width: 700px;
   background-color: ${({ theme }) => theme.palette.secondary.main};
+  color: ${({ theme }) => theme.palette.secondary.contrastText};
   margin-bottom: 10px;
   cursor: pointer;
   padding: 10px;
   border-radius: 4px;
   height: 100%;
   position: relative;
+  border: 1px solid ${({ theme }) => theme.palette.secondary.dark};
 
   :hover {
-    outline: ${({ theme }) => theme.palette.grey[500]} 1px solid;
+    border: 1px solid ${({ theme }) => theme.palette.common.white};
   }
 `
 

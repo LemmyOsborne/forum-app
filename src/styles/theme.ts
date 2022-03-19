@@ -8,16 +8,16 @@ export const defaultTheme: DefaultTheme = {
       white: "#fff",
     },
     primary: {
-      main: "#e85a4f",
-      light: "#E44437",
+      main: "#E44437",
+      light: "#e85a4f",
       dark: "#CB5046",
-      contrastText: "#fff",
+      contrastText: "#000",
     },
     secondary: {
       main: "#8e8d8a",
       light: "#ABAAA6",
       dark: "#666666",
-      contrastText: "#fff",
+      contrastText: "#000",
     },
     error: {
       main: "#d32f2f",
@@ -96,7 +96,7 @@ export const darkTheme: DefaultTheme = {
       main: "#d32f2f",
       light: "#ef5350",
       dark: "#c62828",
-      contrastText: "#fff",
+      contrastText: "#000",
     },
     warning: {
       main: "#ed6c02",

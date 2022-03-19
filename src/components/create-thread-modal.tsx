@@ -73,7 +73,7 @@ export const CreateThread: React.FC<Props> = ({ setModal }) => {
 const Overlay = styled.div`
   width: 100%;
   height: 100%;
-  background: hsl(0, 0%, 20%, 0.7);
+  background: hsl(0, 0%, 10%, 0.9);
   z-index: 999;
   position: absolute;
   top: 0;
@@ -136,7 +136,7 @@ const Button = styled.button`
 `
 
 const Footer = styled.footer`
-  background-color: ${({ theme }) => theme.palette.primary.main};
+  background-color: ${({ theme }) => theme.palette.secondary.dark};
   padding: 15px;
   position: absolute;
   bottom: 0;
