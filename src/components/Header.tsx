@@ -30,17 +30,19 @@ import {
   SearchItem,
   SearchTag,
 } from "styles/components/header.styles"
-import { ToggleThemeContext } from "context/ToggleThemeContext"
 import { useWindowSize } from "hooks/useWindowSize"
 import { CreateThread } from "./create-thread-modal"
 import { ThreadsContext } from "context/ThreadsContext"
+import { useAppDispatch, useAppSelector } from "features/store"
+import { changeTheme } from "features/slices/themeSlice"
+import { ETheme } from "interfaces/interfaces"
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const router = useRouter()
   const { user } = useUser()
   const username = user?.getUsername()
-  const { theme, setTheme } = useContext(ToggleThemeContext)
+  // const { theme, setTheme } = useContext(ToggleThemeContext)
   const { width } = useWindowSize()
   const [showThreadModal, setShowThreadModal] = useState(false)
   const [search, setSearch] = useState<string>()
@@ -49,6 +51,12 @@ export const Header = () => {
     ?.map((thread) => thread.name)
     .filter((name) => name.toLowerCase().includes(search?.toLowerCase() as string))
   const [searchTag, setSearchTag] = useState<string>()
+  const dispatch = useAppDispatch()
+  const { theme } = useAppSelector((state) => state.themeReducer)
+
+  const handleToggleTheme = (themeType: ETheme) => {
+    dispatch(changeTheme({ theme: themeType }))
+  }
 
   const signOut = async () => {
     try {
@@ -123,12 +131,12 @@ export const Header = () => {
           {showMenu && (
             <DropdownMenu>
               {theme === "light" ? (
-                <MenuItem onClick={() => setTheme("dark")}>
+                <MenuItem onClick={() => handleToggleTheme(ETheme.Dark)}>
                   <MoonIcon />
                   Dark mode
                 </MenuItem>
               ) : (
-                <MenuItem onClick={() => setTheme("light")}>
+                <MenuItem onClick={() => handleToggleTheme(ETheme.Light)}>
                   <SunIcon />
                   Light mode
                 </MenuItem>

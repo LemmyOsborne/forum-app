@@ -1,15 +1,15 @@
 import { AppProps } from "next/app"
 import Head from "next/head"
-import React, { useEffect, useLayoutEffect, useState } from "react"
-import { ThemeProvider } from "styled-components"
-import { defaultTheme, darkTheme } from "styles/theme"
+import React, { useEffect, useState } from "react"
 import { GlobalStyle } from "styles/global-style"
 import { Amplify } from "aws-amplify"
 import awsconfig from "../aws-exports"
 import { AuthProvider } from "helpers/AuthProvider"
 import { Header } from "components/Header"
-import { ToggleThemeContext } from "context/ToggleThemeContext"
 import { ThreadsProvider } from "helpers/ThreadsProvider"
+import { Provider } from "react-redux"
+import store from "features/store"
+import { ToggleThemeProvider } from "helpers/ThemeProvider"
 
 Amplify.configure({ ...awsconfig, ssr: true })
 
@@ -28,21 +28,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   return <Child Component={Component} pageProps={pageProps} />
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Child = ({ Component, pageProps }: any) => {
-  const [theme, setTheme] = useState<string | null>(null)
-
-  useLayoutEffect(() => {
-    setTheme(localStorage.getItem("theme"))
-  }, [])
-
-  useEffect(() => {
-    if (theme === "light") {
-      localStorage.setItem("theme", "light")
-    } else {
-      localStorage.setItem("theme", "dark")
-    }
-  }, [theme])
-
   return (
     <>
       <Head>
@@ -54,17 +41,17 @@ const Child = ({ Component, pageProps }: any) => {
         ></meta>
         <title>Forum App</title>
       </Head>
-      <AuthProvider>
-        <ToggleThemeContext.Provider value={{ theme, setTheme }}>
-          <ThemeProvider theme={theme === "light" ? defaultTheme : darkTheme}>
+      <Provider store={store}>
+        <AuthProvider>
+          <ToggleThemeProvider>
             <ThreadsProvider>
               <GlobalStyle />
               <Header />
               <Component {...pageProps} />
             </ThreadsProvider>
-          </ThemeProvider>
-        </ToggleThemeContext.Provider>
-      </AuthProvider>
+          </ToggleThemeProvider>
+        </AuthProvider>
+      </Provider>
     </>
   )
 }
