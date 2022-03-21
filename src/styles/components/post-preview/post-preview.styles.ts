@@ -70,7 +70,7 @@ export const TextWrapper = styled.div`
 export const Text = styled.p`
   font-size: 14px;
   margin-bottom: 20px;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   white-space: pre-line;
 `
 

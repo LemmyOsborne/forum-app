@@ -30,8 +30,8 @@ export const SignInButton = styled.button`
   padding: 0 25px;
   height: 30px;
   font-size: 16px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.palette.primary.contrastText};
+  font-weight: 500;
+  color: ${({ theme }) => theme.palette.common.white};
   margin-right: 10px;
   background-color: transparent;
   border-radius: 20px;
