@@ -10,7 +10,6 @@ export const fetchThreads = createAsyncThunk("threads/fetchThreads", async () =>
     query: listThreads,
     authMode: GRAPHQL_AUTH_MODE.API_KEY,
   })) as { data: ListThreadsQuery }
-  console.log("data: ", data)
   return data.listThreads.items
 })
 
