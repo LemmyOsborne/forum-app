@@ -4,13 +4,14 @@ import { API, Storage } from "aws-amplify"
 import { ImageDropzone } from "components/image-dropzone"
 import { createPost } from "graphql/mutations"
 import { useRouter } from "next/router"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Button, Container, ErrorMessage, Input, Select } from "styles/components/form.styles"
 import { Form, Textarea } from "styles/components/create.styles"
 import { v4 as uuidv4 } from "uuid"
 import * as ROUTES from "constants/routes"
-import { ThreadsContext } from "context/ThreadsContext"
+import { useAppSelector, useAppDispatch } from "features/store"
+import { fetchThreads } from "features/slices/threadsSlice"
 
 interface IFormData {
   title: string
@@ -21,10 +22,12 @@ interface IFormData {
 const Create = () => {
   const [file, setFile] = useState<File>()
   const router = useRouter()
-  const { threads } = useContext(ThreadsContext)
+  const threads = useAppSelector((state) => state.threadsReducer.threads)
+  const dispatch = useAppDispatch()
   const { threadName } = router.query
 
   useEffect(() => {
+    dispatch(fetchThreads())
     if (
       !localStorage.getItem(
         "CognitoIdentityServiceProvider.5rj6ud7ornl6odgesokbgimbtb.LastAuthUser"

@@ -66,7 +66,11 @@ export type Thread = {
   description?: string | null
   image?: string | null
   subscribers?: Array<string | null> | null
-  posts?: ModelPostConnection
+  posts?: {
+    __typename: "ModelPostConnection"
+    nextToken?: string | null
+    items: Array<Post>
+  }
   createdAt: string
   updatedAt: string
   owner: string
@@ -926,7 +930,7 @@ export type ListThreadsQuery = {
       createdAt: string
       updatedAt: string
       owner: string
-    } | null>
+    }>
     nextToken?: string | null
   }
 }

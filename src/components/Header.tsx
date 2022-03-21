@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import React, { useContext, useState } from "react"
+import React, { useEffect, useState } from "react"
 import * as ROUTES from "constants/routes"
 import LogoImage from "assets/logo.png"
 import MenuIcon from "assets/icons/menu.svg"
@@ -32,26 +32,25 @@ import {
 } from "styles/components/header.styles"
 import { useWindowSize } from "hooks/useWindowSize"
 import { CreateThread } from "./create-thread-modal"
-import { ThreadsContext } from "context/ThreadsContext"
 import { useAppDispatch, useAppSelector } from "features/store"
 import { changeTheme } from "features/slices/themeSlice"
 import { ETheme } from "interfaces/interfaces"
+import { fetchThreads } from "features/slices/threadsSlice"
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const router = useRouter()
   const { user } = useUser()
   const username = user?.getUsername()
-  // const { theme, setTheme } = useContext(ToggleThemeContext)
   const { width } = useWindowSize()
   const [showThreadModal, setShowThreadModal] = useState(false)
-  const [search, setSearch] = useState<string>()
-  const { threads } = useContext(ThreadsContext)
+  const [search, setSearch] = useState("")
+  const threads = useAppSelector((state) => state.threadsReducer.threads)
+  const dispatch = useAppDispatch()
   const searchResult = threads
     ?.map((thread) => thread.name)
     .filter((name) => name.toLowerCase().includes(search?.toLowerCase() as string))
   const [searchTag, setSearchTag] = useState<string>()
-  const dispatch = useAppDispatch()
   const { theme } = useAppSelector((state) => state.themeReducer)
 
   const handleToggleTheme = (themeType: ETheme) => {
@@ -72,6 +71,11 @@ export const Header = () => {
   }
 
   const [isFocus, setIsFocus] = useState(false)
+
+  useEffect(() => {
+    dispatch(fetchThreads())
+  }, [])
+
   return (
     <Container>
       <Logo onClick={() => router.push(ROUTES.HOME)}>

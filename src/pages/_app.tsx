@@ -6,7 +6,6 @@ import { Amplify } from "aws-amplify"
 import awsconfig from "../aws-exports"
 import { AuthProvider } from "helpers/AuthProvider"
 import { Header } from "components/Header"
-import { ThreadsProvider } from "helpers/ThreadsProvider"
 import { Provider } from "react-redux"
 import store from "features/store"
 import { ToggleThemeProvider } from "helpers/ThemeProvider"
@@ -44,11 +43,9 @@ const Child = ({ Component, pageProps }: any) => {
       <Provider store={store}>
         <AuthProvider>
           <ToggleThemeProvider>
-            <ThreadsProvider>
-              <GlobalStyle />
-              <Header />
-              <Component {...pageProps} />
-            </ThreadsProvider>
+            <GlobalStyle />
+            <Header />
+            <Component {...pageProps} />
           </ToggleThemeProvider>
         </AuthProvider>
       </Provider>
