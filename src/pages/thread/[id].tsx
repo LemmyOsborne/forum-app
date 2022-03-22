@@ -41,14 +41,13 @@ const IndividualThread: React.FC<Props> = ({
   thread: { id, name, owner, posts, description, createdAt, subscribers = [], image },
 }) => {
   const router = useRouter()
-  const [subs, setSubs] = useState<(string | null)[] | null | undefined>(subscribers)
+  const [subs, setSubs] = useState<(string | null)[] | null | undefined>()
   const { user } = useUser()
   const username = user?.getUsername()
   const [imageUrl, setImageUrl] = useState("")
-  console.log("subs: ", subs)
-  console.log("subscribers: ", subscribers)
 
   useEffect(() => {
+    setSubs(subscribers)
     const getImageUrl = async () => {
       if (image) {
         try {
@@ -64,10 +63,10 @@ const IndividualThread: React.FC<Props> = ({
   }, [image])
 
   const addSubscriber = async () => {
-    if (subscribers && username) {
+    if (username && subscribers && !subscribers.includes(username)) {
       const updateThreadInput: UpdateThreadInput = {
         id: id,
-        subscribers: [...subscribers, username],
+        subscribers: subscribers.concat(username),
       }
 
       const addNewSubscriber = (await API.graphql({
