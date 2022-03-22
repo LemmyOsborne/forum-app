@@ -27,7 +27,7 @@ import {
   Textarea,
   Wrapper,
 } from "styles/components/post.styles"
-import { compare } from "helpers/compare"
+import { compareDates } from "helpers/compare"
 
 interface Props {
   post: Post
@@ -93,7 +93,7 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
             </form>
           )}
           <div>
-            {comments.sort(compare).map((comment) => (
+            {comments.sort(compareDates).map((comment) => (
               <PostComment key={comment?.id} comment={comment} />
             ))}
           </div>

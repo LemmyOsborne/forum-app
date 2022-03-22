@@ -45,8 +45,6 @@ const IndividualThread: React.FC<Props> = ({
   const { user } = useUser()
   const username = user?.getUsername()
   const [imageUrl, setImageUrl] = useState("")
-  console.log("subsribers: ", subscribers)
-  console.log("subs: ", subs)
 
   useEffect(() => {
     const getImageUrl = async () => {
@@ -64,10 +62,7 @@ const IndividualThread: React.FC<Props> = ({
   }, [image])
 
   const addSubscriber = async () => {
-    console.log("add1")
-
     if (subscribers && username) {
-      console.log("add2")
       const updateThreadInput: UpdateThreadInput = {
         id: id,
         subscribers: [...subscribers, username],
