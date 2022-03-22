@@ -11,7 +11,7 @@ type Thread
   name: String!
   description: String
   image: String
-  subscribers: [String]
+  subscribers: [String!]!
   posts: [Post!]! @hasMany
 }
 
