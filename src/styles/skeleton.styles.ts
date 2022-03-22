@@ -20,7 +20,7 @@ const skeletonLight = keyframes`
   }
 `
 
-export const Skeleton = styled.div`
+export const PostsSectionSkeleton = styled.div`
   background-color: ${({ theme }) => theme.palette.secondary.main};
   min-width: 310px;
   width: 100%;
@@ -30,7 +30,7 @@ export const Skeleton = styled.div`
   padding: 20px 40px;
 `
 
-export const SkeletonTitle = styled.div`
+export const PostsSectionSkeletonTitle = styled.div`
   height: 30px;
   animation: ${({ theme }) => (theme.title === "light" ? skeletonLight : skeletonDark)} 1s linear
     infinite alternate;
@@ -39,7 +39,7 @@ export const SkeletonTitle = styled.div`
   border-radius: 2px;
 `
 
-export const SkeletonText = styled.div`
+export const PostsSectionSkeletonText = styled.div`
   height: 15px;
   animation: ${({ theme }) => (theme.title === "light" ? skeletonLight : skeletonDark)} 1s linear
     infinite alternate;
@@ -49,4 +49,31 @@ export const SkeletonText = styled.div`
   :last-of-type {
     width: 80%;
   }
+`
+export const ThreadsSectionSkeleton = styled(PostsSectionSkeleton)`
+  min-width: 300px;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 0;
+`
+export const ThreadsSectionSkeletonItem = styled.div`
+  display: flex;
+  align-items: baseline;
+`
+
+export const ThreadsSectionSkeletonTitle = styled(PostsSectionSkeletonTitle)`
+  margin: 0 auto 30px;
+  width: 70%;
+`
+export const ThreadsSectionSkeletonAvatar = styled.div`
+  border-radius: 100%;
+  margin-right: 20px;
+  height: 40px;
+  width: 40px;
+  animation: ${({ theme }) => (theme.title === "light" ? skeletonLight : skeletonDark)} 1s linear
+    infinite alternate;
+`
+
+export const ThreadsSectionSkeletonText = styled(PostsSectionSkeletonText)`
+  height: 25px;
 `

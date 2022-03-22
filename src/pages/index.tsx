@@ -6,7 +6,16 @@ import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { listPosts } from "graphql/queries"
 import { PostPreview } from "components/post-preview/post-preview"
 import { compareBySubs, compareDates } from "helpers/compare"
-import { Skeleton, SkeletonText, SkeletonTitle } from "styles/skeleton.styles"
+import {
+  PostsSectionSkeleton,
+  PostsSectionSkeletonText,
+  PostsSectionSkeletonTitle,
+  ThreadsSectionSkeleton,
+  ThreadsSectionSkeletonItem,
+  ThreadsSectionSkeletonAvatar,
+  ThreadsSectionSkeletonText,
+  ThreadsSectionSkeletonTitle,
+} from "styles/skeleton.styles"
 import { useUser } from "context/AuthContext"
 import { useAppDispatch, useAppSelector } from "features/store"
 import { fetchThreads } from "features/slices/threadsSlice"
@@ -59,6 +68,7 @@ export default function Home() {
           <PostPreview key={post.id} post={post} />
         ))}
       </PostsSection>
+
       <ThreadsSection>
         <ThreadSectionHeader>
           <h1>Top Threads</h1>
@@ -70,19 +80,34 @@ export default function Home() {
     </Container>
   ) : (
     <Container id="posts-skeleton-container">
-      {Array(9)
-        .fill("")
-        .map((_, index) => (
-          <Skeleton key={index}>
-            <SkeletonText style={{ width: "50%" }} />
-            <SkeletonTitle />
-            {Array(9)
-              .fill("")
-              .map((_, index) => (
-                <SkeletonText key={index} />
-              ))}
-          </Skeleton>
-        ))}
+      <PostsSection>
+        {Array(9)
+          .fill("")
+          .map((_, index) => (
+            <PostsSectionSkeleton key={index}>
+              <PostsSectionSkeletonText style={{ width: "50%" }} />
+              <PostsSectionSkeletonTitle />
+              {Array(9)
+                .fill("")
+                .map((_, index) => (
+                  <PostsSectionSkeletonText key={index} />
+                ))}
+            </PostsSectionSkeleton>
+          ))}
+      </PostsSection>
+      <ThreadsSection>
+        <ThreadsSectionSkeleton>
+          <ThreadsSectionSkeletonTitle />
+          {Array(5)
+            .fill("")
+            .map((_, index) => (
+              <ThreadsSectionSkeletonItem key={index}>
+                <ThreadsSectionSkeletonAvatar />
+                <ThreadsSectionSkeletonText />
+              </ThreadsSectionSkeletonItem>
+            ))}
+        </ThreadsSectionSkeleton>
+      </ThreadsSection>
     </Container>
   )
 }
