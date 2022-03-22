@@ -52,7 +52,7 @@ export default function Home() {
     }
 
     getAllPosts()
-  }, [])
+  }, [user, username])
 
   const dispatch = useAppDispatch()
   const threads = useAppSelector((state) => state.threadsReducer.threads)
@@ -68,7 +68,6 @@ export default function Home() {
           <PostPreview key={post.id} post={post} />
         ))}
       </PostsSection>
-
       <ThreadsSection>
         <ThreadSectionHeader>
           <h1>Top Threads</h1>

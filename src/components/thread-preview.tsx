@@ -1,5 +1,6 @@
 import { Thread } from "API"
 import { Storage } from "aws-amplify"
+import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
@@ -8,11 +9,9 @@ interface Props {
   index: number
 }
 
-export const ThreadPreview: React.FC<Props> = ({
-  thread: { name, image, subscribers = [] },
-  index,
-}) => {
+export const ThreadPreview: React.FC<Props> = ({ thread: { id, name, image }, index }) => {
   const [imageUrl, setImageUrl] = useState("")
+
   useEffect(() => {
     if (image) {
       const getImageUrl = async () => {
@@ -30,8 +29,9 @@ export const ThreadPreview: React.FC<Props> = ({
     <Container>
       <ThreadNumber>{index + 1}</ThreadNumber>
       <ThreadImage src={imageUrl} />
-      <ThreadName>{name}</ThreadName>
-      <div>{subscribers?.length}</div>
+      <ThreadName>
+        <Link href={`/thread/${id}`}>{name}</Link>
+      </ThreadName>
     </Container>
   )
 }
@@ -40,6 +40,7 @@ const Container = styled.article`
   border-bottom: 1px solid grey;
   display: flex;
   padding: 10px 20px;
+  overflow: hidden;
 
   :last-of-type {
     border: none;
@@ -52,7 +53,16 @@ const ThreadImage = styled.img`
   margin-right: 10px;
 `
 const ThreadName = styled.span`
-  font-size: 20px;
+  a {
+    cursor: pointer;
+    font-size: 20px;
+    text-decoration: none;
+    color: inherit;
+
+    :hover {
+      text-decoration: underline;
+    }
+  }
 `
 
 const ThreadNumber = styled.p`
