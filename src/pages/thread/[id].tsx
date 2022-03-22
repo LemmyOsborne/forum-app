@@ -45,6 +45,8 @@ const IndividualThread: React.FC<Props> = ({
   const { user } = useUser()
   const username = user?.getUsername()
   const [imageUrl, setImageUrl] = useState("")
+  console.log("subs: ", subs)
+  console.log("subscribers: ", subscribers)
 
   useEffect(() => {
     const getImageUrl = async () => {
@@ -150,6 +152,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       thread: data.getThread as Thread,
     },
+    revalidate: 30,
   }
 }
 
