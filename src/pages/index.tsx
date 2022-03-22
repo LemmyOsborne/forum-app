@@ -5,7 +5,7 @@ import { API } from "aws-amplify"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
 import { listPosts } from "graphql/queries"
 import { PostPreview } from "components/post-preview/post-preview"
-import { compare } from "helpers/compare"
+import { compareBySubs, compareDates } from "helpers/compare"
 import { Skeleton, SkeletonText, SkeletonTitle } from "styles/skeleton.styles"
 import { useUser } from "context/AuthContext"
 import { useAppDispatch, useAppSelector } from "features/store"
@@ -19,15 +19,16 @@ export default function Home() {
 
   useEffect(() => {
     const getAllPosts = async () => {
-      const allPosts = (await API.graphql({
-        query: listPosts,
-        authMode: GRAPHQL_AUTH_MODE.API_KEY,
-      })) as {
-        data: ListPostsQuery
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        errors: any[]
-      }
       try {
+        const allPosts = (await API.graphql({
+          query: listPosts,
+          authMode: GRAPHQL_AUTH_MODE.API_KEY,
+        })) as {
+          data: ListPostsQuery
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          errors: any[]
+        }
+
         if (allPosts && user && username) {
           const filteredPosts = allPosts.data.listPosts.items.filter((post) =>
             post.thread.subscribers?.includes(username)
@@ -36,8 +37,8 @@ export default function Home() {
         } else {
           setPosts(allPosts.data.listPosts.items as Post[])
         }
-      } catch (e) {
-        console.log(e)
+      } catch (error) {
+        console.error(error)
       }
     }
 
@@ -54,7 +55,7 @@ export default function Home() {
   return posts ? (
     <Container id="posts-container">
       <PostsSection>
-        {posts.sort(compare).map((post) => (
+        {posts.sort(compareDates).map((post) => (
           <PostPreview key={post.id} post={post} />
         ))}
       </PostsSection>
@@ -62,7 +63,7 @@ export default function Home() {
         <ThreadSectionHeader>
           <h1>Top Threads</h1>
         </ThreadSectionHeader>
-        {threads.map((thread, index) => (
+        {[...threads].sort(compareBySubs).map((thread, index) => (
           <ThreadPreview key={thread.id} thread={thread} index={index} />
         ))}
       </ThreadsSection>

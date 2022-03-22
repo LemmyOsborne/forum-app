@@ -8,7 +8,10 @@ interface Props {
   index: number
 }
 
-export const ThreadPreview: React.FC<Props> = ({ thread: { name, image }, index }) => {
+export const ThreadPreview: React.FC<Props> = ({
+  thread: { name, image, subscribers = [] },
+  index,
+}) => {
   const [imageUrl, setImageUrl] = useState("")
   useEffect(() => {
     if (image) {
@@ -28,6 +31,7 @@ export const ThreadPreview: React.FC<Props> = ({ thread: { name, image }, index 
       <ThreadNumber>{index + 1}</ThreadNumber>
       <ThreadImage src={imageUrl} />
       <ThreadName>{name}</ThreadName>
+      <div>{subscribers?.length}</div>
     </Container>
   )
 }
