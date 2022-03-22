@@ -12,7 +12,7 @@ import {
   UpdateThreadMutation,
 } from "API"
 import { PostPreview } from "components/post-preview/post-preview"
-import { compare } from "helpers/compare"
+import { compareDates } from "helpers/compare"
 import {
   Container,
   Header,
@@ -38,13 +38,15 @@ interface Props {
 }
 
 const IndividualThread: React.FC<Props> = ({
-  thread: { id, name, owner, posts, description, createdAt, subscribers, image },
+  thread: { id, name, owner, posts, description, createdAt, subscribers = [], image },
 }) => {
   const router = useRouter()
-  const [subs, setSubs] = useState(subscribers)
+  const [subs, setSubs] = useState<(string | null)[] | null | undefined>(subscribers)
   const { user } = useUser()
   const username = user?.getUsername()
   const [imageUrl, setImageUrl] = useState("")
+  console.log("subsribers: ", subscribers)
+  console.log("subs: ", subs)
 
   useEffect(() => {
     const getImageUrl = async () => {
@@ -62,7 +64,10 @@ const IndividualThread: React.FC<Props> = ({
   }, [image])
 
   const addSubscriber = async () => {
+    console.log("add1")
+
     if (subscribers && username) {
+      console.log("add2")
       const updateThreadInput: UpdateThreadInput = {
         id: id,
         subscribers: [...subscribers, username],
@@ -118,14 +123,14 @@ const IndividualThread: React.FC<Props> = ({
         </HeaderContent>
       </Header>
       <PostsContainer>
-        {posts?.items.sort(compare).map((post) => (
+        {posts?.items.sort(compareDates).map((post) => (
           <PostPreview key={post.id} post={post} />
         ))}
       </PostsContainer>
       <Info>
         <InfoTitle>About Thread</InfoTitle>
         <Description>{description}</Description>
-        <Subs>{subs ? subs.length : "Doesn't nave"} subscribers</Subs>
+        <Subs>{subs?.length} subscribers</Subs>
         <CreatedAt>Created at {format(new Date(createdAt), "MMMM d, Y")}</CreatedAt>
         <CreatePostButton onClick={() => router.push("/create")}>Create Post</CreatePostButton>
       </Info>
