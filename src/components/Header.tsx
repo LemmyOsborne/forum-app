@@ -7,7 +7,6 @@ import MenuIcon from "assets/icons/menu.svg"
 import LogoutIcon from "assets/icons/logout.svg"
 import { Auth } from "aws-amplify"
 import { useRouter } from "next/router"
-import { useUser } from "context/AuthContext"
 import AddIcon from "assets/icons/add.svg"
 import SignInIcon from "assets/icons/signin.svg"
 import SunIcon from "assets/icons/sun.svg"
@@ -40,8 +39,7 @@ import { fetchThreads } from "features/slices/threadsSlice"
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const router = useRouter()
-  const { user } = useUser()
-  const username = user?.getUsername()
+  const user = useAppSelector((state) => state.authReducer.user)
   const { width } = useWindowSize()
   const [showThreadModal, setShowThreadModal] = useState(false)
   const [search, setSearch] = useState("")
@@ -113,7 +111,7 @@ export const Header = () => {
       </SearchContainer>
       <div style={{ display: "flex" }}>
         {user ? (
-          <Username>{username}</Username>
+          <Username>{user}</Username>
         ) : (
           <ButtonGroup>
             <Link href={ROUTES.SIGN_IN}>

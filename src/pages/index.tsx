@@ -16,15 +16,13 @@ import {
   ThreadsSectionSkeletonText,
   ThreadsSectionSkeletonTitle,
 } from "styles/skeleton.styles"
-import { useUser } from "context/AuthContext"
 import { useAppDispatch, useAppSelector } from "features/store"
 import { fetchThreads } from "features/slices/threadsSlice"
 import { ThreadPreview } from "components/thread-preview"
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>()
-  const { user } = useUser()
-  const username = user?.getUsername()
+  const user = useAppSelector((state) => state.authReducer.user)
 
   useEffect(() => {
     const getAllPosts = async () => {
@@ -38,9 +36,9 @@ export default function Home() {
           errors: any[]
         }
 
-        if (allPosts && user && username) {
+        if (allPosts && user) {
           const filteredPosts = allPosts.data.listPosts.items.filter((post) =>
-            post.thread.subscribers?.includes(username)
+            post.thread.subscribers?.includes(user)
           ) as Post[]
           setPosts(filteredPosts)
         } else {
@@ -52,7 +50,7 @@ export default function Home() {
     }
 
     getAllPosts()
-  }, [user, username])
+  }, [user])
 
   const dispatch = useAppDispatch()
   const threads = useAppSelector((state) => state.threadsReducer.threads)

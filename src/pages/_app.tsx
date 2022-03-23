@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react"
 import { GlobalStyle } from "styles/global-style"
 import { Amplify } from "aws-amplify"
 import awsconfig from "../aws-exports"
-import { AuthProvider } from "helpers/AuthProvider"
 import { Header } from "components/Header"
 import { Provider } from "react-redux"
 import store from "features/store"
@@ -41,13 +40,11 @@ const Child = ({ Component, pageProps }: any) => {
         <title>Forum App</title>
       </Head>
       <Provider store={store}>
-        <AuthProvider>
-          <ToggleThemeProvider>
-            <GlobalStyle />
-            <Header />
-            <Component {...pageProps} />
-          </ToggleThemeProvider>
-        </AuthProvider>
+        <ToggleThemeProvider>
+          <GlobalStyle />
+          <Header />
+          <Component {...pageProps} />
+        </ToggleThemeProvider>
       </Provider>
     </>
   )

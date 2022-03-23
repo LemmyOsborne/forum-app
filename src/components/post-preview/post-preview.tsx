@@ -19,7 +19,6 @@ import { formatDate } from "helpers/formatDate"
 import { API, Storage } from "aws-amplify"
 import { updateVote, createVote, deletePost, updatePost } from "graphql/mutations"
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api"
-import { useUser } from "context/AuthContext"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { createPortal } from "react-dom"
@@ -42,6 +41,7 @@ import {
   TextWrapper,
 } from "styles/components/post-preview/post-preview.styles"
 import { DeletePostWarn } from "./delete-post-warn"
+import { useAppSelector } from "features/store"
 
 interface Props {
   post: Post
@@ -51,7 +51,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
   const [isPostDelete, setIsPostDelete] = useState(false)
   const [imageUrl, setImageUrl] = useState("")
   const router = useRouter()
-  const { user } = useUser()
+  const user = useAppSelector((state) => state.authReducer.user)
   const [existingVote, setExistingVote] = useState<string | undefined>(undefined)
   const [existingVoteId, setExistingVoteId] = useState<string | undefined>(undefined)
   const [upvotes, setUpvotes] = useState<number>(
@@ -68,7 +68,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
 
   useEffect(() => {
     if (user) {
-      const tryFindVote = post.votes?.items?.find((vote) => vote?.owner === user.getUsername())
+      const tryFindVote = post.votes?.items?.find((vote) => vote?.owner === user)
 
       if (tryFindVote) {
         setExistingVote(tryFindVote.vote)
@@ -196,7 +196,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
           </DownvoteWrapper>
         </VoteSection>
       )}
-      {user?.getUsername() === post.owner ? (
+      {user === post.owner ? (
         <ButtonGroup>
           {showDeletePostWarn && (
             <DeletePostWarn

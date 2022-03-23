@@ -12,7 +12,7 @@ import {
   Input,
   ServerError,
 } from "styles/components/form.styles"
-import { useUser } from "context/AuthContext"
+import { useAppSelector } from "features/store"
 
 interface IFormData {
   email: string
@@ -32,7 +32,7 @@ const SignUp = () => {
   const [showCode, setShowCode] = useState(false)
   const router = useRouter()
 
-  const { user } = useUser()
+  const user = useAppSelector((state) => state.authReducer.user)
 
   useEffect(() => {
     if (user) {

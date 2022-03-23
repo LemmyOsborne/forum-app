@@ -18,7 +18,6 @@ import CloseIcon from "assets/icons/close.svg"
 import { PostComment } from "components/post-comment"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { createComment } from "graphql/mutations"
-import { useUser } from "context/AuthContext"
 import {
   Button,
   CloseButton,
@@ -28,6 +27,7 @@ import {
   Wrapper,
 } from "styles/components/post.styles"
 import { compareDates } from "helpers/compare"
+import { useAppSelector } from "features/store"
 
 interface Props {
   post: Post
@@ -45,7 +45,7 @@ const IndividualPost: React.FC<Props> = ({ post }) => {
     formState: { errors },
     resetField,
   } = useForm()
-  const { user } = useUser()
+  const user = useAppSelector((state) => state.authReducer.user)
 
   const onSubmit: SubmitHandler<IFormData> = async (data) => {
     if (data.comment) {

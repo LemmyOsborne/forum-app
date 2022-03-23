@@ -31,7 +31,7 @@ import {
 import { useRouter } from "next/router"
 import { format } from "date-fns"
 import { updateThread } from "graphql/mutations"
-import { useUser } from "context/AuthContext"
+import { useAppSelector } from "features/store"
 
 interface Props {
   thread: Thread
@@ -41,13 +41,13 @@ const IndividualThread: React.FC<Props> = ({
   thread: { id, name, owner, posts, description, createdAt, subscribers = [], image },
 }) => {
   const router = useRouter()
-  const [subs, setSubs] = useState<(string | null)[] | null | undefined>()
-  const { user } = useUser()
-  const username = user?.getUsername()
+  const [subs, setSubs] = useState<(string | null)[]>([])
+  const user = useAppSelector((state) => state.authReducer.user)
+  console.log(user)
   const [imageUrl, setImageUrl] = useState("")
 
   useEffect(() => {
-    setSubs(subscribers)
+    setSubs(subscribers as string[])
     const getImageUrl = async () => {
       if (image) {
         try {
@@ -63,10 +63,12 @@ const IndividualThread: React.FC<Props> = ({
   }, [image])
 
   const addSubscriber = async () => {
-    if (username && subscribers && !subscribers.includes(username)) {
+    console.log("add top")
+    if (subscribers && !subs.includes(user)) {
+      console.log("add")
       const updateThreadInput: UpdateThreadInput = {
         id: id,
-        subscribers: subscribers.concat(username),
+        subscribers: subs.concat(user),
       }
 
       const addNewSubscriber = (await API.graphql({
@@ -75,15 +77,15 @@ const IndividualThread: React.FC<Props> = ({
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as { data: UpdateThreadMutation }
 
-      setSubs(addNewSubscriber.data.updateThread?.subscribers)
+      setSubs(addNewSubscriber.data.updateThread?.subscribers as string[])
     }
   }
 
   const deleteSubscriber = async () => {
-    if (subscribers && username) {
+    if (subscribers && user) {
       const updateThreadInput: UpdateThreadInput = {
         id: id,
-        subscribers: subscribers.filter((sub) => sub !== username),
+        subscribers: subscribers.filter((sub) => sub !== user),
       }
 
       const addNewSubscriber = (await API.graphql({
@@ -92,7 +94,7 @@ const IndividualThread: React.FC<Props> = ({
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as { data: UpdateThreadMutation }
 
-      setSubs(addNewSubscriber.data.updateThread?.subscribers)
+      setSubs(addNewSubscriber.data.updateThread?.subscribers as string[])
     }
   }
 
@@ -109,8 +111,8 @@ const IndividualThread: React.FC<Props> = ({
           <Subtitle>
             by <span>{owner}</span>
           </Subtitle>
-          {owner !== username ? (
-            subs?.includes(username as string) ? (
+          {owner !== user ? (
+            subs?.includes(user as string) ? (
               <Button onClick={deleteSubscriber}>Leave</Button>
             ) : (
               <Button onClick={addSubscriber}>Join</Button>
