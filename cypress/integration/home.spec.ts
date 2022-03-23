@@ -50,26 +50,23 @@ context("Home page", () => {
 
   it("render array of posts for guest user", () => {
     if (posts && !user) {
-      cy.get("#posts-container>article").each((post) => {
+      cy.get("#posts").each((post) => {
         cy.wrap(post).should("exist")
       })
     }
   })
 
   it("render array of posts for auth user", () => {
-    Auth.signIn({
-      username: "some_dude",
-      password: "7+7budet49",
+    cy.signIn().then(() => {
+      if (posts && user) {
+        cy.get("#posts").each((post) => {
+          cy.wrap(post).should("exist")
+        })
+      }
     })
-
-    if (posts && user) {
-      cy.get("#posts-container>article").each((post) => {
-        cy.wrap(post).should("exist")
-      })
-    }
   })
 
-  it("render loading skeleton while posts is fetching", () => {
+  it("render loading skeleton while posts has been fetching", () => {
     if (!posts) {
       cy.get("#posts-skeleton-container>div").each((skeleton) => {
         cy.wrap(skeleton).should("exist")
@@ -77,7 +74,7 @@ context("Home page", () => {
     }
   })
 
-  it("does not render loading skeleton after posts is fetched", () => {
+  it("does not render loading skeleton after posts were fetched", () => {
     if (posts) {
       cy.get("#posts-skeleton-container>div").should("not.exist")
     }

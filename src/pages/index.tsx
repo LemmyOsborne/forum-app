@@ -63,7 +63,7 @@ export default function Home() {
 
   return posts ? (
     <Container id="posts-container">
-      <PostsSection>
+      <PostsSection id="posts">
         {posts.sort(compareDates).map((post) => (
           <PostPreview key={post.id} post={post} />
         ))}
