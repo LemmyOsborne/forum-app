@@ -15,8 +15,12 @@ const authSlice = createSlice({
     handleUser: (state, { payload }: PayloadAction<typeof state.user>) => {
       state.user = payload
     },
+    signOut: (state) => {
+      state.user = ""
+    },
   },
 })
 
 export const { handleUser } = authSlice.actions
+export const { signOut } = authSlice.actions
 export const authReducer = authSlice.reducer

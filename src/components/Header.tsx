@@ -35,6 +35,7 @@ import { useAppDispatch, useAppSelector } from "features/store"
 import { changeTheme } from "features/slices/themeSlice"
 import { ETheme } from "interfaces/interfaces"
 import { fetchThreads } from "features/slices/threadsSlice"
+import { signOut as logout } from "features/slices/authSlice"
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -58,6 +59,7 @@ export const Header = () => {
   const signOut = async () => {
     try {
       await Auth.signOut()
+      dispatch(logout())
       router.push(ROUTES.SIGN_IN)
     } catch (error) {
       console.log("error signing out: ", error)
