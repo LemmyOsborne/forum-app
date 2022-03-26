@@ -66,6 +66,8 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
   const [showWarn, setShowWarn] = useState(false)
   const [showDeletePostWarn, setShowDeletePostWarn] = useState(false)
 
+  const createdDate = formatDate(post.createdAt)
+
   useEffect(() => {
     if (user) {
       const tryFindVote = post.votes?.items?.find((vote) => vote?.owner === user)
@@ -221,7 +223,7 @@ export const PostPreview: React.FC<Props> = ({ post, children }) => {
             </SmallText>
           )}
           <SmallText>
-            Posted by <b>{post.owner}</b> {formatDate(post.createdAt)} hours ago.
+            Posted by <b>{post.owner}</b> {createdDate}
           </SmallText>
         </TextWrapper>
         <Title>{post.title}</Title>
