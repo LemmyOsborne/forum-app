@@ -14,6 +14,12 @@ export const Container = styled.div`
   grid-template-columns: 1fr 35vw;
   gap: 20px;
   background-color: ${({ theme }) => theme.palette.background.default};
+
+  @media (max-width: ${({ theme }) => theme.media.lg}) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+  }
 `
 
 export const Header = styled.header`
@@ -31,12 +37,21 @@ export const HeaderContent = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding: 20px;
+
+  @media (max-width: ${({ theme }) => theme.media.lg}) {
+    justify-content: center;
+  }
 `
 
 export const PostsContainer = styled.section`
   grid-area: posts;
   justify-self: end;
   align-self: start;
+
+  @media (max-width: ${({ theme }) => theme.media.lg}) {
+    margin: 15rem auto;
+    width: 90%;
+  }
 `
 
 export const Title = styled.h1`
@@ -53,6 +68,10 @@ export const Subtitle = styled.h2`
   span {
     text-decoration: underline;
     cursor: pointer;
+  }
+
+  @media (max-width: ${({ theme }) => theme.media.lg}) {
+    display: none;
   }
 `
 
@@ -86,6 +105,15 @@ export const Info = styled.section`
   justify-self: start;
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.palette.secondary.dark};
+
+  @media (max-width: ${({ theme }) => theme.media.lg}) {
+    position: absolute;
+    top: 7.1rem;
+    left: 0;
+    right: 0;
+    width: auto;
+    text-align: center;
+  }
 `
 
 export const InfoTitle = styled.h1`
@@ -96,6 +124,7 @@ export const InfoTitle = styled.h1`
 `
 export const CreatePostButton = styled.button`
   width: 100%;
+  max-width: 200px;
   height: 30px;
   display: flex;
   align-items: center;
@@ -109,6 +138,10 @@ export const CreatePostButton = styled.button`
     background-color: ${({ theme }) => theme.palette.primary.dark};
     text-decoration: underline;
   }
+
+  @media (max-width: ${({ theme }) => theme.media.lg}) {
+    align-self: center;
+  }
 `
 
 export const Description = styled.p`
@@ -119,3 +152,4 @@ export const Description = styled.p`
 export const Subs = styled.p``
 
 export const CreatedAt = styled.p``
+
