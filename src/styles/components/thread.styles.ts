@@ -31,7 +31,7 @@ export const Header = styled.header`
 `
 
 export const HeaderContent = styled.div`
-  max-width: 1050px;
+  max-width: 900px;
   margin: 0 auto;
   display: flex;
   justify-content: flex-start;
@@ -50,7 +50,8 @@ export const PostsContainer = styled.section`
 
   @media (max-width: ${({ theme }) => theme.media.lg}) {
     margin: 15rem auto;
-    width: 90%;
+    max-width: 90%;
+    align-self: center;
   }
 `
 
@@ -70,7 +71,7 @@ export const Subtitle = styled.h2`
     cursor: pointer;
   }
 
-  @media (max-width: ${({ theme }) => theme.media.lg}) {
+  @media (max-width: ${({ theme }) => theme.media.md}) {
     display: none;
   }
 `
@@ -124,7 +125,6 @@ export const InfoTitle = styled.h1`
 `
 export const CreatePostButton = styled.button`
   width: 100%;
-  max-width: 200px;
   height: 30px;
   display: flex;
   align-items: center;
@@ -141,6 +141,7 @@ export const CreatePostButton = styled.button`
 
   @media (max-width: ${({ theme }) => theme.media.lg}) {
     align-self: center;
+    width: 200px;
   }
 `
 
