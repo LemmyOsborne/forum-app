@@ -12,7 +12,10 @@ export const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 60px;
-  overflow: scroll;
+
+  @media (max-width: ${({ theme }) => theme.media.sm}) {
+    overflow: scroll;
+  }
 `
 
 export const Container = styled.div`
@@ -24,9 +27,9 @@ export const Container = styled.div`
   border-radius: 4px;
   position: relative;
   z-index: 1001;
-  overflow: scroll;
 
   @media (max-width: ${({ theme }) => theme.media.sm}) {
+    overflow: scroll;
     padding: 10px;
   }
 `
@@ -90,3 +93,4 @@ export const ErrorMessage = styled.div`
   width: 100%;
   margin: 10px 0 15px;
 `
+
