@@ -284,3 +284,4 @@ const Warn: React.FC<IWarn> = ({ postId, setShowWarn }) => {
     document.getElementById(`container-${postId}`) as Element
   )
 }
+

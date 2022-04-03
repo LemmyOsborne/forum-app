@@ -48,6 +48,7 @@ export const ContentSection = styled.section`
   display: flex;
   flex-direction: column;
   max-width: 90%;
+  width: 90%;
 `
 
 export const Title = styled.h1`
@@ -171,3 +172,4 @@ export const Button = styled.button`
   background-color: ${({ theme }) => theme.palette.info.dark};
   color: ${({ theme }) => theme.palette.secondary.contrastText};
 `
+
